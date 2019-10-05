@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6f04c8f94aa74fc0b1b66002f2e42bef" Name="Diagram1">
+        <EntityTypeShape EntityType="Models.APP_PARAMS" Width="1.5" PointX="5.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.DETAILS_TBL" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.EDUFORMS_TBL" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.EDUTYPES_TBL" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.GROUPS_TBL" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.MAIN_TBL" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.SUBDETAILS_TBL" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.SUBJECTS_TBL" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.TEACHERS_TBL" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.WORKS_TBL" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="Models.FK_DETAILS_ITEM_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_DETAILS_WORK_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_SUBDETAILS_DETAIL_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_GROUPS_EDUFORM_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_MAIN_EDUFORM_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_MAIN_EDUTYPE_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_MAIN_SUBJECT_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_SUBDETAILS_TEACHER_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.GPRELATIONS_TBL" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

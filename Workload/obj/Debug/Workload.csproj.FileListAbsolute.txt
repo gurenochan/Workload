@@ -1,0 +1,22 @@
+D:\Documents\workload\WPF_Remake_VS2015\WorkloadVS2015\Workload\bin\Debug\Workload.exe.config
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\Workload.exe.config
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\Workload.exe
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\Workload.pdb
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\EntityFramework.dll
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\EntityFramework.SqlServer.dll
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\FirebirdSql.Data.FirebirdClient.dll
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\EntityFramework.xml
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\EntityFramework.SqlServer.xml
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\MainWindow.g.cs
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\App.g.cs
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload_Content.g.cs
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload_MarkupCompile.cache
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload_MarkupCompile.lref
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\MainWindow.baml
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload.g.resources
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload.Properties.Resources.resources
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload.csproj.GenerateResource.Cache
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload.exe
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload.pdb
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\EntityFramework.Firebird.dll
+D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\fbembed.dll
