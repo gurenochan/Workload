@@ -20,3 +20,32 @@ D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\o
 D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\obj\Debug\Workload.pdb
 D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\EntityFramework.Firebird.dll
 D:\Documents\workload\WPF_Remake_VS2015 – копія\WorkloadVS2015\Workload\bin\Debug\fbembed.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Workload.exe.config
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.exe
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.pdb
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Workload.exe
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Workload.pdb
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\EntityFramework.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\EntityFramework.Firebird.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\EntityFramework.SqlServer.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\FirebirdSql.Data.FirebirdClient.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\EntityFramework.xml
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\EntityFramework.SqlServer.xml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojResolveAssemblyReference.cache
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\MainWindow.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\App.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload_Content.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload_MarkupCompile.cache
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload_MarkupCompile.lref
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\MainWindow.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.g.resources
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.Properties.Resources.resources
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.GenerateResource.Cache
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\firebird.conf
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\firebird.msg
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\wlbase.fdb
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\fbembed.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\ib_util.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\icudt30.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\icuin30.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DBEsentialFiles\icuuc30.dll

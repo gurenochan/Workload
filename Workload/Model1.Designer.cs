@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Documents\workload\WPF_Remake_VS2015\WorkloadVS2015\Workload\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Documents\workload\MainWPFProject\Workload\Workload\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

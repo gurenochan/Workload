@@ -20,22 +20,13 @@ namespace Workload
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly System.String connStr= (new FbConnectionStringBuilder()
-        {
-            ServerType = FbServerType.Embedded,
-            UserID = "SYSDBA",
-            Password = "masterkey",
-            Dialect = 3,
-            Charset = "ASCII",
-            ClientLibrary = System.IO.Path.Combine()
-        }).ConnectionString;
-
         public MainWindow()
         {
             InitializeComponent();
             using (Entities context = new Entities())
             {
                 TEACHERS_TBL teacher = context.TEACHERS_TBL.First();
+                //this.textBox.Text = System.Text.Encoding.Convert(System.Text.ASCIIEncoding.ASCII, System.Text.UTF8Encoding.UTF8, System.Text.ASCIIEncoding.ASCII.GetBytes(teacher.TEACHER_NAME)).ToString();
                 this.textBox.Text = teacher.TEACHER_NAME;
             }
         }

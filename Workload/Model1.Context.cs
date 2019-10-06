@@ -16,11 +16,11 @@ namespace Workload
 
     public partial class Entities : DbContext
     {
-        public Entities(System.String connStr) : base(connStr) {}
+        public Entities(System.String connStr = "name=Entities") : base(connStr) { }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Properties<string>().Configure(x => x.HasColumnType("VARCHAR"));
         }
     
         public virtual DbSet<APP_PARAMS> APP_PARAMS { get; set; }
