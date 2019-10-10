@@ -16,19 +16,13 @@ using System.Windows.Shapes;
 namespace Workload
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Loading.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Loading : Page
     {
-
-        
-        public MainWindow()
+        public Loading()
         {
             InitializeComponent();
-            //this.Closing += this.MainWindow_Closing;
-            this.Closing += delegate (object sender, System.ComponentModel.CancelEventArgs e) { Application.Current.Shutdown(); };
-
-
         }
     }
 }

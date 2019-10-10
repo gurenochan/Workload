@@ -8,14 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/firebird.conf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/firebird.msg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/wlbase.fdb")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/fbembed.dll")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/ib_util.dll")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/icudt30.dll")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/icuin30.dll")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dbesentialfiles/icuuc30.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/firebird.conf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/firebird.msg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/wlbaserenewed.fdb")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/wlbase.fdb")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/fbembed.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/ib_util.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/icudt30.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/icuin30.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/icuuc30.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model1.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model1.tt")]
 

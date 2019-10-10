@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,19 +17,11 @@ using System.Windows.Shapes;
 namespace Workload
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TablePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TablePage : Page
     {
 
-        
-        public MainWindow()
-        {
-            InitializeComponent();
-            //this.Closing += this.MainWindow_Closing;
-            this.Closing += delegate (object sender, System.ComponentModel.CancelEventArgs e) { Application.Current.Shutdown(); };
-
-
-        }
+        public TablePage() => InitializeComponent();
     }
 }

@@ -21,6 +21,7 @@ namespace Workload
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Properties<string>().Configure(x => x.HasColumnType("VARCHAR"));
+            modelBuilder.Properties<string>().Configure(x => x.IsUnicode(true));
         }
     
         public virtual DbSet<APP_PARAMS> APP_PARAMS { get; set; }
