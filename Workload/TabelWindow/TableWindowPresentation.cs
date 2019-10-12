@@ -9,7 +9,7 @@ namespace Workload
 {
     public class TableWindowPresentation<T> where T:class
     {
-        public TableWindowPresentation(Type dbSetType, System.String name = "")
+        public TableWindowPresentation(System.String name)
         {
             this.Name = name;
         }
@@ -21,8 +21,11 @@ namespace Workload
             this.TablePage.DelBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) =>
             {
                 foreach(T selItem in this.TablePage.tableGrid.SelectedItems)
-                { if (selItem != null) this.MainSet.Remove(selItem); }
+                {
+                    if (selItem != null) this.MainSet.Remove(selItem);
+                }
                 this.Context.SaveChanges();
+                //this.TablePage.tableGrid.Items.Refresh();
             });
         }
 
@@ -33,6 +36,8 @@ namespace Workload
         public System.String Name;
 
         public TablePage TablePage;
+
+        protected System.Windows.Controls.Page CreateEditPage;
 
         public virtual void CreateRecord()
         {
