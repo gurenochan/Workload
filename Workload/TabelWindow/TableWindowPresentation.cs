@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Workload
@@ -12,21 +13,41 @@ namespace Workload
         public TableWindowPresentation(System.String name)
         {
             this.Name = name;
+            this.cancellationTokenSource = new CancellationTokenSource();
         }
         public void InitPage()
         {
             this.TablePage = new TablePage();
-            MainSet.Load();
-            this.TablePage.tableGrid.ItemsSource = this.MainSet.Local.ToBindingList();
+            this.TablePage.LoadStatusBar.IsEnabled = true;
+            Task loadTask = MainSet.LoadAsync(this.cancellationTokenSource.Token);
+            loadTask.ContinueWith((Task load) =>
+            {
+                if (!load.IsFaulted) this.TablePage.Dispatcher.Invoke(() => { this.TablePage.tableGrid.ItemsSource = this.MainSet.Local.ToBindingList(); });
+                else System.Windows.MessageBox.Show(messageBoxText: "Sorry, but we could\'t load the data from DB", caption: "Can\'t load data");
+                this.TablePage.Dispatcher.Invoke(() => {
+                    this.TablePage.LoadStatusBar.IsEnabled = false;
+                    this.TablePage.LoadStatusBar.Visibility = System.Windows.Visibility.Collapsed;
+                });
+            }, cancellationToken: this.cancellationTokenSource.Token);
             this.TablePage.DelBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) =>
             {
-                foreach(T selItem in this.TablePage.tableGrid.SelectedItems)
+                this.TablePage.LoadStatusBar.Visibility = System.Windows.Visibility.Visible;
+                foreach (T selItem in this.TablePage.tableGrid.SelectedItems)
+                { if (selItem != null) this.MainSet.Remove(selItem); }
+                Task task= this.Context.SaveChangesAsync(this.cancellationTokenSource.Token);
+                task.ContinueWith((Task) =>
                 {
-                    if (selItem != null) this.MainSet.Remove(selItem);
-                }
-                this.Context.SaveChanges();
+                    this.TablePage.Dispatcher.Invoke(() =>
+                    { this.TablePage.LoadStatusBar.Visibility = System.Windows.Visibility.Collapsed; });
+                }, cancellationToken: this.cancellationTokenSource.Token);
                 //this.TablePage.tableGrid.Items.Refresh();
             });
+        }
+
+        public void WhenClosePage()
+        {
+            this.cancellationTokenSource.Cancel();
+            this.cancellationTokenSource.Dispose();
         }
 
         public Entities Context => ((App)System.Windows.Application.Current).DBContext;
@@ -38,6 +59,8 @@ namespace Workload
         public TablePage TablePage;
 
         protected System.Windows.Controls.Page CreateEditPage;
+
+        protected CancellationTokenSource cancellationTokenSource;
 
         public virtual void CreateRecord()
         {

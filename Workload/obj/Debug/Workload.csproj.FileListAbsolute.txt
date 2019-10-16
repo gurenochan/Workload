@@ -54,5 +54,7 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssenti
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\icudt30.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\icuin30.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\icuuc30.dll
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TablePage.g.cs
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TablePage.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Teacher.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\TablePage.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Teacher.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\TablePage.baml

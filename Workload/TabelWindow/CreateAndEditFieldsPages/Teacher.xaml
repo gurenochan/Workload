@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Workload.TabelWindow.CreateAndEditPages"
-      xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Teacher">
@@ -30,7 +29,7 @@
         <Label x:Name="NotesLabel" Content="Notes" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="5"/>
         
         
-        <TextBlock x:Name="FullNameText" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch"/>
+        <TextBox x:Name="FullNameText" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch"/>
         <ComboBox x:Name="PositionBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Stretch" IsEditable="True">
             <ComboBoxItem Content="асистент"/>
             <ComboBoxItem Content="викладач"/>
@@ -38,7 +37,15 @@
             <ComboBoxItem Content="доцент"/>
             <ComboBoxItem Content="професор"/>
         </ComboBox>
-        <TextBlock x:Name="PayLayText" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" extensions:TextBoxRegex.Regex="^\s*\+?\s*([0-9][\s-]*){9,}$"/>
-
+        <TextBox x:Name="PayLayText" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch"/>
+        <ComboBox x:Name="RankBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="3" VerticalAlignment="Stretch" IsEditable="True">
+            <ComboBoxItem Content="к.т.н."/>
+            <ComboBoxItem Content="д.т.н."/>
+        </ComboBox>
+        <ComboBox x:Name="DegreeBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="4" VerticalAlignment="Stretch" IsEditable="True">
+            <ComboBoxItem Content="доцент"/>
+            <ComboBoxItem Content="професор"/>
+        </ComboBox>
+        <TextBox x:Name="NotesText" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>

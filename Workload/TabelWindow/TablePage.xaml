@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -20,17 +21,24 @@
 
 
         <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <Button x:Name="ImportBut" Content="Import" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10" Width="75"/>
-            <Button x:Name="ExportBut" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10" Width="75"/>
-            <Button x:Name="PrintBut" Content="Print" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10" Width="75"/>
-            <Button x:Name="SortBut" Content="Sort" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10" Width="75"/>
-            <Button x:Name="DelBut" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10" Width="75"/>
-            <Button x:Name="AddBut" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,0,10" Width="75"/>
+            <Button x:Name="ImportBut" Content="Import" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
+            <Button x:Name="ExportBut" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
+            <Button x:Name="PrintBut" Content="Print" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
+            <Button x:Name="SortBut" Content="Sort" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
+            <Button x:Name="DelBut" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
+            <Button x:Name="AddBut" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
         </DockPanel>
 
 
-        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch"/>
+        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Stretch" SelectionMode="Single"/>
         <DockPanel x:Name="CreateEditPanel" Grid.Column="1" LastChildFill="False" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+        <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Button x:Name="OkBut" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="50"/>
+            <Button x:Name="CancelBut" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="50"/>
+            <Button x:Name="CompleteCreateBut" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="50"/>
+        </DockPanel>
+        <ProgressBar HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="2" VerticalAlignment="Stretch" IsIndeterminate="True" Name="LoadStatusBar" IsEnabled="False" Visibility="Hidden"/>
 
 
     </Grid>

@@ -30,5 +30,17 @@ namespace Workload
 
 
         }
+
+        private void TeachersButton_Click(object sender, RoutedEventArgs e)
+        {
+            TableWindowPresentation<TEACHERS_TBL> presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers");
+            presentation.InitPage();
+            this.WorkTabs.Items.Add(new TabItem()
+            {
+                Header = presentation.Name,
+                Content = new Frame() { Content = presentation.TablePage }
+            });
+            this.WorkTabs.SelectedIndex = 0;
+        }
     }
 }
