@@ -48,7 +48,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Loading.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.conf
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.msg
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\wlbaseRenewed.fdb
-D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\wlbase.fdb
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\fbembed.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\ib_util.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\icudt30.dll

@@ -11,7 +11,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/firebird.conf")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/firebird.msg")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/wlbaserenewed.fdb")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/wlbase.fdb")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/fbembed.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/ib_util.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/icudt30.dll")]

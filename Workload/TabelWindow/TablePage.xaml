@@ -15,8 +15,8 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition x:Name="CreateEditColumn" Width="1*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition x:Name="CreateEditColumn" Width="300"/>
         </Grid.ColumnDefinitions>
 
 
@@ -30,15 +30,22 @@
         </DockPanel>
 
 
-        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Stretch" SelectionMode="Single"/>
-        <DockPanel x:Name="CreateEditPanel" Grid.Column="1" LastChildFill="False" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Stretch" SelectionMode="Single" IsReadOnly="True"/>
+        <Frame x:Name="CreateEditPanel" Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
-        <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <Button x:Name="OkBut" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="50"/>
-            <Button x:Name="CancelBut" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="50"/>
-            <Button x:Name="CompleteCreateBut" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="50"/>
-        </DockPanel>
-        <ProgressBar HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="2" VerticalAlignment="Stretch" IsIndeterminate="True" Name="LoadStatusBar" IsEnabled="False" Visibility="Hidden"/>
+        <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="OkBut" Content="OK" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Width="75" IsEnabled="False" Grid.Column="0" Grid.Row="0"/>
+            <Button x:Name="CompleteCreateBut" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" Width="75" Grid.Column="1" Grid.Row="0"/>
+        </Grid>
+
+            
 
 
     </Grid>

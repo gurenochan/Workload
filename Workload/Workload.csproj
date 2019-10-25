@@ -107,6 +107,7 @@
     <Compile Include="SUBJECTS_TBL.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="TabelWindow\ComplexLoadModels\Groups.cs" />
     <Compile Include="TabelWindow\CreateAndEditFieldsPages\Teacher.xaml.cs">
       <DependentUpon>Teacher.xaml</DependentUpon>
     </Compile>
@@ -184,12 +185,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DatabaseEssentials\wlbaseRenewed.fdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Media\talisman_cropped.png" />
-    <Content Include="DatabaseEssentials\wlbase.fdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </None>

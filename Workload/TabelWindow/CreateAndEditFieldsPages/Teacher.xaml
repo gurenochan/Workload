@@ -1,4 +1,4 @@
-﻿<Page x:Class="Workload.TabelWindow.CreateAndEditPages.Teacher"
+﻿<Page x:Class="Workload.TabelWindow.CreateAndEditPages.TeacherEditForm"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,38 +14,39 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label x:Name="FullNameLabel" Content="Full Name" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0"/>
-        <Label x:Name="PosiyionLabel" Content="Position" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1"/>
-        <Label x:Name="ParlayLabel" Content="Paylay" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2"/>
-        <Label x:Name="RankLabel" Content="Scientific Rank" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="3"/>
-        <Label x:Name="DegreeLabel" Content="Scientific Degree" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="4"/>
-        <Label x:Name="NotesLabel" Content="Notes" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="5"/>
-        
-        
-        <TextBox x:Name="FullNameText" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch"/>
-        <ComboBox x:Name="PositionBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Stretch" IsEditable="True">
+        <Label x:Name="FullNameLabel" Content="Full Name" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <Label x:Name="PosiyionLabel" Content="Position" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+        <Label x:Name="ParlayLabel" Content="Paylay" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"/>
+        <Label x:Name="RankLabel" Content="Scientific Rank" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
+        <Label x:Name="DegreeLabel" Content="Scientific Degree" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Center" Grid.Column="0" Grid.Row="4"/>
+        <Label x:Name="NotesLabel" Content="Notes" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Center" Grid.Column="0" Grid.Row="5"/>
+
+
+        <TextBox x:Name="FullNameText" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Center"/>
+        <ComboBox x:Name="PositionBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Center" IsEditable="True">
             <ComboBoxItem Content="асистент"/>
             <ComboBoxItem Content="викладач"/>
             <ComboBoxItem Content="старший викладач"/>
             <ComboBoxItem Content="доцент"/>
             <ComboBoxItem Content="професор"/>
         </ComboBox>
-        <TextBox x:Name="PayLayText" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch"/>
-        <ComboBox x:Name="RankBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="3" VerticalAlignment="Stretch" IsEditable="True">
+        <TextBox x:Name="PayLayText" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Center"/>
+        <ComboBox x:Name="RankBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="3" VerticalAlignment="Center" IsEditable="True">
             <ComboBoxItem Content="к.т.н."/>
             <ComboBoxItem Content="д.т.н."/>
         </ComboBox>
-        <ComboBox x:Name="DegreeBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="4" VerticalAlignment="Stretch" IsEditable="True">
+        <ComboBox x:Name="DegreeBox" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="4" VerticalAlignment="Center" IsEditable="True">
             <ComboBoxItem Content="доцент"/>
             <ComboBoxItem Content="професор"/>
         </ComboBox>
-        <TextBox x:Name="NotesText" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch"/>
+        <TextBox x:Name="NotesText" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="" VerticalAlignment="Center"/>
     </Grid>
 </Page>

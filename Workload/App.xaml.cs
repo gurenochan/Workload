@@ -52,6 +52,7 @@ namespace Workload
                 Environment.Exit(1);
             }
 
+            this.Exit += new ExitEventHandler((object obj, ExitEventArgs args) => this.DBContext.Dispose());
         }
 
         private void DBconnInit()
@@ -69,8 +70,6 @@ namespace Workload
             config.Save();
             ConfigurationManager.RefreshSection("connectionStrings");
             this.DBContext = new Entities();
-            this.DBContext.Database.Connection.Open();
-            this.DBContext.Database.Connection.Close();
         }
     }
 }

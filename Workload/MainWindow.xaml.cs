@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Workload.TabelWindow.CreateAndEditPages;
 
 namespace Workload
 {
@@ -33,7 +34,7 @@ namespace Workload
 
         private void TeachersButton_Click(object sender, RoutedEventArgs e)
         {
-            TableWindowPresentation<TEACHERS_TBL> presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers");
+            TableWindowPresentation<TEACHERS_TBL> presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers", new TeacherEditForm());
             presentation.InitPage();
             this.WorkTabs.Items.Add(new TabItem()
             {
