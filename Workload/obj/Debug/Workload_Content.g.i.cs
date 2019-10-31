@@ -16,6 +16,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/icudt30.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/icuin30.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/icuuc30.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("databaseessentials/wlb_udf.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model1.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model1.tt")]
 

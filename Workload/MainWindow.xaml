@@ -15,7 +15,8 @@
             <Grid.RowDefinitions x:Uid="NamesListRows">
                 
             </Grid.RowDefinitions>
-            <Button x:Name="TeachersButton" Content="Teachers" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top" Click="TeachersButton_Click"/>
+            <Button x:Name="TeachersButton" Content="Teachers" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top"/>
+            <Button x:Name="GroupsButton" Content="Groups" HorizontalAlignment="Stretch" Margin="10,34,10,0" VerticalAlignment="Top"/>
         </Grid>
         <TabControl x:Name="WorkTabs" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
             

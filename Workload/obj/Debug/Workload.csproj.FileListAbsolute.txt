@@ -57,3 +57,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Cre
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\TablePage.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Teacher.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\TablePage.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Group.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Group.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\wlb_udf.dll

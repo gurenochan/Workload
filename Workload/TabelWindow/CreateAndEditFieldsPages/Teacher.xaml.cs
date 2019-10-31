@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Workload.TabelWindow.CreateAndEditPages
+namespace Workload.TabelWindow.CreateAndEditFieldsPages
 {
     /// <summary>
     /// Interaction logic for Teacher.xaml
@@ -24,6 +24,14 @@ namespace Workload.TabelWindow.CreateAndEditPages
         public TeacherEditForm()
         {
             InitializeComponent();
+
+            TextChangedEventHandler textChangedEvent = new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
+            this.FullNameText.TextChanged += textChangedEvent;
+            SelectionChangedEventHandler selectionChangedEvent = new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
+            this.PositionBox.SelectionChanged += selectionChangedEvent;
+            this.PayLayText.TextChanged += textChangedEvent;
+            this.RankBox.SelectionChanged += selectionChangedEvent;
+            this.DegreeBox.SelectionChanged += selectionChangedEvent;
         }
 
         protected int TeacherID = 0;
@@ -70,18 +78,27 @@ namespace Workload.TabelWindow.CreateAndEditPages
 
         protected TextChangedEventHandler fieldsChanged;
 
-        public TextChangedEventHandler FieldsChanged
+        public event TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.FieldsChanged FieldsHasBeenChanged;
+
+        public Expression<Func<TEACHERS_TBL, int>> GetId
+        { get => x => x.TEACHER_ID; }
+
+        public string[] ColumnsToHide => new System.String[] { "TEACHER_ID", "SUBDETAILS_TBL" };
+
+        public Dictionary<string, string> ColumnsNames
         {
-            get => this.fieldsChanged;
-            set
+            get
             {
-                this.fieldsChanged = value;
-                this.FullNameText.TextChanged += value;
+                Dictionary<System.String, System.String> keyValuePairs = new Dictionary<string, string>();
+                keyValuePairs.Add("TEACHER_NAME", "Ім\'я");
+                keyValuePairs.Add("TEACHER_POS", "Посада");
+                keyValuePairs.Add("TEACHER_RATE", "Ставка");
+                keyValuePairs.Add("TEACHER_RANK", "Звання");
+                keyValuePairs.Add("TEACHER_DEGREE", "Ступінь");
+                keyValuePairs.Add("TEACHER_MISC", "Нотатки");
+                return keyValuePairs;
             }
         }
-
-        public Expression<Func<TEACHERS_TBL, int>> GetMaxId
-        { get => x => x.TEACHER_ID; }
 
         public void CleanFields()
         {
@@ -94,5 +111,7 @@ namespace Workload.TabelWindow.CreateAndEditPages
         }
 
         public void AssingNewId(ref TEACHERS_TBL entity, int newId) => entity.TEACHER_ID = newId;
+
+        public TEACHERS_TBL ConvertToPresent(TEACHERS_TBL entity) => entity;
     }
 }

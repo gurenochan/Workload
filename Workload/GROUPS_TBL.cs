@@ -11,7 +11,8 @@ namespace Workload
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class GROUPS_TBL
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +25,7 @@ namespace Workload
         public string GROUP_NAME { get; set; }
         public string GROUP_MISC { get; set; }
         public Nullable<int> EDUFORM_ID { get; set; }
+        [Range(1, 6, ErrorMessage ="Course can be only in range between 1 and 6.")]
         public short COURSE_NO { get; set; }
         public short BUDGET_CNT { get; set; }
         public short CONTRACT_CNT { get; set; }
