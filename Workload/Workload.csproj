@@ -111,6 +111,9 @@
     <Compile Include="TabelWindow\CreateAndEditFieldsPages\Group.xaml.cs">
       <DependentUpon>Group.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TabelWindow\CreateAndEditFieldsPages\Subject.xaml.cs">
+      <DependentUpon>Subject.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TabelWindow\CreateAndEditFieldsPages\Teacher.xaml.cs">
       <DependentUpon>Teacher.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TabelWindow\CreateAndEditFieldsPages\Group.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabelWindow\CreateAndEditFieldsPages\Subject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

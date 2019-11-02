@@ -31,7 +31,7 @@
 
 
         <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Stretch" SelectionMode="Single" IsReadOnly="True"/>
-        <Frame x:Name="CreateEditPanel" Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Frame x:Name="CreateEditPanel" Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5, 5"/>
 
         <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -44,9 +44,5 @@
             <Button x:Name="OkBut" Content="OK" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Width="75" IsEnabled="False" Grid.Column="0" Grid.Row="0"/>
             <Button x:Name="CompleteCreateBut" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" Width="75" Grid.Column="1" Grid.Row="0"/>
         </Grid>
-
-            
-
-
     </Grid>
 </Page>

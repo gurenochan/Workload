@@ -76,8 +76,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.DegreeBox.Text != System.String.Empty);
         }
 
-        protected TextChangedEventHandler fieldsChanged;
-
         public event TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         public Expression<Func<TEACHERS_TBL, int>> GetId

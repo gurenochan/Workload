@@ -30,33 +30,28 @@ namespace Workload
             //this.Closing += this.MainWindow_Closing;
             this.Closing += delegate (object sender, System.ComponentModel.CancelEventArgs e) { Application.Current.Shutdown(); };
 
-            this.TeachersButton.Click += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
-              {
-                  TableWindowPresentation<TEACHERS_TBL> presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers", new TeacherEditForm());
-                  presentation.InitPage();
-                  this.WorkTabs.Items.Add(new TabItem()
-                  {
-                      Header = presentation.Name,
-                      Content = new Frame() { Content = presentation.TablePage }
-                  });
-                  this.WorkTabs.SelectedIndex = 0;
-                  ((Button)sender).IsEnabled = false;
-              });
-
-            this.GroupsButton.Click += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+            RoutedEventHandler TablesButtonHandler = new RoutedEventHandler((object sender, RoutedEventArgs e) =>
             {
-                TableWindowPresentation<GROUPS_TBL, Groups> presentation = new TableWindowPresentation<GROUPS_TBL, Groups>("Groups", new GroupEditForm());
-                presentation.InitPage();
-                this.WorkTabs.Items.Add(new TabItem()
+                ITableWindowPresentation presentation = null;
+                if (sender == this.TeachersButton) presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers", new TeacherEditForm());
+                if (sender == this.GroupsButton) presentation = new TableWindowPresentation<GROUPS_TBL, Groups>("Groups", new GroupEditForm());
+                if (sender == this.SubjectsButton) presentation = new TableWindowPresentation<SUBJECTS_TBL>("Subjeects", new SubjectEditForm());
+                if (presentation!=null)
                 {
-                    Header = presentation.Name,
-                    Content = new Frame() { Content = presentation.TablePage }
-                });
-                this.WorkTabs.SelectedIndex = 0;
-                ((Button)sender).IsEnabled = false;
+                    presentation.InitPage();
+                    this.WorkTabs.Items.Add(new TabItem()
+                    {
+                        Header = presentation.Name,
+                        Content = new Frame() { Content = presentation.TablePage }
+                    });
+                    this.WorkTabs.SelectedIndex = this.WorkTabs.Items.Count - 1;
+                    ((Button)sender).IsEnabled = false;
+                }
             });
 
-
+            this.TeachersButton.Click += TablesButtonHandler;
+            this.GroupsButton.Click += TablesButtonHandler;
+            this.SubjectsButton.Click += TablesButtonHandler;
         }
     }
 }

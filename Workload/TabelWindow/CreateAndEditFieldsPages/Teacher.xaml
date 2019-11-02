@@ -50,6 +50,6 @@
             <ComboBoxItem Content="доцент"/>
             <ComboBoxItem Content="професор"/>
         </ComboBox>
-        <TextBox x:Name="NotesText" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" HorizontalAlignment="Stretch" Margin="10,0,10,0" TextWrapping="Wrap" AcceptsReturn="True" Text="" VerticalAlignment="Stretch"/>
+        <TextBox x:Name="NotesText" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" HorizontalAlignment="Stretch" Margin="0,3" TextWrapping="Wrap" AcceptsReturn="True" Text="" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>
