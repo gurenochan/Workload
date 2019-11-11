@@ -22,6 +22,8 @@ namespace Workload
         {
             modelBuilder.Properties<string>().Configure(x => x.HasColumnType("VARCHAR"));
             modelBuilder.Properties<string>().Configure(x => x.IsUnicode(true));
+
+            modelBuilder.Entity<EDUFORMS_TBL>().HasMany(s => s.GROUPS_TBL).WithOptional(p => p.EDUFORMS_TBL).HasForeignKey(s => s.EDUFORM_ID);
         }
 
         public virtual DbSet<APP_PARAMS> APP_PARAMS { get; set; }

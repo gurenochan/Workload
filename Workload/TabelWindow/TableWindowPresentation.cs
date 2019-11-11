@@ -104,10 +104,16 @@ namespace Workload
             {
                 try
                 {
-                    T inEditEntity = this.MainSet.Single(this.CreateEditPage.GetSingleEntity);
-                    this.Context.Entry(inEditEntity).CurrentValues.SetValues(this.CreateEditPage.EditedEntity);
-                    this.Context.SaveChanges();
-                    this.tablePage.tableGrid.Items.Refresh();
+                    try
+                    { this.CreateEditPage.StartingEditingEvent?.Invoke(); }
+                    catch (NotImplementedException) { }
+                    finally
+                    {
+                        T inEditEntity = this.MainSet.Single(this.CreateEditPage.GetSingleEntity);
+                        this.Context.Entry(inEditEntity).CurrentValues.SetValues(this.CreateEditPage.EditedEntity);
+                        this.Context.SaveChanges();
+                        this.tablePage.tableGrid.Items.Refresh();
+                    }
                 }
                 catch (Exception ex)
                 { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to edit the record."); }
@@ -119,15 +125,21 @@ namespace Workload
                 {
                     if (this.CreateEditPage.FieldsNotEmpty)
                     {
-                        T toCreate = this.CreateEditPage.EditedEntity;
-                        this.CreateEditPage.AssingNewId(ref toCreate, this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0);
-                        this.MainSet.Add(toCreate);
-                        this.Context.SaveChanges();
-                        this.tablePage.tableGrid.Items.Refresh();
+                        try
+                        { this.CreateEditPage.StartingCreateingEntity?.Invoke(); }
+                        catch (NotImplementedException) { }
+                        finally
+                        {
+                            T toCreate = this.CreateEditPage.EditedEntity;
+                            this.CreateEditPage.AssingNewId(ref toCreate, this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0);
+                            this.MainSet.Add(toCreate);
+                            this.Context.SaveChanges();
+                            this.tablePage.tableGrid.Items.Refresh();
+                        }
                     }
                 }
                 catch (Exception ex)
-                { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to create the record."); }
+                { System.Windows.MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "Unfortunately, there is impossible to create the record."); }
             });
         }
 
@@ -145,6 +157,10 @@ namespace Workload
         public ICreateEditPage CreateEditPage;
 
         public delegate void FieldsChanged();
+
+        public delegate void CreatingEntity();
+
+        public delegate void EditingEntity();
         public interface ICreateEditPage
         {
             void CleanFields();
@@ -161,6 +177,10 @@ namespace Workload
             bool FieldsNotEmpty { get; }
 
             event FieldsChanged FieldsHasBeenChanged;
+
+            EditingEntity StartingCreateingEntity { get; }
+
+            CreatingEntity StartingEditingEvent { get; }
 
             System.String[] ColumnsToHide { get; }
 

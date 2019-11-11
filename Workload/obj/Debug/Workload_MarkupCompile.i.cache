@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Documents\workload\MainWPFProject\Workload\Workload\App.xaml
-6-1319572247
+8-1563931540
 11-1355501334
-26-331550158
+28946865153
 21-683237077
-Loading.xaml;MainWindow.xaml;TabelWindow\CreateAndEditFieldsPages\Group.xaml;TabelWindow\CreateAndEditFieldsPages\Subject.xaml;TabelWindow\CreateAndEditFieldsPages\Teacher.xaml;TabelWindow\TablePage.xaml;
+Loading.xaml;MainWindow.xaml;TabelWindow\CreateAndEditFieldsPages\EduForm.xaml;TabelWindow\CreateAndEditFieldsPages\EduTypes.xaml;TabelWindow\CreateAndEditFieldsPages\Group.xaml;TabelWindow\CreateAndEditFieldsPages\Subject.xaml;TabelWindow\CreateAndEditFieldsPages\Teacher.xaml;TabelWindow\TablePage.xaml;
 
-True
+False
 

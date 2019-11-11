@@ -24,6 +24,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public SubjectEditForm()
         {
             InitializeComponent();
+            this.NameText.TextChanged += new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
         }
 
         protected int SubId = 0;
@@ -56,6 +57,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             {"SUBJECT_NAME", "Назва" },
             {"SUBJECT_MISC", "Примітки" }
         };
+
+        public TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
+
+        public TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
         public event TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.FieldsChanged FieldsHasBeenChanged;
 

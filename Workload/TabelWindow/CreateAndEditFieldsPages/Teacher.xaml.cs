@@ -98,6 +98,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             }
         }
 
+        public TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
+
+        public TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
+
         public void CleanFields()
         {
             this.FullNameText.Text = System.String.Empty;

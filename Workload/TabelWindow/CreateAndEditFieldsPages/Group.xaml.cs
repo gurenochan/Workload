@@ -4,17 +4,7 @@ using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Workload.TabelWindow.ComplexLoadModels;
 
 namespace Workload.TabelWindow.CreateAndEditFieldsPages
@@ -28,13 +18,25 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         {
             InitializeComponent();
 
-            this.Context.EDUFORMS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => { this.EducationalFormsList.ItemsSource = this.Context.EDUFORMS_TBL.Select(n => n.EDUFORM_NAME).ToList<System.String>(); });
+            this.Context.EDUFORMS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
+            {
+                this.EducationalFormsList.ItemsSource = this.Context.EDUFORMS_TBL.Select(n => n.EDUFORM_NAME).ToList<System.String>();
+                this.EducationalFormsList.Items.Refresh();
+            });
             this.Context.EDUFORMS_TBL.Load();
 
             TextChangedEventHandler textChangedEvent = new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
             this.GroupNameText.TextChanged += textChangedEvent;
             this.CourseText.TextChanged += textChangedEvent;
-            this.EducationalFormsList.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
+            this.EducationalFormsList.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) =>
+            {
+                if (this.EducationalFormsList.SelectedItems != null)
+                {
+                    this.EduForm = this.Context.EDUFORMS_TBL.Single(p => p.EDUFORM_NAME == ((System.String)this.EducationalFormsList.SelectedItem));
+                }
+                else this.EduForm = null;
+                this.FieldsHasBeenChanged?.Invoke();
+            });
             this.FacultyAbreviationText.TextChanged += textChangedEvent;
             this.BudgetariesCountText.TextChanged += textChangedEvent;
             this.ContractorsCountText.TextChanged += textChangedEvent;
@@ -42,24 +44,57 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         protected Entities Context => ((App)System.Windows.Application.Current).DBContext;
         protected int GroupId = 0;
+        protected EDUFORMS_TBL EduForm = null;
 
         public event TableWindowPresentation<GROUPS_TBL, Groups>.FieldsChanged FieldsHasBeenChanged;
 
+        protected GROUPS_TBL Group = null;
+
         public GROUPS_TBL EditedEntity
         {
-            get => new GROUPS_TBL()
+            get
             {
-                BUDGET_CNT = Convert.ToInt16(this.BudgetariesCountText.Text),
-                CONTRACT_CNT = Convert.ToInt16(this.ContractorsCountText.Text),
-                COURSE_NO = Convert.ToInt16(this.CourseText.Text),
-                EDUFORM_ID = this.Context.EDUFORMS_TBL.Single(p => p.EDUFORM_NAME == ((System.String)this.EducationalFormsList.SelectedItem ?? System.String.Empty))?.EDUFORM_ID,
-                FACULTY_ABBR = this.FacultyAbreviationText.Text,
-                GROUP_MISC = this.NotesText.Text,
-                GROUP_NAME = this.GroupNameText.Text,
-                GROUP_ID = this.GroupId
-            };
+                if (this.Group == null)
+                {
+                    this.Group = new GROUPS_TBL();
+                    this.Group.EDUFORMS_TBL = null;
+                }
+                Group.BUDGET_CNT = Convert.ToInt16(this.BudgetariesCountText.Text);
+                Group.CONTRACT_CNT = Convert.ToInt16(this.ContractorsCountText.Text);
+                Group.COURSE_NO = Convert.ToInt16(this.CourseText.Text);
+                Group.FACULTY_ABBR = this.FacultyAbreviationText.Text;
+                Group.GROUP_MISC = this.NotesText.Text == System.String.Empty ? null : this.NotesText.Text;
+                Group.GROUP_NAME = this.GroupNameText.Text ==System.String.Empty ? null : this.GroupNameText.Text;
+                Group.GROUP_ID = this.GroupId;
+                if (Group.EDUFORMS_TBL == null)
+                {
+                    Group.EDUFORMS_TBL = this.EduForm;
+                    if (this.EduForm!=null)
+                    {
+                        this.Context.Entry<EDUFORMS_TBL>(this.EduForm).State = EntityState.Modified;
+                        this.EduForm.GROUPS_TBL.Add(this.Group);
+                    }
+                }
+                else
+                {
+                    if (Group.EDUFORMS_TBL.EDUFORM_ID != this.EduForm.EDUFORM_ID)
+                    {
+                        this.Context.Entry<EDUFORMS_TBL>(Group.EDUFORMS_TBL).State = EntityState.Modified;
+                        Group.EDUFORMS_TBL.GROUPS_TBL.Remove(this.Context.GROUPS_TBL.Find(this.Group.GROUP_ID));
+                        if (this.EduForm!=null)
+                        {
+                            this.Context.Entry<EDUFORMS_TBL>(this.EduForm).State = EntityState.Modified;
+                            this.EduForm.GROUPS_TBL.Add(this.Context.GROUPS_TBL.Find(this.Group.GROUP_ID));
+                        }
+                        this.Group.EDUFORMS_TBL = this.EduForm;
+                    }
+                }
+                Group.EDUFORM_ID = this.EduForm?.EDUFORM_ID;
+                return Group;
+            }
             set
             {
+                this.Group = value;
                 this.BudgetariesCountText.Text = value.BUDGET_CNT.ToString();
                 this.ContractorsCountText.Text = value.CONTRACT_CNT.ToString();
                 this.CourseText.Text = value.COURSE_NO.ToString();
@@ -111,6 +146,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             }
         }
 
+        public TableWindowPresentation<GROUPS_TBL, Groups>.EditingEntity StartingCreateingEntity => () => { this.Group = null; };
+
+        public TableWindowPresentation<GROUPS_TBL, Groups>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
         public void AssingNewId(ref GROUPS_TBL entity, int newId) => entity.GROUP_ID = newId;
 
@@ -118,11 +156,16 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         {
             this.GroupNameText.Text = System.String.Empty;
             this.CourseText.Text = System.String.Empty;
-            this.EducationalFormsList.SelectedItem = null;
+            try
+            {
+                this.EducationalFormsList.UnselectAll();
+            }
+            catch(System.InvalidOperationException) { }
             this.FacultyAbreviationText.Text = System.String.Empty;
             this.BudgetariesCountText.Text = System.String.Empty;
             this.ContractorsCountText.Text = System.String.Empty;
             this.NotesText.Text = System.String.Empty;
+            this.Group = null;
         }
 
         public Groups ConvertToPresent(GROUPS_TBL entity) => new Groups()

@@ -36,6 +36,8 @@ namespace Workload
                 if (sender == this.TeachersButton) presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers", new TeacherEditForm());
                 if (sender == this.GroupsButton) presentation = new TableWindowPresentation<GROUPS_TBL, Groups>("Groups", new GroupEditForm());
                 if (sender == this.SubjectsButton) presentation = new TableWindowPresentation<SUBJECTS_TBL>("Subjeects", new SubjectEditForm());
+                if (sender == this.EduFormsButton) presentation = new TableWindowPresentation<EDUFORMS_TBL>("Educational Forms", new EduFormEditForm());
+                if (sender == this.EduTypesButton) presentation = new TableWindowPresentation<EDUTYPES_TBL>("Subjeects", new EduTypesEditForm());
                 if (presentation!=null)
                 {
                     presentation.InitPage();
@@ -47,11 +49,20 @@ namespace Workload
                     this.WorkTabs.SelectedIndex = this.WorkTabs.Items.Count - 1;
                     ((Button)sender).IsEnabled = false;
                 }
+                if (presentation is TableWindowPresentation<EDUFORMS_TBL> || presentation is TableWindowPresentation<EDUTYPES_TBL>)
+                {
+                    presentation.TablePage.ImportBut.Visibility = Visibility.Hidden;
+                    presentation.TablePage.ExportBut.Visibility = Visibility.Hidden;
+                    presentation.TablePage.PrintBut.Visibility = Visibility.Hidden;
+                    presentation.TablePage.SortBut.Visibility = Visibility.Hidden; 
+                }
             });
 
             this.TeachersButton.Click += TablesButtonHandler;
             this.GroupsButton.Click += TablesButtonHandler;
             this.SubjectsButton.Click += TablesButtonHandler;
+            this.EduFormsButton.Click += TablesButtonHandler;
+            this.EduTypesButton.Click += TablesButtonHandler;
         }
     }
 }
