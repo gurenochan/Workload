@@ -11,7 +11,8 @@ namespace Workload
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class MAIN_TBL
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +23,12 @@ namespace Workload
     
         public int ITEM_ID { get; set; }
         public int SUBJECT_ID { get; set; }
+
+
+        [Range(1, 6, ErrorMessage = "Course can be only in range between 1 and 6.")]
         public short COURSE_NO { get; set; }
+
+        [Range(1, 2, ErrorMessage = "Semester can be only in range between 1 and 2.")]
         public short SEMESTER_NO { get; set; }
         public int EDUTYPE_ID { get; set; }
         public int EDUFORM_ID { get; set; }

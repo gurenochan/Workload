@@ -102,6 +102,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
+        public TablePage ContentPage { get; set; }
+
         public void CleanFields()
         {
             this.FullNameText.Text = System.String.Empty;
@@ -115,5 +117,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public void AssingNewId(ref TEACHERS_TBL entity, int newId) => entity.TEACHER_ID = newId;
 
         public TEACHERS_TBL ConvertToPresent(TEACHERS_TBL entity) => entity;
+
+        public void CustomSave()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

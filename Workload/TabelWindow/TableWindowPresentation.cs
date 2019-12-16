@@ -33,6 +33,7 @@ namespace Workload
         {
             this.tablePage = new TablePage();
             this.tablePage.CreateEditPanel.Content = this.CreateEditPage;
+            this.CreateEditPage.ContentPage = this.tablePage;
 
             try
             {
@@ -130,10 +131,15 @@ namespace Workload
                         catch (NotImplementedException) { }
                         finally
                         {
-                            T toCreate = this.CreateEditPage.EditedEntity;
-                            this.CreateEditPage.AssingNewId(ref toCreate, this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0);
-                            this.MainSet.Add(toCreate);
-                            this.Context.SaveChanges();
+                            try
+                            { this.CreateEditPage.CustomSave(); }
+                            catch (NotImplementedException)
+                            {
+                                T toCreate = this.CreateEditPage.EditedEntity;
+                                this.CreateEditPage.AssingNewId(ref toCreate, this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0);
+                                this.MainSet.Add(toCreate);
+                                this.Context.SaveChanges();
+                            }
                             this.tablePage.tableGrid.Items.Refresh();
                         }
                     }
@@ -166,6 +172,8 @@ namespace Workload
             void CleanFields();
             T EditedEntity { get; set; }
 
+            TablePage ContentPage { get; set; }
+
             U ConvertToPresent(T entity);
 
             System.Linq.Expressions.Expression<Func<T, bool>> GetSingleEntity { get; }
@@ -185,6 +193,8 @@ namespace Workload
             System.String[] ColumnsToHide { get; }
 
             Dictionary<System.String, System.String> ColumnsNames { get; }
+
+            void CustomSave();
         }
 
     }

@@ -38,6 +38,10 @@ namespace Workload
                 if (sender == this.SubjectsButton) presentation = new TableWindowPresentation<SUBJECTS_TBL>("Subjeects", new SubjectEditForm());
                 if (sender == this.EduFormsButton) presentation = new TableWindowPresentation<EDUFORMS_TBL>("Educational Forms", new EduFormEditForm());
                 if (sender == this.EduTypesButton) presentation = new TableWindowPresentation<EDUTYPES_TBL>("Subjeects", new EduTypesEditForm());
+                if (sender == this.WorksTypesButton) presentation = new TableWindowPresentation<WORKS_TBL>("Works", new WorkTypesEditForm());
+
+                if (sender == this.MainsButton) presentation = new TableWindowPresentation<MAIN_TBL, Mains>("Plans", new MainEditForm());
+
                 if (presentation!=null)
                 {
                     presentation.InitPage();
@@ -63,6 +67,8 @@ namespace Workload
             this.SubjectsButton.Click += TablesButtonHandler;
             this.EduFormsButton.Click += TablesButtonHandler;
             this.EduTypesButton.Click += TablesButtonHandler;
+            this.WorksTypesButton.Click += TablesButtonHandler;
+            this.MainsButton.Click += TablesButtonHandler;
         }
     }
 }

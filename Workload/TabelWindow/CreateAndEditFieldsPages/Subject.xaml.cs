@@ -62,6 +62,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
+        public TablePage ContentPage { get; set; }
+
         public event TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         public void AssingNewId(ref SUBJECTS_TBL entity, int newId) => entity.SUBJECT_ID = newId;
@@ -74,5 +76,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public SUBJECTS_TBL ConvertToPresent(SUBJECTS_TBL entity) => entity;
+
+        public void CustomSave()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -41,7 +41,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.g.reso
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.Properties.Resources.resources
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.GenerateResource.Cache
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojAssemblyReference.cache
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.CoreCompileInputs.cache
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.CopyComplete
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Loading.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Loading.baml
@@ -67,3 +66,9 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Cre
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduTypes.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduForm.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduTypes.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Work.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Work.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.baml

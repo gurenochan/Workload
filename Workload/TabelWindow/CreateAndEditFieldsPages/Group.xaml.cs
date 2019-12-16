@@ -150,6 +150,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public TableWindowPresentation<GROUPS_TBL, Groups>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
+        public TablePage ContentPage { get; set; }
+
         public void AssingNewId(ref GROUPS_TBL entity, int newId) => entity.GROUP_ID = newId;
 
         public void CleanFields()
@@ -181,5 +183,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             GROUP_NAME = entity.GROUP_NAME,
             SUBDETAILS_TBL = entity.SUBDETAILS_TBL
         };
+
+        public void CustomSave()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
         <Image x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped.png" Stretch="Uniform" Grid.Column="1"/>
         <Label x:Name="ProgramNameLabel" Content="Workload" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="80" Width="240" TextBlock.FontSize="54" Grid.Column="0" FontFamily="SansSerif"/>
-        <Label x:Name="MadeByLabel" Content="Made by tedechan and pes7" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="SansSerif" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="MadeByLabel" Content="Made by tedechan" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="SansSerif" FontSize="14" FontWeight="Bold"/>
 
     </Grid>
 </Page>

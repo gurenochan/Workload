@@ -21,6 +21,8 @@
             
             <Button x:Name="EduTypesButton" Content="Types" HorizontalAlignment="Stretch" Margin="10,0,10,10.4" VerticalAlignment="Bottom" Grid.Column="0"/>
             <Button x:Name="EduFormsButton" Content="Forms" HorizontalAlignment="Stretch" Margin="10,0,10,34.4" VerticalAlignment="Bottom" Grid.Column="0"/>
+            <Button x:Name="WorksTypesButton" Content="Works" HorizontalAlignment="Stretch" Margin="10,0,10,58.4" VerticalAlignment="Bottom" Grid.Column="0"/>
+            <Button x:Name="MainsButton" Content="Plan" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0"/>
         </Grid>
         <TabControl x:Name="WorkTabs" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
             
