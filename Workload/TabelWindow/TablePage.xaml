@@ -32,7 +32,7 @@
         </DockPanel>
 
 
-        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" VerticalAlignment="Stretch" SelectionMode="Single" IsReadOnly="True"/>
+        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" VerticalAlignment="Stretch" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False"/>
         <Frame x:Name="CreateEditPanel" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5, 5"/>
 
         <DockPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

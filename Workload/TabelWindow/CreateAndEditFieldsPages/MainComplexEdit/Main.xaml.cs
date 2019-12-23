@@ -16,14 +16,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Workload.TabelWindow.ComplexLoadModels;
 
 namespace Workload.TabelWindow.CreateAndEditFieldsPages
 {
     /// <summary>
     /// Interaction logic for MainEditForm.xaml
     /// </summary>
-    public partial class MainEditForm : Page, Workload.TableWindowPresentation<MAIN_TBL, Mains>.ICreateEditPage
+    public partial class MainEditForm : Page, Workload.TableWindowPresentation<MAIN_TBL>.ICreateEditPage
     {
         public MainEditForm()
         {
@@ -163,7 +162,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         protected MAIN_TBL Main = null;
 
-        public event TableWindowPresentation<MAIN_TBL, Mains>.FieldsChanged FieldsHasBeenChanged;
+        public event TableWindowPresentation<MAIN_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         public MAIN_TBL EditedEntity
         { 
@@ -294,13 +293,20 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.Subject != null &&
             this.Details.Count > 0;
 
-        public TableWindowPresentation<MAIN_TBL, Mains>.EditingEntity StartingCreateingEntity => () => { this.Main = null; };
+        public TableWindowPresentation<MAIN_TBL>.EditingEntity StartingCreateingEntity => () => { this.Main = null; };
 
-        public TableWindowPresentation<MAIN_TBL, Mains>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
+        public TableWindowPresentation<MAIN_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
-        public string[] ColumnsToHide => new System.String[0];
 
-        public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>();
+        public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>()
+        {
+            {"SUBJECTS_TBL.SUBJECT_NAME",  "Предмет"},
+            {"COURSE_NO",  "Курс"},
+            {"SEMESTER_NO", "Семестр" },
+            {"EDUTYPES_TBL.EDUTYPE_NAME", "Тип навчання" },
+            {"EDUFORMS_TBL.EDUFORM_NAME", "Форма навчання" },
+            {"VOLUME", "Об\'єм" }
+        };
 
         public void CleanFields()
         {
@@ -309,21 +315,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             try { this.Details.Clear(); } catch { }
             this.AmountText.Text = System.String.Empty;
         }
-
-        public Mains ConvertToPresent(MAIN_TBL entity) => new Mains()
-        {
-            ITEM_ID = entity.ITEM_ID,
-            COURSE_NO = entity.COURSE_NO,
-            EDUFORMS_TBL = entity.EDUFORMS_TBL,
-            DETAILS_TBL = entity.DETAILS_TBL,
-            EDUFORM_ID = entity.EDUFORM_ID,
-            EDUTYPES_TBL = entity.EDUTYPES_TBL,
-            EDUTYPE_ID = entity.EDUTYPE_ID,
-            SEMESTER_NO = entity.SEMESTER_NO,
-            SUBJECTS_TBL = entity.SUBJECTS_TBL,
-            SUBJECT_ID = entity.SUBJECT_ID,
-            VOLUME = entity.VOLUME
-        };
 
         public void AssingNewId(ref MAIN_TBL entity, int newId) => entity.ITEM_ID = newId;
 

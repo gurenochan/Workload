@@ -58,13 +58,13 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             {"SUBJECT_MISC", "Примітки" }
         };
 
-        public TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
+        public TableWindowPresentation<SUBJECTS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
 
-        public TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
+        public TableWindowPresentation<SUBJECTS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
         public TablePage ContentPage { get; set; }
 
-        public event TableWindowPresentation<SUBJECTS_TBL, SUBJECTS_TBL>.FieldsChanged FieldsHasBeenChanged;
+        public event TableWindowPresentation<SUBJECTS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         public void AssingNewId(ref SUBJECTS_TBL entity, int newId) => entity.SUBJECT_ID = newId;
 

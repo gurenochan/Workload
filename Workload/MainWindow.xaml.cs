@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Workload.TabelWindow.ComplexLoadModels;
 using Workload.TabelWindow.CreateAndEditFieldsPages;
 
 namespace Workload
@@ -34,13 +33,13 @@ namespace Workload
             {
                 ITableWindowPresentation presentation = null;
                 if (sender == this.TeachersButton) presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers", new TeacherEditForm());
-                if (sender == this.GroupsButton) presentation = new TableWindowPresentation<GROUPS_TBL, Groups>("Groups", new GroupEditForm());
+                if (sender == this.GroupsButton) presentation = new TableWindowPresentation<GROUPS_TBL>("Groups", new GroupEditForm());
                 if (sender == this.SubjectsButton) presentation = new TableWindowPresentation<SUBJECTS_TBL>("Subjeects", new SubjectEditForm());
                 if (sender == this.EduFormsButton) presentation = new TableWindowPresentation<EDUFORMS_TBL>("Educational Forms", new EduFormEditForm());
                 if (sender == this.EduTypesButton) presentation = new TableWindowPresentation<EDUTYPES_TBL>("Subjeects", new EduTypesEditForm());
                 if (sender == this.WorksTypesButton) presentation = new TableWindowPresentation<WORKS_TBL>("Works", new WorkTypesEditForm());
 
-                if (sender == this.MainsButton) presentation = new TableWindowPresentation<MAIN_TBL, Mains>("Plans", new MainEditForm());
+                if (sender == this.MainsButton) presentation = new TableWindowPresentation<MAIN_TBL>("Plans", new MainEditForm());
 
                 if (presentation!=null)
                 {

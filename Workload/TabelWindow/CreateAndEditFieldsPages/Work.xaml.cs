@@ -51,9 +51,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public bool FieldsNotEmpty => this.NameText.Text != System.String.Empty && this.NameText.Text != null;
 
-        public TableWindowPresentation<WORKS_TBL, WORKS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
+        public TableWindowPresentation<WORKS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
 
-        public TableWindowPresentation<WORKS_TBL, WORKS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
+        public TableWindowPresentation<WORKS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
         public string[] ColumnsToHide => new System.String[] { "WORK_ID", "DETAILS_TBL" };
 
@@ -65,7 +65,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public TablePage ContentPage { get; set; }
 
-        public event TableWindowPresentation<WORKS_TBL, WORKS_TBL>.FieldsChanged FieldsHasBeenChanged;
+        public event TableWindowPresentation<WORKS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         public void AssingNewId(ref WORKS_TBL entity, int newId) => entity.WORK_ID = newId;
 

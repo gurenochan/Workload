@@ -58,13 +58,13 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>()
         {{"EDUTYPE_NAME", "Назва" }};
 
-        public TableWindowPresentation<EDUTYPES_TBL, EDUTYPES_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
+        public TableWindowPresentation<EDUTYPES_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
 
-        public TableWindowPresentation<EDUTYPES_TBL, EDUTYPES_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
+        public TableWindowPresentation<EDUTYPES_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
         public TablePage ContentPage { get; set; }
 
-        public event TableWindowPresentation<EDUTYPES_TBL, EDUTYPES_TBL>.FieldsChanged FieldsHasBeenChanged;
+        public event TableWindowPresentation<EDUTYPES_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         public void AssingNewId(ref EDUTYPES_TBL entity, int newId) => entity.EDUTYPE_ID = newId;
 

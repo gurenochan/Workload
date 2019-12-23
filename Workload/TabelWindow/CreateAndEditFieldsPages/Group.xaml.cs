@@ -5,14 +5,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Controls;
-using Workload.TabelWindow.ComplexLoadModels;
 
 namespace Workload.TabelWindow.CreateAndEditFieldsPages
 {
     /// <summary>
     /// Interaction logic for Group.xaml
     /// </summary>
-    public partial class GroupEditForm : Page, Workload.TableWindowPresentation<GROUPS_TBL, ComplexLoadModels.Groups>.ICreateEditPage
+    public partial class GroupEditForm : Page, Workload.TableWindowPresentation<GROUPS_TBL>.ICreateEditPage
     {
         public GroupEditForm()
         {
@@ -46,7 +45,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         protected int GroupId = 0;
         protected EDUFORMS_TBL EduForm = null;
 
-        public event TableWindowPresentation<GROUPS_TBL, Groups>.FieldsChanged FieldsHasBeenChanged;
+        public event TableWindowPresentation<GROUPS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         protected GROUPS_TBL Group = null;
 
@@ -134,21 +133,21 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             get
             {
                 Dictionary<System.String, System.String> keyValuePairs = new Dictionary<string, string>();
+                keyValuePairs.Add("GROUP_NAME", "Назва");
+                keyValuePairs.Add("FACULTY_ABBR", "Факультет");
+                keyValuePairs.Add("COURSE_NO", "Курс");
+                keyValuePairs.Add("EDUFORMS_TBL.EDUFORM_NAME", "Форма навчання");
                 keyValuePairs.Add("BUDGET_CNT", "Кількість бюджетників");
                 keyValuePairs.Add("CONTRACT_CNT", "Кількість контрактників");
-                keyValuePairs.Add("COURSE_NO", "Курс");
-                keyValuePairs.Add("FACULTY_ABBR", "Факультет");
                 keyValuePairs.Add("GROUP_MISC", "Нотатки");
-                keyValuePairs.Add("GROUP_NAME", "Назва");
-                keyValuePairs.Add("EDUFORM_NAME", "Форма навчання");
 
                 return keyValuePairs;
             }
         }
 
-        public TableWindowPresentation<GROUPS_TBL, Groups>.EditingEntity StartingCreateingEntity => () => { this.Group = null; };
+        public TableWindowPresentation<GROUPS_TBL>.EditingEntity StartingCreateingEntity => () => { this.Group = null; };
 
-        public TableWindowPresentation<GROUPS_TBL, Groups>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
+        public TableWindowPresentation<GROUPS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
         public TablePage ContentPage { get; set; }
 
@@ -170,19 +169,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.Group = null;
         }
 
-        public Groups ConvertToPresent(GROUPS_TBL entity) => new Groups()
-        {
-            BUDGET_CNT = entity.BUDGET_CNT,
-            CONTRACT_CNT = entity.CONTRACT_CNT,
-            COURSE_NO = entity.COURSE_NO,
-            EDUFORMS_TBL = this.Context.EDUFORMS_TBL.Single(n => n.EDUFORM_ID == entity.EDUFORM_ID),
-            EDUFORM_ID = entity.EDUFORM_ID,
-            FACULTY_ABBR = entity.FACULTY_ABBR,
-            GROUP_ID = entity.GROUP_ID,
-            GROUP_MISC = entity.GROUP_MISC,
-            GROUP_NAME = entity.GROUP_NAME,
-            SUBDETAILS_TBL = entity.SUBDETAILS_TBL
-        };
 
         public void CustomSave()
         {

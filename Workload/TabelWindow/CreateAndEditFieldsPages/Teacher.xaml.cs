@@ -76,7 +76,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.DegreeBox.Text != System.String.Empty);
         }
 
-        public event TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.FieldsChanged FieldsHasBeenChanged;
+        public event TableWindowPresentation<TEACHERS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
         public Expression<Func<TEACHERS_TBL, int>> GetId
         { get => x => x.TEACHER_ID; }
@@ -98,9 +98,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             }
         }
 
-        public TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
+        public TableWindowPresentation<TEACHERS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
 
-        public TableWindowPresentation<TEACHERS_TBL, TEACHERS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
+        public TableWindowPresentation<TEACHERS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
         public TablePage ContentPage { get; set; }
 
