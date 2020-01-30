@@ -122,5 +122,29 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         {
             throw new NotImplementedException();
         }
+
+        public TEACHERS_TBL CreateEntity() => new TEACHERS_TBL();
+
+        public void AssignEntity(ref Entities context, ref TEACHERS_TBL toAssign)
+        {
+            toAssign.TEACHER_ID = this.TeacherID;
+            toAssign.TEACHER_NAME = FullNameText.Text;
+            toAssign.TEACHER_POS = PositionBox.Text;
+            toAssign.TEACHER_RATE = Convert.ToDecimal(PayLayText.Text);
+            toAssign.TEACHER_RANK = RankBox.Text;
+            toAssign.TEACHER_DEGREE = DegreeBox.Text;
+            toAssign.TEACHER_MISC = NotesText.Text;
+        }
+
+        public void AssingFields(TEACHERS_TBL assignSource)
+        {
+            this.TeacherID = assignSource.TEACHER_ID;
+            this.FullNameText.Text = assignSource.TEACHER_NAME;
+            this.PositionBox.Text = assignSource.TEACHER_POS;
+            this.PayLayText.Text = Convert.ToString(assignSource.TEACHER_RATE);
+            this.RankBox.Text = assignSource.TEACHER_RANK;
+            this.DegreeBox.Text = assignSource.TEACHER_DEGREE;
+            this.NotesText.Text = assignSource.TEACHER_MISC;
+        }
     }
 }

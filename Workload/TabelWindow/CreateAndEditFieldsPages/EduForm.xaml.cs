@@ -29,19 +29,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.NameText.TextChanged += new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
         }
 
-        public EDUFORMS_TBL EditedEntity
-        {
-            get => new EDUFORMS_TBL()
-            {
-                EDUFORM_ID = this.EduFormId,
-                EDUFORM_NAME = this.NameText.Text
-            };
-            set
-            {
-                this.EduFormId = value.EDUFORM_ID;
-                this.NameText.Text = value.EDUFORM_NAME;
-            }
-        }
 
         public Expression<Func<EDUFORMS_TBL, bool>> GetSingleEntity => x => x.EDUFORM_ID == this.EduFormId;
 
@@ -49,12 +36,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public bool FieldsNotEmpty => this.NameText.Text != System.String.Empty && this.NameText.Text != null;
 
-        public string[] ColumnsToHide => new System.String[]
-        {
-            "EDUFORM_ID",
-            "GROUPS_TBL",
-            "MAIN_TBL"
-        };
 
         public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>() {{ "EDUFORM_NAME", "Назва" }};
 
@@ -66,6 +47,19 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public event TableWindowPresentation<EDUFORMS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
+        public void AssignEntity(ref Entities context, ref EDUFORMS_TBL toAssign)
+        {
+            toAssign.EDUFORM_ID = this.EduFormId;
+            toAssign.EDUFORM_NAME = this.NameText.Text;
+        }
+
+        public void AssingFields(EDUFORMS_TBL assignSource)
+        {
+
+            this.EduFormId = assignSource.EDUFORM_ID;
+            this.NameText.Text = assignSource.EDUFORM_NAME;
+        }
+
         public void AssingNewId(ref EDUFORMS_TBL entity, int newId) => entity.EDUFORM_ID = newId;
 
         public void CleanFields()
@@ -74,7 +68,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.EduFormId = 0;
         }
 
-        public EDUFORMS_TBL ConvertToPresent(EDUFORMS_TBL entity) => entity;
+
+        public EDUFORMS_TBL CreateEntity() => new EDUFORMS_TBL();
 
         public void CustomSave()
         {

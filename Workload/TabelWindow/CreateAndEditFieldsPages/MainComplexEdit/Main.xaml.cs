@@ -56,7 +56,11 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
 
             this.Details = new ObservableCollection<DETAILS_TBL>();
-            this.Details.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.UnappliedWorksList.ItemsSource = this.Context.WORKS_TBL.ToList().Where(p => !this.Details.Any(g => g.WORK_ID == p.WORK_ID)).ToList());
+            this.Details.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
+            {
+                this.UnappliedWorksList.ItemsSource = this.Context.WORKS_TBL.ToList().Where(p => !this.Details.Any(g => g.WORK_ID == p.WORK_ID)).ToList();
+                this.FieldsHasBeenChanged.Invoke();
+                });
             this.AppliedWorksList.ItemsSource = this.Details.ToBindingList();
             this.UnappliedWorksList.MouseDoubleClick += new MouseButtonEventHandler((object sender, MouseButtonEventArgs args) => 
             {
@@ -79,6 +83,11 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
             this.Context.MAIN_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.PreparePlan());
 
+            SelectionChangedEventHandler selCh = new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => this.FieldsHasBeenChanged?.Invoke());
+            this.ParametersChoose.EduFormsList.SelectionChanged += selCh;
+            this.ParametersChoose.EduTypesList.SelectionChanged += selCh;
+            this.ParametersChoose.CourseChoose.SelectionChanged += selCh;
+            this.ParametersChoose.SemesterChoose.SelectionChanged += selCh;
 
         }
 
@@ -90,14 +99,14 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.ParametersChoose.CourseChoosed!=null)
             {
 
-                List<MAIN_TBL> notAppliedSubjects = this.Context.MAIN_TBL
-                    .Where(g => !(g.SEMESTER_NO == this.ParametersChoose.SemesterChoosed.Value &&
-                      g.COURSE_NO == this.ParametersChoose.CourseChoosed.Value &&
-                      g.EDUFORMS_TBL.EDUFORM_ID == this.ParametersChoose.SelectedEduForm.EDUFORM_ID &&
-                      g.EDUTYPES_TBL.EDUTYPE_ID == this.ParametersChoose.SelectedEduType.EDUTYPE_ID) && g != this.Main)
+                List<MAIN_TBL> notAppliedSubjects = this.Context.MAIN_TBL.ToList()
+                    .Where(g => (g.SEMESTER_NO != this.ParametersChoose.SemesterChoosed.Value &&
+                      g.COURSE_NO != this.ParametersChoose.CourseChoosed.Value &&
+                      g.EDUFORMS_TBL.EDUFORM_ID != this.ParametersChoose.SelectedEduForm.EDUFORM_ID &&
+                      g.EDUTYPES_TBL.EDUTYPE_ID != this.ParametersChoose.SelectedEduType.EDUTYPE_ID) && g != this.Main)
                     .ToList();
 
-                this.UnappliedSubjects.ItemsSource = this.Context.SUBJECTS_TBL
+                this.UnappliedSubjects.ItemsSource = this.Context.SUBJECTS_TBL.ToList()
                     .Where(p => !notAppliedSubjects.Any(g => g.SUBJECT_ID == p.SUBJECT_ID)).ToList();
 
                 this.UnappliedSubjects.SelectedItem = this.Main?.SUBJECTS_TBL;
@@ -318,9 +327,71 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void AssingNewId(ref MAIN_TBL entity, int newId) => entity.ITEM_ID = newId;
 
-        public void CustomSave()
+        public void CustomSave() => throw new NotImplementedException();
+
+        public MAIN_TBL CreateEntity() => new MAIN_TBL();
+
+        public void AssignEntity(ref Entities context, ref MAIN_TBL toAssign)
         {
-            throw new NotImplementedException();
+            toAssign.COURSE_NO = Convert.ToInt16(this.ParametersChoose.CourseChoose.Text);
+            toAssign.SEMESTER_NO = Convert.ToInt16(this.ParametersChoose.SemesterChoose.Text);
+            {
+                decimal i;
+                toAssign.VOLUME = decimal.TryParse(this.AmountText.Text, out i) ? i : (decimal)0.0;
+            }
+            toAssign.EDUFORMS_TBL = context.EDUFORMS_TBL.Find(this.EduForm.EDUFORM_ID);
+            toAssign.EDUTYPES_TBL = context.EDUTYPES_TBL.Find(this.EduType.EDUTYPE_ID);
+            toAssign.SUBJECTS_TBL = context.SUBJECTS_TBL.Find(this.Subject.SUBJECT_ID);
+
+            List<DETAILS_TBL> allrInDet = toAssign.DETAILS_TBL.ToList();
+
+            context.DETAILS_TBL.Load();
+
+            foreach (DETAILS_TBL detail in toAssign.DETAILS_TBL)
+            {
+                DETAILS_TBL origin_detail = context.DETAILS_TBL.Find(detail.DETAIL_ID);
+                if (origin_detail != null) detail.HOURS = this.Details.Single(p => p.DETAIL_ID == detail.DETAIL_ID).HOURS;
+            }
+            foreach (DETAILS_TBL detail in this.Context.DETAILS_TBL.ToList().Where(p => !this.Details.Any(g => g.DETAIL_ID == p.DETAIL_ID) && allrInDet.Any(g => g.DETAIL_ID == p.DETAIL_ID)))
+                toAssign.DETAILS_TBL.Remove(toAssign.DETAILS_TBL.Single(p => detail.DETAIL_ID == p.DETAIL_ID));
+
+
+            UInt16 j = 1;
+            foreach (DETAILS_TBL detail in this.Details.Where(p => !allrInDet.Any(g => g.DETAIL_ID == p.DETAIL_ID) || !allrInDet.Contains(p)))
+            {
+                DETAILS_TBL newDetail = new DETAILS_TBL()
+                {
+                    HOURS = detail.HOURS,
+                    WORK_ID = detail.WORK_ID,
+                    DETAIL_ID = context.DETAILS_TBL.Max(p => p.DETAIL_ID) + j++
+                };
+                //context.DETAILS_TBL.Add(newDetail);
+                //context.SaveChanges();
+                toAssign.DETAILS_TBL.Add(newDetail);
+            }
+
+        }
+
+        public void AssingFields(MAIN_TBL assignSource)
+        {
+            this.Main = assignSource;
+            this.MainId = assignSource.ITEM_ID;
+            this.ParametersChoose.CourseChoosed = assignSource.COURSE_NO;
+            this.ParametersChoose.SemesterChoosed = assignSource.SEMESTER_NO;
+            this.ParametersChoose.SelectedEduType = assignSource.EDUTYPES_TBL;
+            this.ParametersChoose.SelectedEduForm = assignSource.EDUFORMS_TBL;
+            this.AmountText.Text = assignSource.VOLUME.ToString();
+            this.SubjectNameLabel.Content = assignSource.SUBJECTS_TBL.SUBJECT_NAME;
+            this.Subject = assignSource.SUBJECTS_TBL;
+            foreach (DETAILS_TBL detail in assignSource.DETAILS_TBL) this.Details.Add(new DETAILS_TBL()
+            { 
+                DETAIL_ID=detail.DETAIL_ID,
+                HOURS=detail.HOURS,
+                WORK_ID=detail.WORK_ID,
+                WORKS_TBL=detail.WORKS_TBL,
+                ITEM_ID=detail.ITEM_ID,
+            });
+
         }
     }
 }

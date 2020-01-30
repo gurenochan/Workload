@@ -78,9 +78,23 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public WORKS_TBL ConvertToPresent(WORKS_TBL entity) => entity;
 
-        public void CustomSave()
+        public void CustomSave() => throw new NotImplementedException();
+
+        public WORKS_TBL CreateEntity() => new WORKS_TBL();
+
+        public void AssignEntity(ref Entities context, ref WORKS_TBL toAssign)
         {
-            throw new NotImplementedException();
+
+            toAssign.WORK_ID = this.WorkId;
+            toAssign.WORK_NAME = this.NameText.Text;
+            toAssign.HRS_PER_STUD = this.HoursPerStudentText.Text != System.String.Empty ? Convert.ToDecimal(this.HoursPerStudentText.Text) : (Nullable<decimal>)null;
+        }
+
+        public void AssingFields(WORKS_TBL assignSource)
+        {
+            this.WorkId = assignSource.WORK_ID;
+            this.NameText.Text = assignSource.WORK_NAME;
+            this.HoursPerStudentText.Text = assignSource.HRS_PER_STUD.ToString();
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Workload
                         }
                         else
                         {
-                            this.CreateEditPage.EditedEntity = entity;
+                            this.CreateEditPage.AssingFields(entity);
                             this.tablePage.OkBut.IsEnabled = this.CreateEditPage.FieldsNotEmpty;
                         }
                     }
@@ -99,9 +99,13 @@ namespace Workload
                     catch (NotImplementedException) { }
                     finally
                     {
+                        Entities context = new Entities();
                         T inEditEntity = this.MainSet.Single(this.CreateEditPage.GetSingleEntity);
-                        this.Context.Entry(inEditEntity).CurrentValues.SetValues(this.CreateEditPage.EditedEntity);
-                        this.Context.SaveChanges();
+                        this.CreateEditPage.AssignEntity(ref context, ref inEditEntity);
+                        context.Entry<T>(inEditEntity).State = EntityState.Modified;
+                        context.SaveChanges();
+                        this.Context.Entry<T>(this.MainSet.Find(this.CreateEditPage.GetSingleEntity)).Reload();
+                        context.Dispose();
                         this.tablePage.tableGrid.Items.Refresh();
                     }
                 }
@@ -120,14 +124,18 @@ namespace Workload
                         catch (NotImplementedException) { }
                         finally
                         {
-                            try
-                            { this.CreateEditPage.CustomSave(); }
-                            catch (NotImplementedException)
                             {
-                                T toCreate = this.CreateEditPage.EditedEntity;
+                                Entities context = new Entities();
+
+                                T toCreate = this.CreateEditPage.CreateEntity();
+                                this.CreateEditPage.AssignEntity(ref context, ref toCreate);
                                 this.CreateEditPage.AssingNewId(ref toCreate, this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0);
-                                this.MainSet.Add(toCreate);
-                                this.Context.SaveChanges();
+                                context.Set<T>().Add(toCreate);
+                                context.SaveChanges();
+                                this.MainSet.Load();
+
+                                context.Dispose();
+
                             }
                             this.tablePage.tableGrid.Items.Refresh();
                         }
@@ -159,7 +167,6 @@ namespace Workload
         public interface ICreateEditPage
         {
             void CleanFields();
-            T EditedEntity { get; set; }
 
             TablePage ContentPage { get; set; }
 
@@ -167,7 +174,13 @@ namespace Workload
 
             System.Linq.Expressions.Expression<Func<T, int>> GetId { get; }
 
+            T CreateEntity();
+
             void AssingNewId(ref T entity, int newId);
+
+            void AssignEntity(ref Entities context, ref T toAssign);
+
+            void AssingFields(T assignSource);
 
             bool FieldsNotEmpty { get; }
 
@@ -180,7 +193,6 @@ namespace Workload
 
             Dictionary<System.String, System.String> ColumnsNames { get; }
 
-            void CustomSave();
         }
 
     }

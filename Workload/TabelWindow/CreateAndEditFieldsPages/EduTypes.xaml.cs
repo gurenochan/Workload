@@ -29,19 +29,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public int EduTypeId = 0;
 
-        public EDUTYPES_TBL EditedEntity
-        {
-            get => new EDUTYPES_TBL()
-            {
-                EDUTYPE_ID = this.EduTypeId,
-                EDUTYPE_NAME = this.NameText.Text
-            };
-            set
-            {
-                this.EduTypeId = value.EDUTYPE_ID;
-                this.NameText.Text = value.EDUTYPE_NAME;
-            }
-        }
 
         public Expression<Func<EDUTYPES_TBL, bool>> GetSingleEntity => x => x.EDUTYPE_ID == this.EduTypeId;
 
@@ -49,11 +36,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public bool FieldsNotEmpty => this.NameText.Text != System.String.Empty && this.NameText.Text != null;
 
-        public string[] ColumnsToHide => new System.String[]
-        {
-            "EDUTYPE_ID",
-            "MAIN_TBL"
-        };
 
         public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>()
         {{"EDUTYPE_NAME", "Назва" }};
@@ -79,6 +61,20 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public void CustomSave()
         {
             throw new NotImplementedException();
+        }
+
+        public EDUTYPES_TBL CreateEntity() => new EDUTYPES_TBL();
+
+        public void AssignEntity(ref Entities context, ref EDUTYPES_TBL toAssign)
+        {
+            toAssign.EDUTYPE_ID = this.EduTypeId;
+            toAssign.EDUTYPE_NAME = this.NameText.Text;
+        }
+
+        public void AssingFields(EDUTYPES_TBL assignSource)
+        {
+            this.EduTypeId = assignSource.EDUTYPE_ID;
+            this.NameText.Text = assignSource.EDUTYPE_NAME;
         }
     }
 }

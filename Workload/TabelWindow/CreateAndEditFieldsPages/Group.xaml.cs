@@ -119,31 +119,17 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.ContractorsCountText.Text != System.String.Empty
             );
 
-        public string[] ColumnsToHide => new System.String[]
+
+        public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>()
         {
-            "EDUFORMS_TBL",
-            "EDUFORM_ID",
-            "GROUP_ID",
-            "SUBDETAILS_TBL"
+            { "GROUP_NAME", "Назва" },
+            { "FACULTY_ABBR", "Факультет" },
+            { "COURSE_NO", "Курс" },
+            { "EDUFORMS_TBL.EDUFORM_NAME", "Форма навчання" },
+            { "BUDGET_CNT", "Кількість бюджетників" },
+            { "CONTRACT_CNT", "Кількість контрактників" },
+            { "GROUP_MISC", "Нотатки" },
         };
-
-
-        public Dictionary<string, string> ColumnsNames
-        {
-            get
-            {
-                Dictionary<System.String, System.String> keyValuePairs = new Dictionary<string, string>();
-                keyValuePairs.Add("GROUP_NAME", "Назва");
-                keyValuePairs.Add("FACULTY_ABBR", "Факультет");
-                keyValuePairs.Add("COURSE_NO", "Курс");
-                keyValuePairs.Add("EDUFORMS_TBL.EDUFORM_NAME", "Форма навчання");
-                keyValuePairs.Add("BUDGET_CNT", "Кількість бюджетників");
-                keyValuePairs.Add("CONTRACT_CNT", "Кількість контрактників");
-                keyValuePairs.Add("GROUP_MISC", "Нотатки");
-
-                return keyValuePairs;
-            }
-        }
 
         public TableWindowPresentation<GROUPS_TBL>.EditingEntity StartingCreateingEntity => () => { this.Group = null; };
 
@@ -170,9 +156,33 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
 
-        public void CustomSave()
+        public void CustomSave() => throw new NotImplementedException();
+
+        public GROUPS_TBL CreateEntity() => new GROUPS_TBL();
+
+        public void AssignEntity(ref Entities context, ref GROUPS_TBL toAssign)
         {
-            throw new NotImplementedException();
+            toAssign.BUDGET_CNT = Convert.ToInt16(this.BudgetariesCountText.Text);
+            toAssign.CONTRACT_CNT = Convert.ToInt16(this.ContractorsCountText.Text);
+            toAssign.COURSE_NO = Convert.ToInt16(this.CourseText.Text);
+            toAssign.FACULTY_ABBR = this.FacultyAbreviationText.Text;
+            toAssign.GROUP_MISC = this.NotesText.Text == System.String.Empty ? null : this.NotesText.Text;
+            toAssign.GROUP_NAME = this.GroupNameText.Text == System.String.Empty ? null : this.GroupNameText.Text;
+            toAssign.GROUP_ID = this.GroupId;
+            toAssign.EDUFORMS_TBL = context.EDUFORMS_TBL.Find(this.EduForm.EDUFORM_ID);
+            toAssign.EDUFORM_ID = this.EduForm?.EDUFORM_ID;
+        }
+
+        public void AssingFields(GROUPS_TBL assignSource)
+        {
+            this.BudgetariesCountText.Text = assignSource.BUDGET_CNT.ToString();
+            this.ContractorsCountText.Text = assignSource.CONTRACT_CNT.ToString();
+            this.CourseText.Text = assignSource.COURSE_NO.ToString();
+            this.EducationalFormsList.SelectedItem = this.EducationalFormsList.Items.IndexOf(assignSource.EDUFORMS_TBL.EDUFORM_NAME) >= 0 ? assignSource.EDUFORMS_TBL.EDUFORM_NAME : null;
+            this.FacultyAbreviationText.Text = assignSource.FACULTY_ABBR;
+            this.NotesText.Text = assignSource.GROUP_MISC;
+            this.GroupNameText.Text = assignSource.GROUP_NAME;
+            this.GroupId = assignSource.GROUP_ID;
         }
     }
 }

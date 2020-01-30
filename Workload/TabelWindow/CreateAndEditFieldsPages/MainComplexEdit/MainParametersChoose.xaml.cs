@@ -74,25 +74,25 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
 
         public EDUTYPES_TBL SelectedEduType
         {
-            get => this.Context.EDUTYPES_TBL.ToList().Where(p => p.EDUTYPE_NAME == (System.String)(this.EduTypesList.SelectedItem ?? System.String.Empty)).DefaultIfEmpty(null).SingleOrDefault();
-            set => this.EduTypesList.SelectedItem = this.Context.EDUTYPES_TBL.AsEnumerable().Where(p => p == value).FirstOrDefault()?.EDUTYPE_NAME ?? this.courseRange.First();
+            get => this.Context.EDUTYPES_TBL.ToList().Where(p => p.EDUTYPE_NAME == (System.String)(this.EduTypesList.SelectedItem ?? System.String.Empty)).DefaultIfEmpty(null).FirstOrDefault();
+            set => this.EduTypesList.SelectedItem = this.Context.EDUTYPES_TBL.AsEnumerable().Where(p => p == value).FirstOrDefault()?.EDUTYPE_NAME ?? (this.EduTypesList.Items.Count > 0 ? this.EduTypesList.Items[0] : null);
         }
         public EDUFORMS_TBL SelectedEduForm
         {
-            get => this.Context.EDUFORMS_TBL.ToList().Where(p => p.EDUFORM_NAME == (System.String)(this.EduFormsList.SelectedValue ?? System.String.Empty)).DefaultIfEmpty(null).SingleOrDefault();
-            set => this.EduFormsList.SelectedItem = this.Context.EDUFORMS_TBL.AsEnumerable().Where(p => p == value).SingleOrDefault()?.EDUFORM_NAME ?? this.courseRange.First();
+            get => this.Context.EDUFORMS_TBL.ToList().Where(p => p.EDUFORM_NAME == (System.String)(this.EduFormsList.SelectedValue ?? System.String.Empty)).DefaultIfEmpty(null).FirstOrDefault();
+            set => this.EduFormsList.SelectedItem = this.Context.EDUFORMS_TBL.AsEnumerable().Where(p => p == value).FirstOrDefault()?.EDUFORM_NAME ?? (this.EduFormsList.Items.Count > 0 ? this.EduFormsList.Items[0] : null);
         }
 
         public short? CourseChoosed
         {
             get => short.TryParse((System.String)(this.CourseChoose.SelectedItem ?? System.String.Empty), out short i) ? (short?)i : null;
-            set => this.CourseChoose.SelectedItem = this.CourseChoose.Items.OfType<System.String>().Where(p => p == value.ToString()).DefaultIfEmpty(this.courseRange.First()).SingleOrDefault();
+            set => this.CourseChoose.SelectedItem = this.CourseChoose.Items.OfType<System.String>().Where(p => p == value.ToString()).DefaultIfEmpty(this.courseRange.First()).FirstOrDefault();
         }
 
         public short? SemesterChoosed
         {
             get => short.TryParse((System.String)(this.SemesterChoose.SelectedItem ?? System.String.Empty), out short i) ? (short?)i : null;
-            set => this.SemesterChoose.SelectedItem = this.SemesterChoose.Items.OfType<System.String>().Where(p => p == value.ToString()).DefaultIfEmpty(this.semesterRange.First()).SingleOrDefault();
+            set => this.SemesterChoose.SelectedItem = this.SemesterChoose.Items.OfType<System.String>().Where(p => p == value.ToString()).DefaultIfEmpty(this.semesterRange.First()).FirstOrDefault();
         }
     }
 }

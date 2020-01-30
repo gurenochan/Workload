@@ -81,5 +81,21 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         {
             throw new NotImplementedException();
         }
+
+        public SUBJECTS_TBL CreateEntity() => new SUBJECTS_TBL();
+
+        public void AssignEntity(ref Entities context, ref SUBJECTS_TBL toAssign)
+        {
+            this.SubId = toAssign.SUBJECT_ID;
+            this.NameText.Text = toAssign.SUBJECT_NAME;
+            this.NotesText.Text = toAssign.SUBJECT_MISC;
+        }
+
+        public void AssingFields(SUBJECTS_TBL assignSource)
+        {
+            this.SubId = assignSource.SUBJECT_ID;
+            this.NameText.Text = assignSource.SUBJECT_NAME;
+            this.NotesText.Text = assignSource.SUBJECT_MISC;
+        }
     }
 }
