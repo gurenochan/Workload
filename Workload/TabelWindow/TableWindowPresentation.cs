@@ -55,9 +55,16 @@ namespace Workload
             this.tablePage.DelBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) =>
             {
                 try
-                { 
-                    if (this.tablePage.tableGrid.SelectedItem != null) this.Context.Entry<T>(this.MainSet.Single(this.CreateEditPage.GetSingleEntity)).State = EntityState.Deleted;
-                    this.Context.SaveChanges();
+                {
+                    using (Entities context=new Entities())
+                    {
+                        if (this.tablePage.tableGrid.SelectedItem != null) context.Set<T>().Remove(context.Set<T>().Single(this.CreateEditPage.GetSingleEntity));
+                        context.SaveChanges();
+                    }
+                    //if (this.tablePage.tableGrid.SelectedItem != null) this.Context.Entry<T>(this.MainSet.Single(this.CreateEditPage.GetSingleEntity)).State = EntityState.Deleted;
+
+                    //this.Context.SaveChanges();
+                    this.MainSet.Load();
                     this.tablePage.tableGrid.Items.Refresh();
                 }
                 catch (Exception ex)

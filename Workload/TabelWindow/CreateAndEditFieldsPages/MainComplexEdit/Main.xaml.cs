@@ -383,6 +383,11 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.AmountText.Text = assignSource.VOLUME.ToString();
             this.SubjectNameLabel.Content = assignSource.SUBJECTS_TBL.SUBJECT_NAME;
             this.Subject = assignSource.SUBJECTS_TBL;
+            try
+            {
+                this.Details.Clear();
+            }
+            finally { }
             foreach (DETAILS_TBL detail in assignSource.DETAILS_TBL) this.Details.Add(new DETAILS_TBL()
             { 
                 DETAIL_ID=detail.DETAIL_ID,

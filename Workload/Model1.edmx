@@ -413,8 +413,10 @@ FROM "GPRELATIONS_TBL" AS "A"</DefiningQuery>
           <NavigationProperty Name="DETAILS_TBL" Relationship="Self.FK_DETAILS_WORK_ID" FromRole="WORKS_TBL" ToRole="DETAILS_TBL" />
         </EntityType>
         <Association Name="FK_DETAILS_ITEM_ID">
-          <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="1" />
-          <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="*" />
+          <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="*" ></End>
           <ReferentialConstraint>
             <Principal Role="MAIN_TBL">
               <PropertyRef Name="ITEM_ID" />
