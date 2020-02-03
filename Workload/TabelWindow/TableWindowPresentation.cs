@@ -61,11 +61,7 @@ namespace Workload
                         if (this.tablePage.tableGrid.SelectedItem != null) context.Set<T>().Remove(context.Set<T>().Single(this.CreateEditPage.GetSingleEntity));
                         context.SaveChanges();
                     }
-                    //if (this.tablePage.tableGrid.SelectedItem != null) this.Context.Entry<T>(this.MainSet.Single(this.CreateEditPage.GetSingleEntity)).State = EntityState.Deleted;
-
-                    //this.Context.SaveChanges();
-                    this.MainSet.Load();
-                    this.tablePage.tableGrid.Items.Refresh();
+                    if (this.tablePage.tableGrid.SelectedItem != null) this.Context.Set<T>().Local.Remove((T)this.tablePage.tableGrid.SelectedItem);
                 }
                 catch (Exception ex)
                 { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to delete the record."); }

@@ -327,8 +327,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void AssingNewId(ref MAIN_TBL entity, int newId) => entity.ITEM_ID = newId;
 
-        public void CustomSave() => throw new NotImplementedException();
-
         public MAIN_TBL CreateEntity() => new MAIN_TBL();
 
         public void AssignEntity(ref Entities context, ref MAIN_TBL toAssign)
