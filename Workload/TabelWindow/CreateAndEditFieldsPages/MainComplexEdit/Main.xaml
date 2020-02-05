@@ -29,8 +29,7 @@
 
         <DataGrid x:Name="AppliedWorksList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Вид роботи" Binding="{Binding Path=WORKS_TBL.WORK_NAME}" IsReadOnly="True">
-                </DataGridTextColumn>
+                <DataGridTextColumn Header="Вид роботи" Binding="{Binding Path=WORKS_TBL.WORK_NAME}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="к-ть годин" Binding="{Binding Path=HOURS}" IsReadOnly="False"/>
             </DataGrid.Columns>
         </DataGrid>

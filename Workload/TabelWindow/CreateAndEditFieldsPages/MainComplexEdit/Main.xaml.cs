@@ -93,10 +93,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void PreparePlan()
         {
-            if (this.ParametersChoose.SelectedEduType!=null &&
-                this.ParametersChoose.SelectedEduForm!=null && 
-                this.ParametersChoose.SemesterChoosed!=null &&
-                this.ParametersChoose.CourseChoosed!=null)
+            if (this.ParametersChoose.SelectedEduType != null &&
+                this.ParametersChoose.SelectedEduForm != null &&
+                this.ParametersChoose.SemesterChoosed != null &&
+                this.ParametersChoose.CourseChoosed != null)
             {
 
                 List<MAIN_TBL> notAppliedSubjects = this.Context.MAIN_TBL.ToList()
@@ -111,10 +111,14 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
                 this.UnappliedSubjects.SelectedItem = this.Main?.SUBJECTS_TBL;
 
-                
+
                 this.UnappliedSubjects.IsEnabled = true;
             }
-            else this.UnappliedSubjects.IsEnabled = false;
+            else
+            {
+                this.UnappliedSubjects.IsEnabled = false;
+
+            }
         }
 
         public void AddDetail()
@@ -123,7 +127,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.Details.Add(new DETAILS_TBL()
                 {
                     WORKS_TBL = work,
-                    WORK_ID = work.WORK_ID
+                    WORK_ID = work.WORK_ID,
+                    DETAIL_ID = -1
                 });
         }
 
@@ -154,6 +159,31 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.contentPage.MainGrid.Children.Add(parametersFrame);
                 this.contentPage.MainGrid.Children.Add(this.UnappliedSubjects);
                 this.contentPage.tableGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => PreparePlan());
+                this.contentPage.OkBut.Click += new RoutedEventHandler((object obj, RoutedEventArgs args) =>
+                  {
+                      try
+                      {
+                          using (Entities context = new Entities())
+                          {
+                              foreach (DETAILS_TBL detail in this.Details)
+                              {
+                                  DETAILS_TBL originalDetail = this.Context.DETAILS_TBL.Find(detail.DETAIL_ID);
+                                  if (originalDetail != null && (originalDetail?.HOURS ?? detail.HOURS) != detail.HOURS)
+                                      this.Context.Entry<DETAILS_TBL>(originalDetail).Reload();
+                              }
+                              context.DETAILS_TBL.Load();
+                              List<DETAILS_TBL> allreadyInDB = context.DETAILS_TBL.ToList();
+                              foreach (DETAILS_TBL detail in this.Context.DETAILS_TBL.Local.ToList().Where(p => !allreadyInDB.Any(g => g.DETAIL_ID == p.DETAIL_ID)))
+                                  this.Context.DETAILS_TBL.Local.Remove(detail);
+                              this.Context.DETAILS_TBL.Load();
+
+                          }
+                      }
+                      catch(Exception ex)
+                      {
+                          MessageBox.Show(ex.Message, "Unable to update locale cache of details…");
+                      }
+                  });
 
                 this.contentPage.ImportBut.Visibility = Visibility.Hidden;
                 this.contentPage.ExportBut.Visibility = Visibility.Hidden;
@@ -348,14 +378,20 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             foreach (DETAILS_TBL detail in toAssign.DETAILS_TBL)
             {
                 DETAILS_TBL origin_detail = context.DETAILS_TBL.Find(detail.DETAIL_ID);
-                if (origin_detail != null) detail.HOURS = this.Details.Single(p => p.DETAIL_ID == detail.DETAIL_ID).HOURS;
+                if (origin_detail != null)
+                {
+                    decimal hours = this.Details.DefaultIfEmpty(null).SingleOrDefault(p => p.DETAIL_ID == detail.DETAIL_ID)?.HOURS ?? origin_detail.HOURS;
+                    if (origin_detail.HOURS != hours)
+                    {
+                        origin_detail.HOURS = hours;
+                        context.Entry<DETAILS_TBL>(origin_detail).State = EntityState.Modified;
+                    }
+                }
             }
-            foreach (DETAILS_TBL detail in this.Context.DETAILS_TBL.ToList().Where(p => !this.Details.Any(g => g.DETAIL_ID == p.DETAIL_ID) && allrInDet.Any(g => g.DETAIL_ID == p.DETAIL_ID)))
-                toAssign.DETAILS_TBL.Remove(toAssign.DETAILS_TBL.Single(p => detail.DETAIL_ID == p.DETAIL_ID));
 
 
             UInt16 j = 1;
-            foreach (DETAILS_TBL detail in this.Details.Where(p => !allrInDet.Any(g => g.DETAIL_ID == p.DETAIL_ID) || !allrInDet.Contains(p)))
+            foreach (DETAILS_TBL detail in this.Details.Where(p => !allrInDet.Any(g => g.DETAIL_ID == p.DETAIL_ID)))
             {
                 DETAILS_TBL newDetail = new DETAILS_TBL()
                 {
@@ -363,10 +399,15 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     WORK_ID = detail.WORK_ID,
                     DETAIL_ID = context.DETAILS_TBL.Max(p => p.DETAIL_ID) + j++
                 };
-                //context.DETAILS_TBL.Add(newDetail);
-                //context.SaveChanges();
-                toAssign.DETAILS_TBL.Add(newDetail);
+                if (context.MAIN_TBL.Find(toAssign.ITEM_ID) != null)
+                {
+                    newDetail.ITEM_ID = toAssign.ITEM_ID;
+                    context.DETAILS_TBL.Add(newDetail);
+                }
+                else toAssign.DETAILS_TBL.Add(newDetail);
             }
+            foreach (DETAILS_TBL detail in this.Context.DETAILS_TBL.ToList().Where(p => !this.Details.Any(g => g.DETAIL_ID == p.DETAIL_ID) && allrInDet.Any(g => g.DETAIL_ID == p.DETAIL_ID)))
+                context.DETAILS_TBL.Remove(context.DETAILS_TBL.Single(p => detail.DETAIL_ID == p.DETAIL_ID));
 
         }
 

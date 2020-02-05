@@ -30,7 +30,6 @@ namespace Workload
         {
             this.tablePage = new TablePage();
             this.tablePage.CreateEditPanel.Content = this.CreateEditPage;
-            this.CreateEditPage.ContentPage = this.tablePage;
 
             try
             {
@@ -103,12 +102,13 @@ namespace Workload
                     finally
                     {
                         Entities context = new Entities();
-                        T inEditEntity = this.MainSet.Single(this.CreateEditPage.GetSingleEntity);
+                        T inEditEntity = context.Set<T>().Single(this.CreateEditPage.GetSingleEntity);
                         this.CreateEditPage.AssignEntity(ref context, ref inEditEntity);
                         context.Entry<T>(inEditEntity).State = EntityState.Modified;
                         context.SaveChanges();
-                        this.Context.Entry<T>(this.MainSet.Find(this.CreateEditPage.GetSingleEntity)).Reload();
                         context.Dispose();
+                        this.MainSet.Load();
+                        this.Context.Entry<T>(this.MainSet.Single(this.CreateEditPage.GetSingleEntity)).Reload();
                         this.tablePage.tableGrid.Items.Refresh();
                     }
                 }
@@ -129,16 +129,14 @@ namespace Workload
                         {
                             {
                                 Entities context = new Entities();
-
                                 T toCreate = this.CreateEditPage.CreateEntity();
+                                this.CreateEditPage.AssingNewId(ref toCreate, -1);
                                 this.CreateEditPage.AssignEntity(ref context, ref toCreate);
                                 this.CreateEditPage.AssingNewId(ref toCreate, this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0);
                                 context.Set<T>().Add(toCreate);
                                 context.SaveChanges();
                                 this.MainSet.Load();
-
                                 context.Dispose();
-
                             }
                             this.tablePage.tableGrid.Items.Refresh();
                         }
@@ -147,6 +145,7 @@ namespace Workload
                 catch (Exception ex)
                 { System.Windows.MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "Unfortunately, there is impossible to create the record."); }
             });
+            this.CreateEditPage.ContentPage = this.tablePage;
         }
 
 
