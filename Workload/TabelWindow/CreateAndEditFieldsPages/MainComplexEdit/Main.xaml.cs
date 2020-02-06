@@ -93,32 +93,27 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void PreparePlan()
         {
+
+            List<MAIN_TBL> currentMains = this.Context.MAIN_TBL.ToList().Where(p =>
+               p.EDUTYPE_ID == (this.ParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID) &&
+               p.EDUFORM_ID == (this.ParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID) &&
+               p.SEMESTER_NO == (this.ParametersChoose.SemesterChoosed ?? p.SEMESTER_NO) &&
+               p.COURSE_NO == (this.ParametersChoose.CourseChoosed ?? p.COURSE_NO)).ToList();
+            if (this.contentPage != null) this.contentPage.tableGrid.ItemsSource = currentMains;
             if (this.ParametersChoose.SelectedEduType != null &&
                 this.ParametersChoose.SelectedEduForm != null &&
                 this.ParametersChoose.SemesterChoosed != null &&
                 this.ParametersChoose.CourseChoosed != null)
             {
-
-                List<MAIN_TBL> notAppliedSubjects = this.Context.MAIN_TBL.ToList()
-                    .Where(g => (g.SEMESTER_NO != this.ParametersChoose.SemesterChoosed.Value &&
-                      g.COURSE_NO != this.ParametersChoose.CourseChoosed.Value &&
-                      g.EDUFORMS_TBL.EDUFORM_ID != this.ParametersChoose.SelectedEduForm.EDUFORM_ID &&
-                      g.EDUTYPES_TBL.EDUTYPE_ID != this.ParametersChoose.SelectedEduType.EDUTYPE_ID) && g != this.Main)
-                    .ToList();
-
                 this.UnappliedSubjects.ItemsSource = this.Context.SUBJECTS_TBL.ToList()
-                    .Where(p => !notAppliedSubjects.Any(g => g.SUBJECT_ID == p.SUBJECT_ID)).ToList();
+                    .Where(p => !currentMains.Any(g => g.SUBJECT_ID == p.SUBJECT_ID) || this.Main?.SUBJECT_ID == p.SUBJECT_ID).ToList();
 
                 this.UnappliedSubjects.SelectedItem = this.Main?.SUBJECTS_TBL;
 
 
                 this.UnappliedSubjects.IsEnabled = true;
             }
-            else
-            {
-                this.UnappliedSubjects.IsEnabled = false;
-
-            }
+            else this.UnappliedSubjects.IsEnabled = false;
         }
 
         public void AddDetail()

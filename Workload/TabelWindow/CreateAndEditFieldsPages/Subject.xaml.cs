@@ -86,9 +86,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void AssignEntity(ref Entities context, ref SUBJECTS_TBL toAssign)
         {
-            this.SubId = toAssign.SUBJECT_ID;
-            this.NameText.Text = toAssign.SUBJECT_NAME;
-            this.NotesText.Text = toAssign.SUBJECT_MISC;
+            toAssign.SUBJECT_ID= this.SubId;
+            toAssign.SUBJECT_NAME = this.NameText.Text;
+            toAssign.SUBJECT_MISC = this.NotesText.Text;
         }
 
         public void AssingFields(SUBJECTS_TBL assignSource)
