@@ -40,10 +40,7 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\MainWindow.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.g.resources
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.Properties.Resources.resources
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.GenerateResource.Cache
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojAssemblyReference.cache
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.CopyComplete
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Loading.g.cs
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Loading.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.conf
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.msg
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\wlbaseRenewed.fdb
@@ -72,3 +69,13 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Cre
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\GroupSelect.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\GroupSelect.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojAssemblyReference.cache
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.dll
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.xml

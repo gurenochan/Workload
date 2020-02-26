@@ -18,23 +18,15 @@ namespace Workload
     public partial class App : Application
     {
         public Entities DBContext;
+        protected SplashScreen startwindow;
 
         private void AtStartup(object sender, StartupEventArgs e)
         {
             Task CheckDB = new Task(() => { this.DBconnInit(); });
-            Task WaitFor = new Task(() => { System.Threading.Thread.Sleep(1000); });
+            Task WaitFor = new Task(() => System.Threading.Thread.Sleep(1000));
             try
             {
-                Window startwindow = new Window()
-                {
-                    WindowStyle = WindowStyle.None,
-                    ResizeMode = ResizeMode.NoResize,
-                    Content = new Loading(),
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen
-                };
-                startwindow.Width = ((Loading)startwindow.Content).Width;
-                startwindow.Height = ((Loading)startwindow.Content).Height;
+                startwindow = new SplashScreen();
                 startwindow.Show();
                 CheckDB.Start();
                 WaitFor.Start();

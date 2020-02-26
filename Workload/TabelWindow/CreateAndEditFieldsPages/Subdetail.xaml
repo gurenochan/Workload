@@ -1,0 +1,30 @@
+﻿<Page x:Class="Workload.TabelWindow.CreateAndEditFieldsPages.SubdetailEditForm"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Workload.TabelWindow.CreateAndEditFieldsPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Subdetail">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Grid.Column="0" x:Name="MainTblGrid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дисципліна" Binding="{Binding Path=SUBJECTS_TBL.SUBJECT_NAME}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Курс" Binding="{Binding Path=COURSE_NO}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Форма" Binding="{Binding Path=EDUFORMS_TBL.EDUFORM_NAME}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="1" Grid.Column="0" x:Name="Details">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Вид роботи" Binding="{Binding Path=WORKS_TBL.WORK_NAME}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Вільно" IsReadOnly="True" x:Name="FreeHours"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

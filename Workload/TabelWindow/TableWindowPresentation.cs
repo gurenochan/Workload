@@ -15,7 +15,7 @@ namespace Workload
 
         void InitPage();
 
-        TablePage TablePage { get; set; }
+        System.Windows.Controls.Page TablePage { get; set; }
     }
 
     public class TableWindowPresentation<T>: ITableWindowPresentation where T: class
@@ -157,7 +157,7 @@ namespace Workload
 
         protected TablePage tablePage;
         protected DbSet<T> MainSet => this.Context.Set<T>();
-        TablePage ITableWindowPresentation.TablePage { get => this.tablePage; set => this.tablePage = value; }
+        System.Windows.Controls.Page ITableWindowPresentation.TablePage { get => this.tablePage; set => this.tablePage = (TablePage) value; }
 
         public ICreateEditPage CreateEditPage;
 

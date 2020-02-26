@@ -143,13 +143,31 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             {
                 this.contentPage = value;
 
-                Grid.SetRowSpan(this.contentPage.tableGrid, 1);
+                this.contentPage.MainGrid.ColumnDefinitions.Insert(0, new ColumnDefinition() { Width = new GridLength(100.0, GridUnitType.Pixel) });
+                this.contentPage.MainGrid.RowDefinitions.Insert(2, new RowDefinition() { Height = new GridLength(1.0, GridUnitType.Star) });
+
                 Frame parametersFrame = new Frame()
                 { Content = this.ParametersChoose };
-                Grid.SetRow(parametersFrame, 2);
+                Grid.SetRow(parametersFrame, 1);
                 Grid.SetColumn(parametersFrame, 0);
-                Grid.SetRow(this.UnappliedSubjects, 3);
-                Grid.SetColumn(this.UnappliedSubjects, 0);
+                Grid.SetRowSpan(parametersFrame, 3);
+
+                Grid.SetColumnSpan(this.contentPage.ButtonsDock, 3);
+
+                Grid.SetColumn(this.contentPage.CreateEditPanel, 2);
+                Grid.SetRow(this.contentPage.CreateEditPanel, 1);
+                Grid.SetRowSpan(this.contentPage.CreateEditPanel, 2);
+
+                Grid.SetRowSpan(this.contentPage.tableGrid, 1);
+                Grid.SetColumn(this.contentPage.tableGrid, 1);
+
+                Grid.SetColumn(this.contentPage.OkCreateDock, 2);
+                Grid.SetRow(this.contentPage.OkCreateDock, 3);
+
+                this.UnappliedSubjects.Margin = new Thickness(left: 0.0, top: 2.5, right: 0.0, bottom: 2.5);
+
+                Grid.SetRow(this.UnappliedSubjects, 2);
+                Grid.SetColumn(this.UnappliedSubjects, 1);
                 Grid.SetRowSpan(this.UnappliedSubjects, 2);
                 this.contentPage.MainGrid.Children.Add(parametersFrame);
                 this.contentPage.MainGrid.Children.Add(this.UnappliedSubjects);
@@ -209,8 +227,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     this.Main.EDUTYPES_TBL = null;
                     this.Main.SUBJECTS_TBL = null;
                 }
-                this.Main.COURSE_NO = Convert.ToInt16(this.ParametersChoose.CourseChoose.Text);
-                this.Main.SEMESTER_NO = Convert.ToInt16(this.ParametersChoose.SemesterChoose.Text);
+                //this.Main.COURSE_NO = Convert.ToInt16(this.ParametersChoose.CourseChoose.Text);
+                //this.Main.SEMESTER_NO = Convert.ToInt16(this.ParametersChoose.SemesterChoose.Text);
                 {
                     decimal i;
                     this.Main.VOLUME = decimal.TryParse(this.AmountText.Text, out i) ? i : (decimal)0.0;
@@ -356,11 +374,11 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void AssignEntity(ref Entities context, ref MAIN_TBL toAssign)
         {
-            toAssign.COURSE_NO = Convert.ToInt16(this.ParametersChoose.CourseChoose.Text);
-            toAssign.SEMESTER_NO = Convert.ToInt16(this.ParametersChoose.SemesterChoose.Text);
+            toAssign.COURSE_NO = (short)this.ParametersChoose.CourseChoosed;
+            toAssign.SEMESTER_NO = (short)this.ParametersChoose.SemesterChoosed;
             {
-                decimal i;
-                toAssign.VOLUME = decimal.TryParse(this.AmountText.Text, out i) ? i : (decimal)0.0;
+                //decimal i;
+                toAssign.VOLUME = decimal.TryParse(this.AmountText.Text, out decimal i) ? i : (decimal)0.0;
             }
             toAssign.EDUFORMS_TBL = context.EDUFORMS_TBL.Find(this.EduForm.EDUFORM_ID);
             toAssign.EDUTYPES_TBL = context.EDUTYPES_TBL.Find(this.EduType.EDUTYPE_ID);

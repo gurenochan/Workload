@@ -43,7 +43,18 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public TableWindowPresentation<EDUFORMS_TBL>.CreatingEntity StartingEditingEvent => throw new NotImplementedException();
 
-        public TablePage ContentPage { get; set; }
+        protected TablePage contentPage;
+        public TablePage ContentPage {
+            get => this.contentPage;
+            set
+            {
+                this.contentPage = value;
+                this.contentPage.ImportBut.Visibility = Visibility.Hidden;
+                this.contentPage.ExportBut.Visibility = Visibility.Hidden;
+                this.contentPage.PrintBut.Visibility = Visibility.Hidden;
+                this.contentPage.SortBut.Visibility = Visibility.Hidden;
+            }
+        }
 
         public event TableWindowPresentation<EDUFORMS_TBL>.FieldsChanged FieldsHasBeenChanged;
 

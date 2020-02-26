@@ -85,13 +85,13 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
 
         public short? CourseChoosed
         {
-            get => short.TryParse((System.String)(this.CourseChoose.SelectedItem ?? System.String.Empty), out short i) ? (short?)i : null;
+            get => short.TryParse((System.String)(this.CourseChoose.SelectedValue ?? System.String.Empty), out short i) ? (short?)i : null;
             set => this.CourseChoose.SelectedItem = this.CourseChoose.Items.OfType<System.String>().Where(p => p == value.ToString()).DefaultIfEmpty(this.courseRange.First()).FirstOrDefault();
         }
 
         public short? SemesterChoosed
         {
-            get => short.TryParse((System.String)(this.SemesterChoose.SelectedItem ?? System.String.Empty), out short i) ? (short?)i : null;
+            get => short.TryParse((System.String)(this.SemesterChoose.SelectedValue ?? System.String.Empty), out short i) ? (short?)i : null;
             set => this.SemesterChoose.SelectedItem = this.SemesterChoose.Items.OfType<System.String>().Where(p => p == value.ToString()).DefaultIfEmpty(this.semesterRange.First()).FirstOrDefault();
         }
     }

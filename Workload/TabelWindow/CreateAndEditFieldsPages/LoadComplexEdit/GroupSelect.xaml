@@ -1,0 +1,42 @@
+﻿<Page x:Class="Workload.TabelWindow.CreateAndEditFieldsPages.LoadComplexEdit.GroupSelect"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Workload.TabelWindow.CreateAndEditFieldsPages.LoadComplexEdit"
+      mc:Ignorable="d" 
+      d:DesignHeight="200" d:DesignWidth="200"
+      MinHeight="200"
+      MinWidth="200"
+      Title="GroupSelect" 
+      Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="GroupsInSubList" Grid.Row="0" Grid.Column="0" SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=GROUP_NAME}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListView>
+        <ListView x:Name="GroupsOutSubList" Grid.Row="2" Grid.Column="0" SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=GROUP_NAME}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListView>
+
+        <Button x:Name="AddGroupBut" Content="Add" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" Width="60"/>
+        <Button x:Name="RemoveGroupBut" Content="Remove" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Width="60"/>
+
+        <Button x:Name="CloseBut" Visibility="Hidden" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" Margin="10,1"/>
+    </Grid>
+</Page>

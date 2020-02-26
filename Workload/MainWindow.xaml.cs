@@ -40,6 +40,7 @@ namespace Workload
                 if (sender == this.WorksTypesButton) presentation = new TableWindowPresentation<WORKS_TBL>("Works", new WorkTypesEditForm());
 
                 if (sender == this.MainsButton) presentation = new TableWindowPresentation<MAIN_TBL>("Plans", new MainEditForm());
+                if (sender == this.SubdetailsButton) presentation = new WorkLoadEdit();
 
                 if (presentation!=null)
                 {
@@ -52,13 +53,6 @@ namespace Workload
                     this.WorkTabs.SelectedIndex = this.WorkTabs.Items.Count - 1;
                     ((Button)sender).IsEnabled = false;
                 }
-                if (presentation is TableWindowPresentation<EDUFORMS_TBL> || presentation is TableWindowPresentation<EDUTYPES_TBL>)
-                {
-                    presentation.TablePage.ImportBut.Visibility = Visibility.Hidden;
-                    presentation.TablePage.ExportBut.Visibility = Visibility.Hidden;
-                    presentation.TablePage.PrintBut.Visibility = Visibility.Hidden;
-                    presentation.TablePage.SortBut.Visibility = Visibility.Hidden; 
-                }
             });
 
             this.TeachersButton.Click += TablesButtonHandler;
@@ -68,6 +62,7 @@ namespace Workload
             this.EduTypesButton.Click += TablesButtonHandler;
             this.WorksTypesButton.Click += TablesButtonHandler;
             this.MainsButton.Click += TablesButtonHandler;
+            this.SubdetailsButton.Click += TablesButtonHandler;
         }
     }
 }

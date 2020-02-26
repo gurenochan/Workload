@@ -12,8 +12,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition/>
-            <RowDefinition Height="100"/>
-            <RowDefinition/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,7 +20,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="ButtonsDock">
             <Button x:Name="ImportBut" Content="Import" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
             <Button x:Name="ExportBut" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
             <Button x:Name="PrintBut" Content="Print" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
@@ -32,10 +30,10 @@
         </DockPanel>
 
 
-        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" VerticalAlignment="Stretch" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False"/>
-        <Frame x:Name="CreateEditPanel" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5, 5"/>
+        <DataGrid x:Name="tableGrid" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Stretch" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False"/>
+        <Frame x:Name="CreateEditPanel" Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5, 5"/>
 
-        <DockPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <DockPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="OkCreateDock">
             <Button x:Name="OkBut" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75" IsEnabled="False" Grid.Column="0" Grid.Row="0"/>
             <Button x:Name="CompleteCreateBut" Content="Create" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Width="75" Grid.Column="1" Grid.Row="0"/>
         </DockPanel>
