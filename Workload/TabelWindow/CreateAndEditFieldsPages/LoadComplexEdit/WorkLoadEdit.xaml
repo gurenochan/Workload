@@ -58,6 +58,10 @@
         <DataGrid x:Name="MainsGrid" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дисципліна" IsReadOnly="True" Binding="{Binding Path=SUBJECTS_TBL.SUBJECT_NAME}"/>
+                <DataGridTextColumn x:Name="EduFormCol" Header = "Форма" IsReadOnly="True" Binding="{Binding Path=EDUFORMS_TBL.EDUFORM_NAME}"/>
+                <DataGridTextColumn x:Name="EduTypeCol" Header = "Тип" IsReadOnly="True" Binding="{Binding Path=EDUTYPES_TBL.EDUTYPE_NAME}"/>
+                <DataGridTextColumn x:Name="CourseCol" Header = "Курс" IsReadOnly="True" Binding="{Binding Path=COURSE_NO}"/>
+                <DataGridTextColumn x:Name="SemesterCol" Header = "Семестр" IsReadOnly="True" Binding="{Binding Path=SEMESTER_NO}"/>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid x:Name="DetailsGrid" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">

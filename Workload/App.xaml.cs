@@ -23,11 +23,22 @@ namespace Workload
         private void AtStartup(object sender, StartupEventArgs e)
         {
             Task CheckDB = new Task(() => { this.DBconnInit(); });
-            Task WaitFor = new Task(() => System.Threading.Thread.Sleep(1000));
-            try
+            Task WaitFor = new Task(() => System.Threading.Thread.Sleep(2000));
+            EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+            Thread OpenSplash = new Thread(() =>
             {
                 startwindow = new SplashScreen();
                 startwindow.Show();
+                ewh.Set();
+                System.Windows.Threading.Dispatcher.Run();
+            });
+            try
+            {
+                OpenSplash.SetApartmentState(ApartmentState.STA);
+                OpenSplash.Start();
+                ewh.WaitOne();
+                /*startwindow = new SplashScreen();
+                startwindow.Show();*/
                 CheckDB.Start();
                 WaitFor.Start();
                 CheckDB.Wait();
@@ -35,8 +46,17 @@ namespace Workload
                 MainWindow wnd = new MainWindow();
                 wnd.Title = "Hello";
                 WaitFor.Wait();
-                startwindow.Close();
+                bool active = true;
+                System.Windows.Threading.Dispatcher.FromThread(OpenSplash).Invoke(() =>
+                {
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown();
+                    active = startwindow.IsActive;
+                    startwindow.Close();
+                });
                 wnd.Show();
+                wnd.ShowActivated = active;
+                if (active) wnd.Activate();
+                OpenSplash.Abort();
             }
             catch (Exception ex)
             {

@@ -38,12 +38,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.MainContext.MAIN_TBL.Local.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.PreparePlan());
             this.MainContext.MAIN_TBL.Load();
 
-            this.MainsGrid.Columns.Add(this.EduFormCol);
-            this.MainsGrid.Columns.Add(this.EduTypeCol);
-            this.MainsGrid.Columns.Add(this.CourseCol);
-            this.MainsGrid.Columns.Add(this.SemesterCol);
             this.MainsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => this.DetailsGrid.ItemsSource = ((MAIN_TBL)this.MainsGrid.SelectedItem)?.DETAILS_TBL ?? new List<DETAILS_TBL>());
-            this.MainContext.DETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.DetailsGrid.ItemsSource = ((MAIN_TBL)this.MainsGrid.SelectedItem)?.DETAILS_TBL ?? new List<DETAILS_TBL>());
+            this.MainContext.DETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => 
+            this.DetailsGrid.ItemsSource = ((MAIN_TBL)this.MainsGrid.SelectedItem)?.DETAILS_TBL ?? new List<DETAILS_TBL>());
             this.MainContext.DETAILS_TBL.Load();
 
             this.MainContext.SUBDETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
@@ -70,7 +67,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                       decimal
                           detailHours = ((DETAILS_TBL)DetailsGrid.SelectedItem).HOURS,
                           newHours = Convert.ToDecimal(((TextBox)args.EditingElement).Text);
-                      if (detailHours < newHours + this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL()).Select(p => p.HOURS).Sum())
+                      if (detailHours < newHours + this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL()).Where(p=>p.SUBDETAIL_ID!=subdetail.SUBDETAIL_ID).Select(p => p.HOURS).Sum())
                       {
                           args.Cancel = true;
                           return;
@@ -98,7 +95,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 }
                 else
                 {
-                    SUBDETAILS_TBL subdetail = this.SubdetailsGrid.SelectedItem.GetType() == typeof(SUBDETAILS_TBL) ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem) : new SUBDETAILS_TBL()
+                    SUBDETAILS_TBL subdetail = this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem) : new SUBDETAILS_TBL()
                     {
                         DETAIL_ID = ((DETAILS_TBL)this.DetailsGrid.SelectedItem).DETAIL_ID,
                         TEACHER_ID = 0
@@ -137,7 +134,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID = ((TEACHERS_TBL)this.AvaliebleTutors.SelectedItem).TEACHER_ID;
                 }
 
-                    this.SubdetailsGrid.Items.Refresh();
+                this.SubdetailsGrid.Items.Refresh();
                 this.UpdateLoad();
             });
 
@@ -174,48 +171,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public LoadComplexEdit.GroupSelect GroupSelectPage;
 
-        public DataGridTextColumn
-            EduFormCol = new DataGridTextColumn()
-            {
-                Header = "Форма",
-                Binding = new Binding("EDUFORMS_TBL.EDUFORM_NAME"),
-                IsReadOnly = true
-            },
-            EduTypeCol = new DataGridTextColumn()
-            {
-                Header = "Тип",
-                Binding = new Binding("EDUTYPES_TBL.EDUTYPE_NAME"),
-                IsReadOnly = true
-            },
-            CourseCol = new DataGridTextColumn()
-            {
-                Header = "Курс",
-                Binding = new Binding("COURSE_NO"),
-                IsReadOnly = true
-            },
-            SemesterCol = new DataGridTextColumn()
-            {
-                Header = "Семестр",
-                Binding = new Binding("SEMESTER_NO"),
-                IsReadOnly = true
-            };
-
-        private void GroupCell_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            SUBDETAILS_TBL item;
-            if (((DataGridCell)sender).DataContext.GetType() != typeof(SUBDETAILS_TBL))
-            {
-                item = new SUBDETAILS_TBL();
-                this.SubDetailCol.Add(item);
-            }
-            else item = (SUBDETAILS_TBL)((DataGridCell)sender).DataContext;
-            this.GroupSelectPage.AvGroups = this.MainContext.GROUPS_TBL.ToList().Where(p =>
-            p.COURSE_NO == (this.MainParametersChoose.CourseChoosed ?? p.COURSE_NO) &&
-            p.EDUFORM_ID==(this.MainParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID))
-                .ToList();
-            this.GroupSelectPage.SubDetail = item;
-            this.GroupSelectFrame.IsEnabled = true;
-        }
 
         public void UpdateLoad()
         {
@@ -241,14 +196,14 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                         local.HOURS = subdetail.HOURS;
                         local.TEACHER_ID = subdetail.TEACHER_ID;
                         context.SaveChanges();
-                        List<GROUPS_TBL> avGroups = local.GROUPS_TBL.ToList();
+                        List<GROUPS_TBL> avGroups = local.GROUPS_TBL.ToList(), avGroups2;
                         context.Database.Connection.Open();
                         foreach (GROUPS_TBL group in subdetail.GROUPS_TBL.ToList().Where(p=>!avGroups.Any(g=>g.GROUP_ID==p.GROUP_ID)))
                         {
                             GROUPS_TBL localGroup = context.GROUPS_TBL.Find(group.GROUP_ID);
                             if (localGroup!=null)
                             {
-                                local.GROUPS_TBL.Add(localGroup);
+                                //local.GROUPS_TBL.Add(localGroup);
                                 DbCommand command = context.Database.Connection.CreateCommand();
                                 command.CommandText = "INSERT INTO GPRELATIONS_TBL (SUBDETAIL_ID, GROUP_ID) VALUES(" + local.SUBDETAIL_ID.ToString() + "," + localGroup.GROUP_ID.ToString() + ")";
                                 command.ExecuteNonQuery();
@@ -257,9 +212,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                         avGroups = subdetail.GROUPS_TBL.ToList();
                         foreach (GROUPS_TBL group in local.GROUPS_TBL.ToList().Where(p => !avGroups.Any(g => g.GROUP_ID == p.GROUP_ID)))
                         { 
-                            local.GROUPS_TBL.Remove(group);
+                            //local.GROUPS_TBL.Remove(group);
                             DbCommand command = context.Database.Connection.CreateCommand();
-                            command.CommandText = "DELETE FROM GPRELATIONS_TBL WHERE SUBDETAIL_ID=" + local.SUBDETAIL_ID + ", GROUP_ID=" + group.GROUP_ID;
+                            command.CommandText = "DELETE FROM GPRELATIONS_TBL WHERE SUBDETAIL_ID=" + local.SUBDETAIL_ID.ToString() + " AND GROUP_ID=" + group.GROUP_ID.ToString();
                             command.ExecuteNonQuery();
                         }
                         context.Database.Connection.Close();
@@ -268,7 +223,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.MainContext.SUBDETAILS_TBL.Load();
             }
         }
-
 
         public void InitPage() { }
 
@@ -291,6 +245,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
             if (detail != null)
             {
+                this.MainContext.Entry<DETAILS_TBL>(detail).Reload();
+                this.DetailsGrid.Items.Refresh();
                 this.SubdetailsGrid.CanUserAddRows = detail.HOURS > detail.SUBDETAILS_TBL.Select(p => p.HOURS).Sum();
                 try
                 { this.SubDetailCol.Clear(); }
