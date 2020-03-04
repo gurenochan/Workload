@@ -38,22 +38,93 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.MainContext.MAIN_TBL.Local.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.PreparePlan());
             this.MainContext.MAIN_TBL.Load();
 
-            this.MainsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => this.DetailsGrid.ItemsSource = ((MAIN_TBL)this.MainsGrid.SelectedItem)?.DETAILS_TBL ?? new List<DETAILS_TBL>());
-            this.MainContext.DETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => 
-            this.DetailsGrid.ItemsSource = ((MAIN_TBL)this.MainsGrid.SelectedItem)?.DETAILS_TBL ?? new List<DETAILS_TBL>());
+            this.MainsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => this.UpdateDetails());
+            this.MainContext.DETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
+            {
+                DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
+                this.UpdateDetails();
+                if (detail != null) this.DetailsGrid.SelectedItem = this.DetailsGrid.Items.OfType<DETAILS_TBL>().Where(p => p.DETAIL_ID == detail.DETAIL_ID).FirstOrDefault();
+            });
             this.MainContext.DETAILS_TBL.Load();
 
-            this.MainContext.SUBDETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
+            this.MainContext.SUBDETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => 
             {
-                this.DetailsGrid.ItemsSource = ((MAIN_TBL)this.MainsGrid.SelectedItem)?.DETAILS_TBL ?? new List<DETAILS_TBL>();
-                this.PrepareAddRow();
+                DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
+                if (detail != null)
+                {
+                    if (args.Action==NotifyCollectionChangedAction.Reset)
+                    {
+                        try
+                        { this.SubDetailCol.Clear(); }
+                        catch { }
+                    }
+                    switch (args.Action)
+                    {
+                        case NotifyCollectionChangedAction.Reset:
+                        case NotifyCollectionChangedAction.Replace:
+                        case NotifyCollectionChangedAction.Add:
+                            foreach (SUBDETAILS_TBL subdetail in args.NewItems)
+                            {
+                                if (subdetail.DETAIL_ID == detail.DETAIL_ID && !this.SubDetailCol.Any(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID))
+                                    this.SubDetailCol.Add(this.MainContext.SUBDETAILS_TBL.Where(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID).AsNoTracking().FirstOrDefault());
+                            }
+                            this.SubdetailsGrid.IsEnabled = true;
+                            this.UserAbleAdd();
+                            break;
+                        case NotifyCollectionChangedAction.Remove:
+                            foreach (SUBDETAILS_TBL subdetail in args.OldItems)
+                            {
+                                if (subdetail.DETAIL_ID == detail.DETAIL_ID && !this.SubDetailCol.Any(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID))
+                                {
+                                    SUBDETAILS_TBL s = this.SubDetailCol.FirstOrDefault(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID);
+                                    if (s != null)
+                                        this.SubDetailCol.Remove(s);
+                                }
+                            }
+                            break;
+                    }
+
+
+
+                }
+                else this.SubdetailsGrid.IsEnabled = false;
             });
 
             this.DetailsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => this.PrepareAddRow());
-            this.MainContext.SUBDETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs arg) => this.PrepareAddRow());
             this.MainContext.SUBDETAILS_TBL.Load();
 
             this.SubDetailCol = new ObservableCollection<SUBDETAILS_TBL>();
+            this.SubDetailCol.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs args) =>
+            {
+                if (args.Action == NotifyCollectionChangedAction.Remove)
+                {
+                    foreach (SUBDETAILS_TBL subdetail in args.OldItems)
+                    {
+                        if (((DETAILS_TBL)this.DetailsGrid.SelectedItem).SUBDETAILS_TBL.Any(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID))
+                        {
+                            using (Entities context = new Entities())
+                            {
+                                SUBDETAILS_TBL _subdetail = context.SUBDETAILS_TBL.Find(subdetail.SUBDETAIL_ID);
+                                if (_subdetail != null)
+                                {
+                                    context.SUBDETAILS_TBL.Remove(_subdetail);
+                                    SUBDETAILS_TBL local = this.MainContext.SUBDETAILS_TBL.Local.FirstOrDefault(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID);
+                                    if (local!=null)
+                                        this.MainContext.SUBDETAILS_TBL.Local.Remove(local);
+                                    context.SaveChanges();
+                                    context.Database.Connection.Open();
+                                    DbCommand command = context.Database.Connection.CreateCommand();
+                                    command.CommandText = "DELETE FROM GPRELATIONS_TBL WHERE SUBDETAIL_ID=" + _subdetail.SUBDETAIL_ID.ToString();
+                                    command.ExecuteNonQuery();
+                                    context.Database.Connection.Close();
+                                    this.MainContext.SUBDETAILS_TBL.Load();
+                                }
+                            }
+                        }
+                    }
+                }
+                this.DetailsGrid.Items.Refresh();
+            });
             this.SubdetailsGrid.ItemsSource = this.SubDetailCol;
 
 
@@ -95,29 +166,30 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 }
                 else
                 {
+                    this.AvaliebleTutors.IsEnabled = true;
+                    this.GroupSelectFrame.IsEnabled = true;
+                    this.SkipUpdateLoad = true;
                     SUBDETAILS_TBL subdetail = this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem) : new SUBDETAILS_TBL()
                     {
                         DETAIL_ID = ((DETAILS_TBL)this.DetailsGrid.SelectedItem).DETAIL_ID,
                         TEACHER_ID = 0
                     };
                     this.AvaliebleTutors.ItemsSource = this.MainContext.TEACHERS_TBL.ToList()
-                    .Where(p => (this.SubdetailsGrid.SelectedItem.GetType() == typeof(SUBDETAILS_TBL) ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false) || !this.SubDetailCol.Any(g => g.TEACHER_ID == p.TEACHER_ID));
-                    this.AvaliebleTutors.SelectedItem = this.AvaliebleTutors.Items.OfType<TEACHERS_TBL>().Where(p => this.SubdetailsGrid.SelectedItem.GetType() == typeof(SUBDETAILS_TBL) ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false);
+                    .Where(p => (this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false) || !this.SubDetailCol.Any(g => g.TEACHER_ID == p.TEACHER_ID));
+                    this.AvaliebleTutors.SelectedItem=this.MainContext.TEACHERS_TBL.Where(p => this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false);
 
                     this.GroupSelectPage.AvGroups = this.MainContext.GROUPS_TBL.ToList().Where(p =>
                     p.COURSE_NO == ((DETAILS_TBL)this.DetailsGrid.SelectedItem).MAIN_TBL.COURSE_NO &&
                     p.EDUFORM_ID == ((DETAILS_TBL)this.DetailsGrid.SelectedItem).MAIN_TBL.EDUFORM_ID)
                     .ToList();
                     this.GroupSelectPage.SubDetail = subdetail;
-
-                    this.AvaliebleTutors.IsEnabled = true;
-                    this.GroupSelectFrame.IsEnabled = true;
+                    this.SkipUpdateLoad = false;
                 }
             });
 
             this.AvaliebleTutors.SelectionChanged += new SelectionChangedEventHandler((object sender, SelectionChangedEventArgs args) =>
             {
-                if ((this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(SUBDETAILS_TBL)) != typeof(SUBDETAILS_TBL) && this.SubdetailsGrid.SelectedItem != null && this.AvaliebleTutors.SelectedItem!=null)
+                if (!(this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(SUBDETAILS_TBL)).Name.Contains("SUBDETAILS_TBL") && this.SubdetailsGrid.SelectedItem != null && this.AvaliebleTutors.SelectedItem!=null)
                 {
                     SUBDETAILS_TBL subdetail = new SUBDETAILS_TBL()
                     {
@@ -128,7 +200,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     this.SubDetailCol.Add(subdetail);
                     this.SubdetailsGrid.SelectedItem = subdetail;
                 }
-                if ((this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(object)) == typeof(SUBDETAILS_TBL) && this.SubdetailsGrid.SelectedItem != null && this.AvaliebleTutors.SelectedItem != null)
+                if ((this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(object)).Name.Contains("SUBDETAILS_TBL") && this.SubdetailsGrid.SelectedItem != null && this.AvaliebleTutors.SelectedItem != null)
                 {
                     ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHERS_TBL = (TEACHERS_TBL)this.AvaliebleTutors.SelectedItem;
                     ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID = ((TEACHERS_TBL)this.AvaliebleTutors.SelectedItem).TEACHER_ID;
@@ -171,9 +243,30 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public LoadComplexEdit.GroupSelect GroupSelectPage;
 
+        public void UserAbleAdd()
+        {
+            DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
+            this.SubdetailsGrid.CanUserAddRows = detail != null ? detail.HOURS > this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL() { HOURS = (decimal)0.0 }).Select(p => p.HOURS).Sum() : false;
+        }
 
+        public void UpdateDetails()
+        {
+            MAIN_TBL selMain = (MAIN_TBL)this.MainsGrid.SelectedItem;
+            if (selMain != null)
+                this.DetailsGrid.ItemsSource = this.MainContext.DETAILS_TBL.Where(p => p.ITEM_ID == ((MAIN_TBL)this.MainsGrid.SelectedItem).ITEM_ID).AsNoTracking().ToList();
+            else
+            {
+                try
+                { this.DetailsGrid.Items.Clear(); }
+                catch { }
+            }
+            this.DetailsGrid.Items.Refresh();
+        }
+
+        protected bool SkipUpdateLoad = false;
         public void UpdateLoad()
         {
+            if (this.SkipUpdateLoad) return;
             using (Entities context = new Entities())
             {
                 int i = context.SUBDETAILS_TBL.ToList().DefaultIfEmpty(new SUBDETAILS_TBL() { SUBDETAIL_ID = 0 }).Max(p => p.SUBDETAIL_ID);
@@ -192,11 +285,12 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                                 DETAIL_ID = subdetail.DETAIL_ID
                             };
                             context.SUBDETAILS_TBL.Add(local);
+                            subdetail.SUBDETAIL_ID = local.SUBDETAIL_ID;
                         }
                         local.HOURS = subdetail.HOURS;
                         local.TEACHER_ID = subdetail.TEACHER_ID;
                         context.SaveChanges();
-                        List<GROUPS_TBL> avGroups = local.GROUPS_TBL.ToList(), avGroups2;
+                        List<GROUPS_TBL> avGroups = local.GROUPS_TBL.ToList();
                         context.Database.Connection.Open();
                         foreach (GROUPS_TBL group in subdetail.GROUPS_TBL.ToList().Where(p=>!avGroups.Any(g=>g.GROUP_ID==p.GROUP_ID)))
                         {
@@ -218,9 +312,13 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                             command.ExecuteNonQuery();
                         }
                         context.Database.Connection.Close();
+                        this.MainContext.SUBDETAILS_TBL.Load();
+                        this.MainContext.DETAILS_TBL.Load();
                     }
                 }
-                this.MainContext.SUBDETAILS_TBL.Load();
+
+                this.UserAbleAdd();
+                this.DetailsGrid.Items.Refresh();
             }
         }
 
@@ -228,6 +326,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void PreparePlan()
         {
+            MAIN_TBL selMain = (MAIN_TBL) this.MainsGrid.SelectedItem;
             this.MainsGrid.ItemsSource = this.MainContext.MAIN_TBL.ToList().Where(p =>
               p.EDUFORM_ID == (this.MainParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID) &&
               p.EDUTYPE_ID == (this.MainParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID) &&
@@ -238,6 +337,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.EduTypeCol.Visibility = (this.MainParametersChoose.SelectedEduType == null ? Visibility.Visible : Visibility.Collapsed);
             this.CourseCol.Visibility = (this.MainParametersChoose.CourseChoosed == null ? Visibility.Visible : Visibility.Collapsed);
             this.SemesterCol.Visibility = (this.MainParametersChoose.SemesterChoosed == null ? Visibility.Visible : Visibility.Collapsed);
+            this.MainsGrid.SelectedItem = this.MainContext.MAIN_TBL.ToList().FirstOrDefault(p => p.ITEM_ID == (selMain ?? new MAIN_TBL() { ITEM_ID = 0 }).ITEM_ID);
         }
 
         public void PrepareAddRow()
@@ -245,9 +345,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
             if (detail != null)
             {
-                this.MainContext.Entry<DETAILS_TBL>(detail).Reload();
-                this.DetailsGrid.Items.Refresh();
-                this.SubdetailsGrid.CanUserAddRows = detail.HOURS > detail.SUBDETAILS_TBL.Select(p => p.HOURS).Sum();
                 try
                 { this.SubDetailCol.Clear(); }
                 catch { }
@@ -256,6 +353,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.SubdetailsGrid.IsEnabled = true;
             }
             else this.SubdetailsGrid.IsEnabled = false;
+            this.UserAbleAdd();
         }
     }
 
