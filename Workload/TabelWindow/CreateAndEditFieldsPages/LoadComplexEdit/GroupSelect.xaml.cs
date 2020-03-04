@@ -98,7 +98,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.LoadComplexEdit
                     this.GroupsInColl.Clear();
                 }
                 catch { }
-                foreach (GROUPS_TBL group in value.GROUPS_TBL.ToList()) this.GroupsInColl.Add(group);
+                try
+                { foreach (GROUPS_TBL group in value.GROUPS_TBL.ToList()) this.GroupsInColl.Add(group); }
+                catch { }
             }
         }
 
