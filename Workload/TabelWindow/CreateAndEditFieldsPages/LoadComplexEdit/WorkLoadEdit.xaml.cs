@@ -28,6 +28,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public WorkLoadEdit()
         {
             InitializeComponent();
+            this.Tab = null;
+            this.Window = null;
             this.MainParametersChoose = new MainComplexEdit.MainParametersChoose();
             this.ParametersFrame.Content = this.MainParametersChoose;
             SelectionChangedEventHandler selectionChanged = new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => this.PreparePlan());
@@ -243,12 +245,18 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     this.UpdateLoad();
                 }
             });
+
+            this.Loaded += new RoutedEventHandler((object sender, RoutedEventArgs args) => PreparePlan());
         }
 
-        public System.String Name => "Loads";
+        public System.String PresentationName => "Навантаження";
 
         protected Entities MainContext => ((App)System.Windows.Application.Current).DBContext;
         public Page TablePage { get => this; set => throw new NotImplementedException(); }
+        public TabItem Tab { get; set; }
+        public Window Window { get; set; }
+
+        public System.String PresentationType => PresentaionType.Distribution;
 
         public MainComplexEdit.MainParametersChoose MainParametersChoose;
 
@@ -356,8 +364,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
             }
         }
-
-        public void InitPage() { }
 
         public void PreparePlan()
         {

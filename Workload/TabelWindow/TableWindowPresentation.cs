@@ -5,28 +5,53 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using Workload.TabelWindow;
 
 namespace Workload
 {
     public interface ITableWindowPresentation
     {
-        System.String Name { get; }
+        System.String PresentationName { get; }
 
-        void InitPage();
+        System.String PresentationType { get; }
 
         System.Windows.Controls.Page TablePage { get; set; }
+
+        System.Windows.Controls.TabItem Tab { get; set; }
+
+        System.Windows.Window Window { get; set; }
+
+    }
+
+    public class PresentaionType
+    {
+        private PresentaionType(System.String value) { this.Value = value; }
+
+        protected System.String Value;
+
+        public static implicit operator string(PresentaionType presentaionType)=> presentaionType.Value;
+        public override System.String ToString() => this.Value;
+        public static PresentaionType Table => new PresentaionType("Таблиці");
+        public static PresentaionType Distribution => new PresentaionType("Розподіл");
+        public static PresentaionType Reports => new PresentaionType("Звіти");
+        public static PresentaionType Database => new PresentaionType("База даних");
     }
 
     public class TableWindowPresentation<T>: ITableWindowPresentation where T: class
     {
-        public TableWindowPresentation(System.String name, ICreateEditPage createEditPage)
+        public TableWindowPresentation(System.String name, PresentaionType presentaionType, ICreateEditPage createEditPage)
         {
-            this.name = name;
+            this.PresentationName = name;
             this.CreateEditPage = createEditPage;
+            this.PresentationType = presentaionType;
+            this.Tab = null;
+            this.Window = null;
+            this.InitPage();
         }
 
-        public void InitPage()
+        protected void InitPage()
         {
             this.tablePage = new TablePage();
             this.tablePage.CreateEditPanel.Content = this.CreateEditPage;
@@ -48,8 +73,6 @@ namespace Workload
             }
             catch(Exception e)
             { System.Windows.MessageBox.Show(e.Message, "ERROR"); }
-
-
 
             this.tablePage.DelBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) =>
             {
@@ -152,12 +175,15 @@ namespace Workload
 
         public Entities Context => ((App)System.Windows.Application.Current).DBContext;
 
-        protected System.String name;
-        public System.String Name { get => this.name; }
+        public System.String PresentationName { get; protected set; }
 
         protected TablePage tablePage;
         protected DbSet<T> MainSet => this.Context.Set<T>();
         System.Windows.Controls.Page ITableWindowPresentation.TablePage { get => this.tablePage; set => this.tablePage = (TablePage) value; }
+        public TabItem Tab { get; set; }
+        public Window Window { get; set; }
+
+        public System.String PresentationType { get; protected set; }
 
         public ICreateEditPage CreateEditPage;
 

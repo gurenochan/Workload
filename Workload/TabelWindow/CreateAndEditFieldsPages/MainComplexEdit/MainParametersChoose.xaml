@@ -26,10 +26,22 @@
         </Grid.RowDefinitions>
 
         <Label Content="Вид навчання" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1"/>
-        <ListView x:Name="EduTypesList" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2.5,2.5"/>
+        <ListView x:Name="EduTypesList" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2.5,2.5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=EDUTYPE_NAME}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListView>
 
         <Label Content="Форма навчання" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="3"/>
-        <ListView x:Name="EduFormsList" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2.5,2.5"/>
+        <ListView x:Name="EduFormsList" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2.5,2.5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=EDUFORM_NAME}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListView>
 
         <Label Content="Курс" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="5"/>
         <ListView x:Name="CourseChoose" Grid.Column="0" Grid.Row="6" Margin="2.5,1.25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

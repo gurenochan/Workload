@@ -26,31 +26,33 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
         {
             InitializeComponent();
 
-            this.Context.EDUFORMS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
+            Action EduFormsListFill = new Action(() =>
             {
-                System.String defValue = "<Усі>", selValue;
-                List<System.String> items = new List<System.String>() { defValue };
-                items.AddRange(this.Context.EDUFORMS_TBL.Select(n => n.EDUFORM_NAME).ToList<System.String>());
-                selValue = items.Where(p => p == ((System.String)this.EduFormsList.SelectedValue ?? defValue)).DefaultIfEmpty(defValue).SingleOrDefault();
+                EDUFORMS_TBL defValue = new EDUFORMS_TBL() { EDUFORM_ID = -1, EDUFORM_NAME = "<Усі>" }, selValue;
+                List<EDUFORMS_TBL> items = new List<EDUFORMS_TBL>() { defValue };
+                items.AddRange(this.Context.EDUFORMS_TBL);
+                selValue = items.Where(p => p.EDUFORM_ID == ((EDUFORMS_TBL) this.EduFormsList.SelectedValue ?? defValue).EDUFORM_ID).DefaultIfEmpty(defValue).SingleOrDefault();
                 this.EduFormsList.ItemsSource = items;
                 this.EduFormsList.Items.Refresh();
                 this.EduFormsList.SelectedItem = selValue;
             });
-            this.Context.EDUFORMS_TBL.Load();
-            this.EduFormsList.Items.Refresh();
+            EduFormsListFill();
+            this.Context.EDUFORMS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => EduFormsListFill());
 
-            this.Context.EDUTYPES_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
+            Action EduTypesListFill = new Action(() => 
             {
-                System.String defValue = "<Усі>", selValue;
-                List<System.String> items = new List<System.String>() { defValue };
-                items.AddRange(this.Context.EDUTYPES_TBL.Select(n => n.EDUTYPE_NAME).ToList<System.String>());
-                selValue = items.Where(p => p == ((System.String)this.EduTypesList.SelectedValue ?? defValue)).DefaultIfEmpty(defValue).SingleOrDefault();
+
+
+                EDUTYPES_TBL defValue = new EDUTYPES_TBL() { EDUTYPE_ID = -1, EDUTYPE_NAME = "<Усі>" }, selValue;
+                List<EDUTYPES_TBL> items = new List<EDUTYPES_TBL>() { defValue };
+                items.AddRange(this.Context.EDUTYPES_TBL);
+                selValue = items.Where(p => p.EDUTYPE_ID == ((EDUTYPES_TBL)this.EduTypesList.SelectedValue ?? defValue).EDUTYPE_ID).DefaultIfEmpty(defValue).SingleOrDefault();
                 this.EduTypesList.ItemsSource = items;
                 this.EduTypesList.Items.Refresh();
                 this.EduTypesList.SelectedItem = selValue;
             });
-            this.Context.EDUTYPES_TBL.Load();
-            this.EduTypesList.Items.Refresh();
+            EduTypesListFill();
+            this.Context.EDUTYPES_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => EduTypesListFill());
 
             System.String def_value = "<Усі>";
 
@@ -74,13 +76,14 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
 
         public EDUTYPES_TBL SelectedEduType
         {
-            get => this.Context.EDUTYPES_TBL.ToList().Where(p => p.EDUTYPE_NAME == (System.String)(this.EduTypesList.SelectedItem ?? System.String.Empty)).DefaultIfEmpty(null).FirstOrDefault();
-            set => this.EduTypesList.SelectedItem = this.Context.EDUTYPES_TBL.AsEnumerable().Where(p => p == value).FirstOrDefault()?.EDUTYPE_NAME ?? (this.EduTypesList.Items.Count > 0 ? this.EduTypesList.Items[0] : null);
+            get => ((EDUTYPES_TBL)this.EduTypesList.SelectedItem).EDUTYPE_ID != -1 ? (EDUTYPES_TBL)this.EduTypesList.SelectedItem : null;
+            set => this.EduTypesList.SelectedItem = value != null ? this.EduTypesList.Items.OfType<EDUTYPES_TBL>().DefaultIfEmpty((EDUTYPES_TBL)this.EduTypesList.Items[0]).FirstOrDefault(p => p.EDUTYPE_ID == ((EDUTYPES_TBL)value).EDUTYPE_ID) : (EDUTYPES_TBL)this.EduTypesList.Items[0];
         }
         public EDUFORMS_TBL SelectedEduForm
         {
-            get => this.Context.EDUFORMS_TBL.ToList().Where(p => p.EDUFORM_NAME == (System.String)(this.EduFormsList.SelectedValue ?? System.String.Empty)).DefaultIfEmpty(null).FirstOrDefault();
-            set => this.EduFormsList.SelectedItem = this.Context.EDUFORMS_TBL.AsEnumerable().Where(p => p == value).FirstOrDefault()?.EDUFORM_NAME ?? (this.EduFormsList.Items.Count > 0 ? this.EduFormsList.Items[0] : null);
+
+            get => ((EDUFORMS_TBL)this.EduFormsList.SelectedItem).EDUFORM_ID != -1 ? (EDUFORMS_TBL)this.EduFormsList.SelectedItem : null;
+            set => this.EduFormsList.SelectedItem = value != null ? this.EduFormsList.Items.OfType<EDUFORMS_TBL>().DefaultIfEmpty((EDUFORMS_TBL)this.EduFormsList.Items[0]).FirstOrDefault(p => p.EDUFORM_ID == ((EDUFORMS_TBL)value).EDUFORM_ID) : (EDUFORMS_TBL)this.EduFormsList.Items[0];
         }
 
         public short? CourseChoosed

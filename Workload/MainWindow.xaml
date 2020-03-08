@@ -8,26 +8,30 @@
         Title="MainWindow" Height="700" Width="1200">
     <Grid x:Name="DividerGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="100" Width="100"/>
+            <ColumnDefinition MinWidth="100" Width="150"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="TablesNamesList">
-            <Grid.RowDefinitions x:Uid="NamesListRows">
-                
-            </Grid.RowDefinitions>
-            <Button x:Name="TeachersButton" Content="Teachers" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top" Grid.Column="0"/>
-            <Button x:Name="GroupsButton" Content="Groups" HorizontalAlignment="Stretch" Margin="10,34,10,0" VerticalAlignment="Top" Grid.Column="0"/>
-            <Button x:Name="SubjectsButton" Content="Subjects" HorizontalAlignment="Stretch" Margin="10,58,10,0" VerticalAlignment="Top" Grid.Column="0"/>
-            
-            <Button x:Name="MainsButton" Content="Plan" HorizontalAlignment="Stretch" Margin="10,0,10,25" VerticalAlignment="Center" Grid.Column="0"/>
-            <Button x:Name="SubdetailsButton" Content="Load" HorizontalAlignment="Stretch" Margin="10,0,10,-25" VerticalAlignment="Center" Grid.Column="0"/>
-            
-            <Button x:Name="EduTypesButton" Content="Types" HorizontalAlignment="Stretch" Margin="10,0,10,10.4" VerticalAlignment="Bottom" Grid.Column="0"/>
-            <Button x:Name="EduFormsButton" Content="Forms" HorizontalAlignment="Stretch" Margin="10,0,10,34.4" VerticalAlignment="Bottom" Grid.Column="0"/>
-            <Button x:Name="WorksTypesButton" Content="Works" HorizontalAlignment="Stretch" Margin="10,0,10,58.4" VerticalAlignment="Bottom" Grid.Column="0"/>
-        </Grid>
-        <TabControl x:Name="WorkTabs" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
-            
-        </TabControl>
+        <ListView x:Name="PresentaionsList" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionMode="Single" Margin="1.5,1,1.5,1.5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=PresentationName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5,1,1,1" Background="AliceBlue" FontWeight="Bold" Text="{Binding Path=Name}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+        <TabControl x:Name="WorkTabs" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1"/>
     </Grid>
 </Window>

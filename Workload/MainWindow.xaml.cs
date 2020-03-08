@@ -29,40 +29,76 @@ namespace Workload
             //this.Closing += this.MainWindow_Closing;
             this.Closing += delegate (object sender, System.ComponentModel.CancelEventArgs e) { Application.Current.Shutdown(); };
 
-            RoutedEventHandler TablesButtonHandler = new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+            List<ITableWindowPresentation> tableWindowPresentations = new List<ITableWindowPresentation>();
+            tableWindowPresentations.Add(new TableWindowPresentation<TEACHERS_TBL>("Вчителі", PresentaionType.Table, new TeacherEditForm()));
+            tableWindowPresentations.Add(new TableWindowPresentation<GROUPS_TBL>("Групи", PresentaionType.Table, new GroupEditForm()));
+            tableWindowPresentations.Add(new TableWindowPresentation<SUBJECTS_TBL>("Дисципліни", PresentaionType.Table, new SubjectEditForm()));
+            tableWindowPresentations.Add(new TableWindowPresentation<MAIN_TBL>("Навчальний план", PresentaionType.Distribution, new MainEditForm()));
+            tableWindowPresentations.Add(new WorkLoadEdit());
+            tableWindowPresentations.Add(new TableWindowPresentation<EDUFORMS_TBL>("Форми навчання", PresentaionType.Database, new EduFormEditForm()));
+            tableWindowPresentations.Add(new TableWindowPresentation<EDUTYPES_TBL>("Види навчання ", PresentaionType.Database, new EduTypesEditForm()));
+            tableWindowPresentations.Add(new TableWindowPresentation<WORKS_TBL>("Види робіт", PresentaionType.Database, new WorkTypesEditForm()));
+
+            this.PresentaionsList.ItemsSource = tableWindowPresentations;
+
+            ((CollectionView)CollectionViewSource.GetDefaultView(this.PresentaionsList.ItemsSource)).GroupDescriptions.Add(new PropertyGroupDescription("PresentationType"));
+        }
+
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.PresentaionsList.SelectedItem = null;
+            ListViewItem item = sender as ListViewItem;
+            if (item!=null)
             {
-                ITableWindowPresentation presentation = null;
-                if (sender == this.TeachersButton) presentation = new TableWindowPresentation<TEACHERS_TBL>("Teachers", new TeacherEditForm());
-                if (sender == this.GroupsButton) presentation = new TableWindowPresentation<GROUPS_TBL>("Groups", new GroupEditForm());
-                if (sender == this.SubjectsButton) presentation = new TableWindowPresentation<SUBJECTS_TBL>("Subjeects", new SubjectEditForm());
-                if (sender == this.EduFormsButton) presentation = new TableWindowPresentation<EDUFORMS_TBL>("Educational Forms", new EduFormEditForm());
-                if (sender == this.EduTypesButton) presentation = new TableWindowPresentation<EDUTYPES_TBL>("Subjeects", new EduTypesEditForm());
-                if (sender == this.WorksTypesButton) presentation = new TableWindowPresentation<WORKS_TBL>("Works", new WorkTypesEditForm());
-
-                if (sender == this.MainsButton) presentation = new TableWindowPresentation<MAIN_TBL>("Plans", new MainEditForm());
-                if (sender == this.SubdetailsButton) presentation = new WorkLoadEdit();
-
-                if (presentation!=null)
+                ITableWindowPresentation tableWindowPresentation = (ITableWindowPresentation)item.DataContext;
+                if (tableWindowPresentation.Tab == null && tableWindowPresentation.Window == null)
                 {
-                    presentation.InitPage();
-                    this.WorkTabs.Items.Add(new TabItem()
+                    TabItem tabItem = new TabItem()
                     {
-                        Header = presentation.Name,
-                        Content = new Frame() { Content = presentation.TablePage }
-                    });
-                    this.WorkTabs.SelectedIndex = this.WorkTabs.Items.Count - 1;
-                    ((Button)sender).IsEnabled = false;
-                }
-            });
+                        Header = tableWindowPresentation.PresentationName,
+                        Content = new Frame() { Content = tableWindowPresentation.TablePage }
+                    };
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem closeItem = new MenuItem()
+                    { Header = "Закрити" },
+                    putToWindow = new MenuItem()
+                    { Header = "Відкрити як вікно" };
 
-            this.TeachersButton.Click += TablesButtonHandler;
-            this.GroupsButton.Click += TablesButtonHandler;
-            this.SubjectsButton.Click += TablesButtonHandler;
-            this.EduFormsButton.Click += TablesButtonHandler;
-            this.EduTypesButton.Click += TablesButtonHandler;
-            this.WorksTypesButton.Click += TablesButtonHandler;
-            this.MainsButton.Click += TablesButtonHandler;
-            this.SubdetailsButton.Click += TablesButtonHandler;
+                    closeItem.Click += new RoutedEventHandler((object obj, RoutedEventArgs args) =>
+                    {
+                        tableWindowPresentation.Tab = null;
+                        this.WorkTabs.Items.Remove(tabItem);
+                    });
+                    putToWindow.Click += new RoutedEventHandler((object obj, RoutedEventArgs args) =>
+                    {
+                        Window window = new Window()
+                        {
+                            Title = tableWindowPresentation.PresentationName,
+                            Content = tableWindowPresentation.TablePage
+                        };
+                        window.Closed += new EventHandler((object obj1, EventArgs args1) =>
+                          tableWindowPresentation.Window = null);
+                        tableWindowPresentation.Window = window;
+                        tableWindowPresentation.Tab = null;
+                        this.WorkTabs.Items.Remove(tabItem);
+                        window.Show();
+                    });
+
+                    contextMenu.Items.Add(closeItem);
+                    contextMenu.Items.Add(putToWindow);
+
+                    tabItem.Header = new ContentControl
+                    {
+                        ContextMenu = contextMenu,
+                        Content = tableWindowPresentation.PresentationName
+                    };
+                    this.WorkTabs.Items.Add(tabItem);
+                    tableWindowPresentation.Tab = tabItem;
+                    this.WorkTabs.SelectedIndex = this.WorkTabs.Items.Count - 1;
+                }
+                else if (tableWindowPresentation.Tab != null) this.WorkTabs.SelectedItem = tableWindowPresentation.Tab;
+                else if (tableWindowPresentation.Window != null) tableWindowPresentation.Window.Activate();
+            }
         }
     }
 }
