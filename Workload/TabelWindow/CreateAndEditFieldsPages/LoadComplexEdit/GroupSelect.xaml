@@ -12,21 +12,27 @@
       Background="White">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="25"/>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="GroupsInSubList" Grid.Row="0" Grid.Column="0" SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Label Content="Наявні" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"/>
+        <ListView x:Name="GroupsInSubList" Grid.Row="1" Grid.Column="0" SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=GROUP_NAME}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>
-        <ListView x:Name="GroupsOutSubList" Grid.Row="2" Grid.Column="0" SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Label Content="Доступні" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"/>
+        <ListView x:Name="GroupsOutSubList" Grid.Row="3" Grid.Column="0" SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=GROUP_NAME}"/>
@@ -34,8 +40,8 @@
             </ListBox.ItemTemplate>
         </ListView>
 
-        <Button x:Name="AddGroupBut" Content="Add" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" Width="60"/>
-        <Button x:Name="RemoveGroupBut" Content="Remove" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Width="60"/>
+        <Button x:Name="AddGroupBut" Content="Add" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,0" Height="20"/>
+        <Button x:Name="RemoveGroupBut" Content="Remove" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,30,5,0" Height="20"/>
 
         <Button x:Name="CloseBut" Visibility="Hidden" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" Margin="10,1"/>
     </Grid>

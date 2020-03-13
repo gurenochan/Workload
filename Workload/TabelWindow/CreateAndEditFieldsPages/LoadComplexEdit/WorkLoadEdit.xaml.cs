@@ -17,6 +17,7 @@ using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Collections.ObjectModel;
 using System.Data.Common;
+using System.Windows.Controls.Primitives;
 
 namespace Workload.TabelWindow.CreateAndEditFieldsPages
 {
@@ -37,8 +38,15 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.MainParametersChoose.EduTypesList.SelectionChanged += selectionChanged;
             this.MainParametersChoose.CourseChoose.SelectionChanged += selectionChanged;
             this.MainParametersChoose.SemesterChoose.SelectionChanged += selectionChanged;
-            this.MainContext.MAIN_TBL.Local.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.PreparePlan());
-            this.MainContext.MAIN_TBL.Load();
+            try
+            {
+                this.MainContext.MAIN_TBL.Local.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.PreparePlan());
+                this.MainContext.MAIN_TBL.Load();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to load plans.\nError: " + ex.Message + ".\n" + ex.StackTrace);
+            }
 
             this.MainsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => this.UpdateDetails());
             this.MainContext.DETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
@@ -47,7 +55,14 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.UpdateDetails();
                 if (detail != null) this.DetailsGrid.SelectedItem = this.DetailsGrid.Items.OfType<DETAILS_TBL>().FirstOrDefault(p => p.DETAIL_ID == detail.DETAIL_ID);
             });
-            this.MainContext.DETAILS_TBL.Load();
+            try
+            {
+                this.MainContext.DETAILS_TBL.Load();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to load plans details.\nError: " + ex.Message + "\n" + ex.StackTrace);
+            }
 
             this.MainContext.SUBDETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => 
             {
@@ -94,18 +109,24 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
             this.DetailsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) =>
             {
-                DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
                 try
-                { this.SubDetailCol.Clear(); }
-                catch { }
-                if (detail != null)
                 {
-                    foreach (SUBDETAILS_TBL subdetail in this.MainContext.SUBDETAILS_TBL.Where(p => p.DETAIL_ID == detail.DETAIL_ID).AsNoTracking())
-                        this.SubDetailCol.Add(subdetail);
-                    this.SubdetailsGrid.IsEnabled = true;
+
+                    DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
+                    try
+                    { this.SubDetailCol.Clear(); }
+                    catch { }
+                    if (detail != null)
+                    {
+                        foreach (SUBDETAILS_TBL subdetail in this.MainContext.SUBDETAILS_TBL.Where(p => p.DETAIL_ID == detail.DETAIL_ID).AsNoTracking())
+                            this.SubDetailCol.Add(subdetail);
+                        this.SubdetailsGrid.IsEnabled = true;
+                    }
+                    else this.SubdetailsGrid.IsEnabled = false;
+                    this.UserAbleAdd();
                 }
-                else this.SubdetailsGrid.IsEnabled = false;
-                this.UserAbleAdd();
+                catch(Exception ex)
+                { MessageBox.Show("Unable to load loads details while switchiing selection of plan details.\nError: " + ex.Message + "\n" + ex.StackTrace); }
             });
             this.MainContext.SUBDETAILS_TBL.Load();
 
@@ -116,26 +137,34 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 {
                     foreach (SUBDETAILS_TBL subdetail in args.OldItems)
                     {
-                        if (((DETAILS_TBL)this.DetailsGrid.SelectedItem).SUBDETAILS_TBL.Any(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID))
+                        try
                         {
-                            using (Entities context = new Entities())
+
+                            if (((DETAILS_TBL)this.DetailsGrid.SelectedItem).SUBDETAILS_TBL.Any(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID))
                             {
-                                SUBDETAILS_TBL _subdetail = context.SUBDETAILS_TBL.Find(subdetail.SUBDETAIL_ID);
-                                if (_subdetail != null)
+                                using (Entities context = new Entities())
                                 {
-                                    context.SUBDETAILS_TBL.Remove(_subdetail);
-                                    SUBDETAILS_TBL local = this.MainContext.SUBDETAILS_TBL.Local.FirstOrDefault(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID);
-                                    if (local!=null)
-                                        this.MainContext.SUBDETAILS_TBL.Local.Remove(local);
-                                    context.SaveChanges();
-                                    context.Database.Connection.Open();
-                                    DbCommand command = context.Database.Connection.CreateCommand();
-                                    command.CommandText = "DELETE FROM GPRELATIONS_TBL WHERE SUBDETAIL_ID=" + _subdetail.SUBDETAIL_ID.ToString();
-                                    command.ExecuteNonQuery();
-                                    context.Database.Connection.Close();
-                                    this.MainContext.SUBDETAILS_TBL.Load();
+                                    SUBDETAILS_TBL _subdetail = context.SUBDETAILS_TBL.Find(subdetail.SUBDETAIL_ID);
+                                    if (_subdetail != null)
+                                    {
+                                        context.SUBDETAILS_TBL.Remove(_subdetail);
+                                        SUBDETAILS_TBL local = this.MainContext.SUBDETAILS_TBL.Local.FirstOrDefault(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID);
+                                        if (local != null)
+                                            this.MainContext.SUBDETAILS_TBL.Local.Remove(local);
+                                        context.SaveChanges();
+                                        context.Database.Connection.Open();
+                                        DbCommand command = context.Database.Connection.CreateCommand();
+                                        command.CommandText = "DELETE FROM GPRELATIONS_TBL WHERE SUBDETAIL_ID=" + _subdetail.SUBDETAIL_ID.ToString();
+                                        command.ExecuteNonQuery();
+                                        context.Database.Connection.Close();
+                                        this.MainContext.SUBDETAILS_TBL.Load();
+                                    }
                                 }
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Unable to delete load detail.\nError: " + ex.Message+"\n"+ex.StackTrace);
                         }
                     }
                 }
@@ -144,36 +173,60 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             });
             this.SubdetailsGrid.ItemsSource = this.SubDetailCol;
 
+            RoutedEventHandler HourCellLostFocusHandler = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.SubdetailsGrid.Items.Refresh());
 
             this.SubdetailsGrid.CellEditEnding += new EventHandler<DataGridCellEditEndingEventArgs>((object sender, DataGridCellEditEndingEventArgs args) =>
-              {
-                  if (args.EditAction == DataGridEditAction.Cancel)
-                  {
-                      ((TextBox)args.EditingElement).Background = Brushes.White;
-                      return;
-                  }
-
-                  SUBDETAILS_TBL subdetail = (SUBDETAILS_TBL)args.Row.DataContext;
-                  if (args.Column == this.SubHourCol && this.DetailsGrid.SelectedItem != null)
-                  {
-                      decimal
-                          detailHours = ((DETAILS_TBL)DetailsGrid.SelectedItem).HOURS,
-                          newHours = Convert.ToDecimal(((TextBox)args.EditingElement).Text);
-                      if (detailHours < newHours + this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL()).Select(p => p.HOURS).Sum())
-                      {
-                          args.Cancel = true;
-                          ((TextBox)args.EditingElement).Background = Brushes.LightPink;
-                          return;
-                      }
-                      else
-                      {
-                          subdetail.HOURS = newHours;
-                          ((TextBox)args.EditingElement).Background = Brushes.White;
-                          this.UpdateLoad();
-                      }
-                  }
-
-              });
+            {
+                if (args.EditAction == DataGridEditAction.Cancel)
+                {
+                    ((TextBox)args.EditingElement).Background = Brushes.White;
+                    return;
+                }
+                try
+                {
+                    SUBDETAILS_TBL subdetail = (SUBDETAILS_TBL)args.Row.DataContext;
+                    if (args.Column == this.SubHourCol && this.DetailsGrid.SelectedItem != null)
+                    {
+                        decimal
+                            detailHours = ((DETAILS_TBL)DetailsGrid.SelectedItem).HOURS,
+                            newHours = Convert.ToDecimal(((TextBox)args.EditingElement).Text);
+                        if (!decimal.TryParse(((TextBox)args.EditingElement).Text, out newHours))
+                        {
+                            ((TextBox)args.EditingElement).Background = Brushes.LightPink;
+                            MessageBox.Show("На жаль, неможливо розпізнати введений текст як ЧИСЛО.\nБудь ласка, переконайтеся що введені вами дані не містять постороніх символів (усе окрім цифр та коми).");
+                            args.Cancel = true;
+                            return;
+                        }
+                        else if (newHours<=(decimal)0.0)
+                        {
+                            ((TextBox)args.EditingElement).Background = Brushes.LightPink;
+                            MessageBox.Show("На жаль, кількість годин не може бути від'ємною.");
+                            args.Cancel = true;
+                            return;
+                        }
+                        if (detailHours < newHours + this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL()).Select(p => p.HOURS).Sum() - (this.SubdetailsGrid.SelectedItem != null && (this.SubdetailsGrid.SelectedItem ?? new object()).GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).HOURS : (decimal)0.0))
+                        {
+                            args.Cancel = true;
+                            ((TextBox)args.EditingElement).Background = Brushes.LightPink;
+                            MessageBox.Show("На жаль така кількість годин наразі недоступна.");
+                            return;
+                        }
+                        else
+                        {
+                            subdetail.HOURS = newHours;
+                            ((TextBox)args.EditingElement).Background = Brushes.White;
+                            this.UpdateLoad();
+                            this.SubdetailsGrid.ItemsSource = null;
+                            this.SubdetailsGrid.ItemsSource = this.SubDetailCol;
+                            this.UserAbleAdd();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unable to edit the record.\nError: " + ex.Message + ".\n" + ex.StackTrace);
+                }
+            });
 
             this.SubdetailsGrid.InitializingNewItem += new InitializingNewItemEventHandler((object sender, InitializingNewItemEventArgs args) => ((SUBDETAILS_TBL)args.NewItem).DETAIL_ID = ((DETAILS_TBL)this.DetailsGrid.SelectedItem).DETAIL_ID);
 
@@ -189,60 +242,99 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 }
                 else
                 {
-                    this.AvaliebleTutors.IsEnabled = true;
-                    this.GroupSelectFrame.IsEnabled = true;
-                    this.SkipUpdateLoad = true;
-                    SUBDETAILS_TBL subdetail = this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem) : new SUBDETAILS_TBL()
+                    try
                     {
-                        DETAIL_ID = ((DETAILS_TBL)this.DetailsGrid.SelectedItem).DETAIL_ID,
-                        TEACHER_ID = 0
-                    };
-                    this.AvaliebleTutors.ItemsSource = this.MainContext.TEACHERS_TBL.ToList()
-                    .Where(p => (this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false) || !this.SubDetailCol.Any(g => g.TEACHER_ID == p.TEACHER_ID));
+                        this.AvaliebleTutors.IsEnabled = true;
+                        this.GroupSelectFrame.IsEnabled = true;
+                        this.SkipUpdateLoad = true;
+                        SUBDETAILS_TBL subdetail = this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem) : new SUBDETAILS_TBL()
+                        {
+                            DETAIL_ID = ((DETAILS_TBL)this.DetailsGrid.SelectedItem).DETAIL_ID,
+                            TEACHER_ID = 0
+                        };
+                        this.AvaliebleTutors.ItemsSource = this.MainContext.TEACHERS_TBL.ToList()
+                        .Where(p => (this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false) || !this.SubDetailCol.Any(g => g.TEACHER_ID == p.TEACHER_ID));
 
 
 
-                    this.GroupSelectPage.AvGroups = this.MainContext.GROUPS_TBL.ToList().Where(p =>
-                    p.COURSE_NO == ((DETAILS_TBL)this.DetailsGrid.SelectedItem).MAIN_TBL.COURSE_NO &&
-                    p.EDUFORM_ID == ((DETAILS_TBL)this.DetailsGrid.SelectedItem).MAIN_TBL.EDUFORM_ID)
-                    .ToList();
-                    this.GroupSelectPage.SubDetail = subdetail;
-                    this.AvaliebleTutors.SelectedItem = this.AvaliebleTutors.Items.OfType<TEACHERS_TBL>().FirstOrDefault(p => this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false);
-                    this.SkipUpdateLoad = false;
+                        this.GroupSelectPage.AvGroups = this.MainContext.GROUPS_TBL.ToList().Where(p =>
+                        p.COURSE_NO == ((DETAILS_TBL)this.DetailsGrid.SelectedItem).MAIN_TBL.COURSE_NO &&
+                        p.EDUFORM_ID == ((DETAILS_TBL)this.DetailsGrid.SelectedItem).MAIN_TBL.EDUFORM_ID)
+                        .ToList();
+                        this.GroupSelectPage.SubDetail = subdetail;
+                        this.AvaliebleTutors.SelectedItem = this.AvaliebleTutors.Items.OfType<TEACHERS_TBL>().FirstOrDefault(p => this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false);
+                        this.SkipUpdateLoad = false;
+                    }
+                    catch (Exception ex)
+                    { MessageBox.Show("Unable to fill edit fields while switching selection of load plan.\nError: " + ex.Message + ".\n" + ex.StackTrace); }
                 }
             });
 
             this.AvaliebleTutors.SelectionChanged += new SelectionChangedEventHandler((object sender, SelectionChangedEventArgs args) =>
             {
-                if (this.AvaliebleTutors.SelectedItem != null)
-                    this.AddSubdetail(new Action<SUBDETAILS_TBL>((SUBDETAILS_TBL subdetail) =>
-                    {
-                        subdetail.TEACHERS_TBL = (TEACHERS_TBL)this.AvaliebleTutors.SelectedItem;
-                        subdetail.TEACHER_ID = ((TEACHERS_TBL)this.AvaliebleTutors.SelectedItem).TEACHER_ID;
-                    }));
-                if ((this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(object)).Name.Contains("SUBDETAILS_TBL") && this.SubdetailsGrid.SelectedItem != null && this.AvaliebleTutors.SelectedItem != null)
+                try
                 {
-                    ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHERS_TBL = (TEACHERS_TBL)this.AvaliebleTutors.SelectedItem;
-                    ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID = ((TEACHERS_TBL)this.AvaliebleTutors.SelectedItem).TEACHER_ID;
-                }
+                    bool goToNextRow = !(this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(SUBDETAILS_TBL)).Name.Contains("SUBDETAILS_TBL") && this.SubdetailsGrid.SelectedItem != null && this.AvaliebleTutors.SelectedItem != null;
 
-                this.SubdetailsGrid.Items.Refresh();
-                this.UpdateLoad();
+                    if (this.AvaliebleTutors.SelectedItem != null)
+                        this.AddSubdetail(new Action<SUBDETAILS_TBL>((SUBDETAILS_TBL subdetail) =>
+                        {
+                            subdetail.TEACHERS_TBL = (TEACHERS_TBL)this.AvaliebleTutors.SelectedItem;
+                            subdetail.TEACHER_ID = ((TEACHERS_TBL)this.AvaliebleTutors.SelectedItem).TEACHER_ID;
+                        }));
+                    if ((this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(object)).Name.Contains("SUBDETAILS_TBL") && this.SubdetailsGrid.SelectedItem != null && this.AvaliebleTutors.SelectedItem != null)
+                    {
+                        ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHERS_TBL = (TEACHERS_TBL)this.AvaliebleTutors.SelectedItem;
+                        ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID = ((TEACHERS_TBL)this.AvaliebleTutors.SelectedItem).TEACHER_ID;
+                    }
+
+                    this.SubdetailsGrid.Items.Refresh();
+                    this.UpdateLoad();
+
+                    if (goToNextRow && this.SubdetailsGrid.CanUserAddRows) this.SubdetailsGrid.SelectedIndex = this.SubdetailsGrid.Items.Count - 1;
+                }
+                catch(Exception ex)
+                { MessageBox.Show("Unable to change selection of tutor.\nError: " + ex.Message + ".\n" + ex.StackTrace); }
             });
 
             this.GroupSelectPage.GroupsInColl.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs args) =>
             {
                 if (args.Action == NotifyCollectionChangedAction.Add || args.Action == NotifyCollectionChangedAction.Remove)
                 {
-                    if (this.GroupSelectPage.GroupsInColl.Count > 0)
-                        this.AddSubdetail(new Action<SUBDETAILS_TBL>((SUBDETAILS_TBL subdetail) =>
-                        {
-                            foreach (GROUPS_TBL group in args.NewItems)
-                                subdetail.GROUPS_TBL.Add(group);
-                        }));
-
+                    try
+                    {
+                        if (this.GroupSelectPage.GroupsInColl.Count > 0)
+                            this.AddSubdetail(new Action<SUBDETAILS_TBL>((SUBDETAILS_TBL subdetail) =>
+                            {
+                                foreach (GROUPS_TBL group in args.NewItems)
+                                    subdetail.GROUPS_TBL.Add(group);
+                            }));
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("Unable to update group affiliating.\nError: " + ex.Message + ".\n" + ex.StackTrace);
+                    }
                     this.SubdetailsGrid.Items.Refresh();
                     this.UpdateLoad();
+                }
+            });
+
+            this.MainContext.TEACHERS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs args) =>
+            {
+                try
+                {
+
+                    this.SubdetailsGrid.Items.Refresh();
+                    if (this.AvaliebleTutors.IsEnabled && this.SubdetailsGrid.SelectedItem != null)
+                    {
+                        this.AvaliebleTutors.ItemsSource = this.MainContext.TEACHERS_TBL.ToList()
+                            .Where(p => (this.SubdetailsGrid.SelectedItem.GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).TEACHER_ID == p.TEACHER_ID : false) || !this.SubDetailCol.Any(g => g.TEACHER_ID == p.TEACHER_ID));
+                        this.AvaliebleTutors.Items.Refresh();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Неможливо оновити список доступних викладачів.\nПричина:\n" + ex.Message + "\n" + ex.StackTrace);
                 }
             });
 
@@ -266,38 +358,57 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public void AddSubdetail(Action<SUBDETAILS_TBL> act)
         {
-            if (!(this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(SUBDETAILS_TBL)).Name.Contains("SUBDETAILS_TBL") && this.SubdetailsGrid.SelectedItem != null)
+            try
             {
-                SUBDETAILS_TBL subdetail = new SUBDETAILS_TBL()
+                if (!(this.SubdetailsGrid.SelectedItem?.GetType() ?? typeof(SUBDETAILS_TBL)).Name.Contains("SUBDETAILS_TBL") && this.SubdetailsGrid.SelectedItem != null)
                 {
-                    DETAIL_ID = ((DETAILS_TBL)this.DetailsGrid.SelectedItem).DETAIL_ID
-                };
-                act(subdetail);
-                this.SubDetailCol.Add(subdetail);
-                this.SubdetailsGrid.SelectedItem = subdetail;
+                    SUBDETAILS_TBL subdetail = new SUBDETAILS_TBL()
+                    {
+                        DETAIL_ID = ((DETAILS_TBL)this.DetailsGrid.SelectedItem).DETAIL_ID
+                    };
+                    act(subdetail);
+                    this.SubDetailCol.Add(subdetail);
+                    this.SubdetailsGrid.SelectedItem = subdetail;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to add load detail.\nError: " + ex.Message + ".\n" + ex.StackTrace);
             }
         }
 
         public void UserAbleAdd()
         {
-            DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
             try
-            { this.SubdetailsGrid.CanUserAddRows = detail != null ? detail.HOURS > this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL() { HOURS = (decimal)0.0 }).Select(p => p.HOURS).Sum() : false; }
-            catch { }
+            {
+                DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
+                try
+                { this.SubdetailsGrid.CanUserAddRows = detail != null ? detail.HOURS > this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL() { HOURS = (decimal)0.0 }).Select(p => p.HOURS).Sum() : false; }
+                catch { }
+            }
+            catch(Exception ex) { MessageBox.Show("Unable to decide avability of adding option.\nError: " + ex.Message + ".\n" + ex.StackTrace); }
         }
 
         public void UpdateDetails()
         {
-            MAIN_TBL selMain = (MAIN_TBL)this.MainsGrid.SelectedItem;
-            if (selMain != null)
-                this.DetailsGrid.ItemsSource = this.MainContext.DETAILS_TBL.Where(p => p.ITEM_ID == ((MAIN_TBL)this.MainsGrid.SelectedItem).ITEM_ID).AsNoTracking().ToList();
-            else
+            try
             {
-                try
-                { this.DetailsGrid.Items.Clear(); }
-                catch { }
+
+                MAIN_TBL selMain = (MAIN_TBL)this.MainsGrid.SelectedItem;
+                if (selMain != null)
+                    this.DetailsGrid.ItemsSource = this.MainContext.DETAILS_TBL.Where(p => p.ITEM_ID == ((MAIN_TBL)this.MainsGrid.SelectedItem).ITEM_ID).ToList();
+                else
+                {
+                    try
+                    { this.DetailsGrid.Items.Clear(); }
+                    catch { }
+                }
+                this.DetailsGrid.Items.Refresh();
             }
-            this.DetailsGrid.Items.Refresh();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to update grid of detail.\nError: " + ex.Message + ".\n" + ex.StackTrace);
+            }
         }
 
         protected bool SkipUpdateLoad = false;
@@ -305,81 +416,97 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         {
             this.UserAbleAdd();
             if (this.SkipUpdateLoad) return;
-            using (Entities context = new Entities())
+            try
             {
-                int i = context.SUBDETAILS_TBL.ToList().DefaultIfEmpty(new SUBDETAILS_TBL() { SUBDETAIL_ID = 0 }).Max(p => p.SUBDETAIL_ID);
-                foreach (SUBDETAILS_TBL subdetail in this.SubDetailCol)
+                using (Entities context = new Entities())
                 {
-                    if (subdetail.DETAIL_ID!=0 && 
-                        subdetail.HOURS!=(decimal)0.0 &&
-                        subdetail.TEACHER_ID!=0)
+                    int i = context.SUBDETAILS_TBL.ToList().DefaultIfEmpty(new SUBDETAILS_TBL() { SUBDETAIL_ID = 0 }).Max(p => p.SUBDETAIL_ID);
+                    foreach (SUBDETAILS_TBL subdetail in this.SubDetailCol)
                     {
-                        SUBDETAILS_TBL local = context.SUBDETAILS_TBL.Find(subdetail.SUBDETAIL_ID);
-                        if (local==null)
+                        if (subdetail.DETAIL_ID != 0 &&
+                            subdetail.HOURS != (decimal)0.0 &&
+                            subdetail.TEACHER_ID != 0)
                         {
-                            local = new SUBDETAILS_TBL()
+                            SUBDETAILS_TBL local = context.SUBDETAILS_TBL.Find(subdetail.SUBDETAIL_ID);
+                            if (local == null)
                             {
-                                SUBDETAIL_ID = ++i,
-                                DETAIL_ID = subdetail.DETAIL_ID
-                            };
-                            context.SUBDETAILS_TBL.Add(local);
-                            subdetail.SUBDETAIL_ID = local.SUBDETAIL_ID;
-                        }
-                        local.HOURS = subdetail.HOURS;
-                        local.TEACHER_ID = subdetail.TEACHER_ID;
-                        context.SaveChanges();
-                        List<GROUPS_TBL> avGroups = local.GROUPS_TBL.ToList();
-                        context.Database.Connection.Open();
-                        foreach (GROUPS_TBL group in subdetail.GROUPS_TBL.ToList().Where(p=>!avGroups.Any(g=>g.GROUP_ID==p.GROUP_ID)))
-                        {
-                            GROUPS_TBL localGroup = context.GROUPS_TBL.Find(group.GROUP_ID);
-                            if (localGroup!=null)
+                                local = new SUBDETAILS_TBL()
+                                {
+                                    SUBDETAIL_ID = ++i,
+                                    DETAIL_ID = subdetail.DETAIL_ID
+                                };
+                                context.SUBDETAILS_TBL.Add(local);
+                                subdetail.SUBDETAIL_ID = local.SUBDETAIL_ID;
+                            }
+                            local.HOURS = subdetail.HOURS;
+                            local.TEACHER_ID = subdetail.TEACHER_ID;
+                            context.SaveChanges();
+                            List<GROUPS_TBL> avGroups = local.GROUPS_TBL.ToList();
+                            context.Database.Connection.Open();
+                            foreach (GROUPS_TBL group in subdetail.GROUPS_TBL.ToList().Where(p => !avGroups.Any(g => g.GROUP_ID == p.GROUP_ID)))
                             {
-                                //local.GROUPS_TBL.Add(localGroup);
+                                GROUPS_TBL localGroup = context.GROUPS_TBL.Find(group.GROUP_ID);
+                                if (localGroup != null)
+                                {
+                                    //local.GROUPS_TBL.Add(localGroup);
+                                    DbCommand command = context.Database.Connection.CreateCommand();
+                                    command.CommandText = "INSERT INTO GPRELATIONS_TBL (SUBDETAIL_ID, GROUP_ID) VALUES(" + local.SUBDETAIL_ID.ToString() + "," + localGroup.GROUP_ID.ToString() + ")";
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                            avGroups = subdetail.GROUPS_TBL.ToList();
+                            foreach (GROUPS_TBL group in local.GROUPS_TBL.ToList().Where(p => !avGroups.Any(g => g.GROUP_ID == p.GROUP_ID)))
+                            {
+                                //local.GROUPS_TBL.Remove(group);
                                 DbCommand command = context.Database.Connection.CreateCommand();
-                                command.CommandText = "INSERT INTO GPRELATIONS_TBL (SUBDETAIL_ID, GROUP_ID) VALUES(" + local.SUBDETAIL_ID.ToString() + "," + localGroup.GROUP_ID.ToString() + ")";
+                                command.CommandText = "DELETE FROM GPRELATIONS_TBL WHERE SUBDETAIL_ID=" + local.SUBDETAIL_ID.ToString() + " AND GROUP_ID=" + group.GROUP_ID.ToString();
                                 command.ExecuteNonQuery();
                             }
+                            context.Database.Connection.Close();
+                            this.MainContext.SUBDETAILS_TBL.Load();
+                            SUBDETAILS_TBL s = this.MainContext.SUBDETAILS_TBL.FirstOrDefault(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID);
+                            if (s != null)
+                                this.MainContext.Entry<SUBDETAILS_TBL>(s).Reload();
+                            this.MainContext.DETAILS_TBL.Load();
+                            DETAILS_TBL detail = this.MainContext.DETAILS_TBL.FirstOrDefault(p => p.DETAIL_ID == subdetail.DETAIL_ID);
+                            if (detail != null)
+                                this.MainContext.Entry<DETAILS_TBL>(detail).Reload();
+                            this.DetailsGrid.Items.Refresh();
                         }
-                        avGroups = subdetail.GROUPS_TBL.ToList();
-                        foreach (GROUPS_TBL group in local.GROUPS_TBL.ToList().Where(p => !avGroups.Any(g => g.GROUP_ID == p.GROUP_ID)))
-                        { 
-                            //local.GROUPS_TBL.Remove(group);
-                            DbCommand command = context.Database.Connection.CreateCommand();
-                            command.CommandText = "DELETE FROM GPRELATIONS_TBL WHERE SUBDETAIL_ID=" + local.SUBDETAIL_ID.ToString() + " AND GROUP_ID=" + group.GROUP_ID.ToString();
-                            command.ExecuteNonQuery();
-                        }
-                        context.Database.Connection.Close();
-                        this.MainContext.SUBDETAILS_TBL.Load();
-                        SUBDETAILS_TBL s = this.MainContext.SUBDETAILS_TBL.FirstOrDefault(p => p.SUBDETAIL_ID == subdetail.SUBDETAIL_ID);
-                        if (s != null)
-                            this.MainContext.Entry<SUBDETAILS_TBL>(s).Reload();
-                        this.MainContext.DETAILS_TBL.Load();
-                        DETAILS_TBL detail = this.MainContext.DETAILS_TBL.FirstOrDefault(p => p.DETAIL_ID == subdetail.DETAIL_ID);
-                        if (detail != null)
-                            this.MainContext.Entry<DETAILS_TBL>(detail).Reload();
-                        this.DetailsGrid.Items.Refresh();
                     }
                 }
-
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Unable to update load plans data.\nError: " + ex.Message + ".\n" + ex.StackTrace);
             }
         }
 
         public void PreparePlan()
         {
-            MAIN_TBL selMain = (MAIN_TBL) this.MainsGrid.SelectedItem;
-            this.MainsGrid.ItemsSource = this.MainContext.MAIN_TBL.ToList().Where(p =>
-              p.EDUFORM_ID == (this.MainParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID) &&
-              p.EDUTYPE_ID == (this.MainParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID) &&
-              p.COURSE_NO == (this.MainParametersChoose.CourseChoosed ?? p.COURSE_NO) &&
-              p.SEMESTER_NO == (this.MainParametersChoose.SemesterChoosed ?? p.SEMESTER_NO)).
-              AsEnumerable();
-            this.EduFormCol.Visibility = (this.MainParametersChoose.SelectedEduForm == null ? Visibility.Visible : Visibility.Collapsed);
-            this.EduTypeCol.Visibility = (this.MainParametersChoose.SelectedEduType == null ? Visibility.Visible : Visibility.Collapsed);
-            this.CourseCol.Visibility = (this.MainParametersChoose.CourseChoosed == null ? Visibility.Visible : Visibility.Collapsed);
-            this.SemesterCol.Visibility = (this.MainParametersChoose.SemesterChoosed == null ? Visibility.Visible : Visibility.Collapsed);
-            this.MainsGrid.SelectedItem = this.MainContext.MAIN_TBL.ToList().FirstOrDefault(p => p.ITEM_ID == (selMain ?? new MAIN_TBL() { ITEM_ID = 0 }).ITEM_ID);
+
+            try
+            {
+                MAIN_TBL selMain = (MAIN_TBL)this.MainsGrid.SelectedItem;
+                this.MainsGrid.ItemsSource = this.MainContext.MAIN_TBL.ToList().Where(p =>
+                  p.EDUFORM_ID == (this.MainParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID) &&
+                  p.EDUTYPE_ID == (this.MainParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID) &&
+                  p.COURSE_NO == (this.MainParametersChoose.CourseChoosed ?? p.COURSE_NO) &&
+                  p.SEMESTER_NO == (this.MainParametersChoose.SemesterChoosed ?? p.SEMESTER_NO)).
+                  AsEnumerable();
+                this.EduFormCol.Visibility = (this.MainParametersChoose.SelectedEduForm == null ? Visibility.Visible : Visibility.Collapsed);
+                this.EduTypeCol.Visibility = (this.MainParametersChoose.SelectedEduType == null ? Visibility.Visible : Visibility.Collapsed);
+                this.CourseCol.Visibility = (this.MainParametersChoose.CourseChoosed == null ? Visibility.Visible : Visibility.Collapsed);
+                this.SemesterCol.Visibility = (this.MainParametersChoose.SemesterChoosed == null ? Visibility.Visible : Visibility.Collapsed);
+                this.MainsGrid.SelectedItem = selMain != null?this.MainContext.MAIN_TBL.ToList().DefaultIfEmpty(null).FirstOrDefault(p => p.ITEM_ID == selMain.ITEM_ID):null;
+                UpdateDetails();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to prepare plans list.\nError: " + ex.Message + ".\n" + ex.StackTrace);
+            }
         }
+
     }
 
     [ValueConversion(typeof(DETAILS_TBL), typeof(System.String))]

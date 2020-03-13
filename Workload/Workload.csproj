@@ -147,6 +147,9 @@
     <Compile Include="TabelWindow\CreateAndEditFieldsPages\Group.xaml.cs">
       <DependentUpon>Group.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainEdit2.xaml.cs">
+      <DependentUpon>MainEdit2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.xaml.cs">
       <DependentUpon>MainParametersChoose.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TabelWindow\CreateAndEditFieldsPages\Group.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainEdit2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

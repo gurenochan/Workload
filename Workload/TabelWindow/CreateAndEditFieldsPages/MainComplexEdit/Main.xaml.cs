@@ -201,7 +201,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.contentPage.ImportBut.Visibility = Visibility.Hidden;
                 this.contentPage.ExportBut.Visibility = Visibility.Hidden;
                 this.contentPage.PrintBut.Visibility = Visibility.Hidden;
-                this.contentPage.SortBut.Visibility = Visibility.Hidden;
             }
             get => this.contentPage; 
         }

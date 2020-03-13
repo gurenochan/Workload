@@ -16,6 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -24,32 +25,26 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-        
         <Frame Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" x:Name="ParametersFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-
         <DataGrid x:Name="SubdetailsGrid" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" IsEnabled="False">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="SubTutCol" Header="Викладач" IsReadOnly="True" Binding="{Binding Path=TEACHERS_TBL.TEACHER_NAME}"/>
-                <DataGridTextColumn x:Name="SubHourCol" Header="Години" Binding="{Binding Path=HOURS}"/>
-                <DataGridTextColumn Header="Групи" x:Name="GroupCol" Binding="{Binding Converter={StaticResource Groups}}" IsReadOnly="True">
-                    <!--<DataGridTextColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <EventSetter Event="MouseDoubleClick" Handler="GroupCell_DoubleClick"/>
-                        </Style>
-                    </DataGridTextColumn.CellStyle>-->
-                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="SubHourCol" Header="Години" Binding="{Binding Path=HOURS}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="Групи" x:Name="GroupCol" Binding="{Binding Converter={StaticResource Groups}}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <ListView x:Name="AvaliebleTutors" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="1.5,1.5" SelectionMode="Single">
+        <Label Content="Доступні викладачі" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+        <ListView x:Name="AvaliebleTutors" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Margin="1.5,1.5" SelectionMode="Single">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=TEACHER_NAME}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>
-        <Frame x:Name="GroupSelectFrame" Grid.Column="2" Grid.Row="1" Margin="1.5,1.5" IsEnabled="False"/>
-
+        
+        <Label Content="Набори груп" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+        <Frame x:Name="GroupSelectFrame" Grid.Column="2" Grid.Row="2" Margin="1.5,1.5" IsEnabled="False"/>
         <DataGrid x:Name="MainsGrid" Grid.Row="0" Grid.Column="3" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дисципліна" IsReadOnly="True" Binding="{Binding Path=SUBJECTS_TBL.SUBJECT_NAME}"/>
@@ -59,7 +54,7 @@
                 <DataGridTextColumn x:Name="SemesterCol" Header = "Семестр" IsReadOnly="True" Binding="{Binding Path=SEMESTER_NO}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="DetailsGrid" Grid.Row="1" Grid.Column="3" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid x:Name="DetailsGrid" Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Вид роботи" IsReadOnly="True" Binding="{Binding Path=WORKS_TBL.WORK_NAME}"/>
                 <DataGridTextColumn Header="Вільно" Binding="{Binding Converter={StaticResource FreeHours}}" IsReadOnly="True"/>

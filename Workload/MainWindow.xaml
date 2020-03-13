@@ -32,6 +32,20 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <TabControl x:Name="WorkTabs" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1"/>
+        <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+            Content="Жодна вкладка не відчинена" FontSize="36" Foreground="LightSkyBlue" Margin="0,0,0,50"/>
+        <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+            Content="Для роботи натисніть на один з пунктів меню ліворуч" Foreground="SlateGray" Margin="0,15,0,0" FontSize="16"/>
+        <TabControl x:Name="WorkTabs" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
+            <TabControl.Style>
+                <Style TargetType="TabControl">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Items.Count, RelativeSource={RelativeSource Self}}" Value="0">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.Style>
+        </TabControl>
     </Grid>
 </Window>

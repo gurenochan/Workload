@@ -30,7 +30,7 @@ namespace Workload
             this.Closing += delegate (object sender, System.ComponentModel.CancelEventArgs e) { Application.Current.Shutdown(); };
 
             List<ITableWindowPresentation> tableWindowPresentations = new List<ITableWindowPresentation>();
-            tableWindowPresentations.Add(new TableWindowPresentation<TEACHERS_TBL>("Вчителі", PresentaionType.Table, new TeacherEditForm()));
+            tableWindowPresentations.Add(new TableWindowPresentation<TEACHERS_TBL>("Викладачі", PresentaionType.Table, new TeacherEditForm()));
             tableWindowPresentations.Add(new TableWindowPresentation<GROUPS_TBL>("Групи", PresentaionType.Table, new GroupEditForm()));
             tableWindowPresentations.Add(new TableWindowPresentation<SUBJECTS_TBL>("Дисципліни", PresentaionType.Table, new SubjectEditForm()));
             tableWindowPresentations.Add(new TableWindowPresentation<MAIN_TBL>("Навчальний план", PresentaionType.Distribution, new MainEditForm()));
