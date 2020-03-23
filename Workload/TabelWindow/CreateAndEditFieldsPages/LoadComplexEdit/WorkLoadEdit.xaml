@@ -25,7 +25,7 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-        <Frame Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" x:Name="ParametersFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Frame Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" x:Name="ParametersFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <DataGrid x:Name="SubdetailsGrid" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" IsEnabled="False">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="SubTutCol" Header="Викладач" IsReadOnly="True" Binding="{Binding Path=TEACHERS_TBL.TEACHER_NAME}"/>

@@ -72,8 +72,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.FullNameText.Text != System.String.Empty &&
                 this.PositionBox.Text != System.String.Empty &&
                 this.PayLayText.Text != System.String.Empty &&
-                this.RankBox.Text != System.String.Empty &&
-                this.DegreeBox.Text != System.String.Empty);
+                this.RankBox.SelectedItem != null &&
+                this.DegreeBox.SelectedItem != null);
         }
 
         public event TableWindowPresentation<TEACHERS_TBL>.FieldsChanged FieldsHasBeenChanged;
@@ -146,5 +146,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.DegreeBox.Text = assignSource.TEACHER_DEGREE;
             this.NotesText.Text = assignSource.TEACHER_MISC;
         }
+
+        public Expression<Func<TEACHERS_TBL, bool>> GetById(int id) => x => x.TEACHER_ID == id;
     }
 }

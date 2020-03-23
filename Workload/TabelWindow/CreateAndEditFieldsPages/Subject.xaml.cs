@@ -97,5 +97,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.NameText.Text = assignSource.SUBJECT_NAME;
             this.NotesText.Text = assignSource.SUBJECT_MISC;
         }
+
+        public Expression<Func<SUBJECTS_TBL, bool>> GetById(int id) => x => x.SUBJECT_ID == id;
     }
 }

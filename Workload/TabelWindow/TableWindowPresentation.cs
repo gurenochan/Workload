@@ -84,6 +84,7 @@ namespace Workload
                         context.SaveChanges();
                     }
                     if (this.tablePage.tableGrid.SelectedItem != null) this.Context.Set<T>().Local.Remove((T)this.tablePage.tableGrid.SelectedItem);
+                    this.tablePage.tableGrid.Items.Refresh();
                 }
                 catch (Exception ex)
                 { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to delete the record."); }
@@ -113,7 +114,11 @@ namespace Workload
                     { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to select the record."); }
                 });
 
-            this.CreateEditPage.FieldsHasBeenChanged += new FieldsChanged(() => this.tablePage.OkBut.IsEnabled = this.CreateEditPage.FieldsNotEmpty);
+            this.CreateEditPage.FieldsHasBeenChanged += new FieldsChanged(() => 
+            {
+                this.tablePage.OkBut.IsEnabled = (this.tablePage.tableGrid.SelectedItem != null) && this.CreateEditPage.FieldsNotEmpty;
+                this.tablePage.CompleteCreateBut.IsEnabled = this.CreateEditPage.FieldsNotEmpty;
+            });
 
             this.tablePage.OkBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) =>
             {
@@ -130,7 +135,7 @@ namespace Workload
                         context.Entry<T>(inEditEntity).State = EntityState.Modified;
                         context.SaveChanges();
                         context.Dispose();
-                        this.MainSet.Load();
+                        //this.MainSet.Load();
                         this.Context.Entry<T>(this.MainSet.Single(this.CreateEditPage.GetSingleEntity)).Reload();
                         this.tablePage.tableGrid.Items.Refresh();
                     }
@@ -155,11 +160,25 @@ namespace Workload
                                 T toCreate = this.CreateEditPage.CreateEntity();
                                 this.CreateEditPage.AssingNewId(ref toCreate, -1);
                                 this.CreateEditPage.AssignEntity(ref context, ref toCreate);
-                                this.CreateEditPage.AssingNewId(ref toCreate, this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0);
+                                int newId = this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0;
+                                this.CreateEditPage.AssingNewId(ref toCreate, newId);
                                 context.Set<T>().Add(toCreate);
                                 context.SaveChanges();
-                                this.MainSet.Load();
+
+                                /*T entry = context.Set<T>().Find(context.Entry<T>(toCreate).Property(this.CreateEditPage.GetId).CurrentValue);
+                                context.Entry<T>(entry).State = EntityState.Detached;*/
                                 context.Dispose();
+                                T newToAdd = this.MainSet.SingleOrDefault(this.CreateEditPage.GetById(newId));
+                                this.MainSet.Local.Add(newToAdd);
+                                //this.MainSet.Load();
+                                /*((App)System.Windows.Application.Current).Dispatcher.BeginInvoke(new Action(() =>
+                                {
+                                    if (this.MainSet.Select(this.CreateEditPage.GetId).Contains(newId) && !this.MainSet.Local.AsQueryable().Select(this.CreateEditPage.GetId).Contains(newId))
+                                    {
+                                        IQueryable<T> queryable = this.MainSet.AsQueryable();
+                                        this.MainSet.Local.Add(queryable.Where(p => queryable.Where(x => x == p).Select(this.CreateEditPage.GetId).Contains(newId)).FirstOrDefault());
+                                    }
+                                }), System.Windows.Threading.DispatcherPriority.Normal);*/
                             }
                             this.tablePage.tableGrid.Items.Refresh();
                         }
@@ -201,6 +220,8 @@ namespace Workload
             System.Linq.Expressions.Expression<Func<T, bool>> GetSingleEntity { get; }
 
             System.Linq.Expressions.Expression<Func<T, int>> GetId { get; }
+
+            System.Linq.Expressions.Expression<Func<T, bool>> GetById(int id);
 
             T CreateEntity();
 

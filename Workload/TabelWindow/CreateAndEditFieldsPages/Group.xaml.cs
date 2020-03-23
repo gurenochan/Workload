@@ -184,5 +184,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.GroupNameText.Text = assignSource.GROUP_NAME;
             this.GroupId = assignSource.GROUP_ID;
         }
+
+        public Expression<Func<GROUPS_TBL, bool>> GetById(int id) => x => x.GROUP_ID == id;
     }
 }

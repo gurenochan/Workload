@@ -87,5 +87,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.EduTypeId = assignSource.EDUTYPE_ID;
             this.NameText.Text = assignSource.EDUTYPE_NAME;
         }
+
+        public Expression<Func<EDUTYPES_TBL, bool>> GetById(int id) => x => x.EDUTYPE_ID == id;
     }
 }

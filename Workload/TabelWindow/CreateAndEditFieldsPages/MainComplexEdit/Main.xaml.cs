@@ -449,5 +449,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             });
 
         }
+
+        public Expression<Func<MAIN_TBL, bool>> GetById(int id) => x => x.ITEM_ID == id;
     }
 }

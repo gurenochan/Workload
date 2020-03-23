@@ -34,6 +34,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<EDUFORMS_TBL, int>> GetId => x => x.EDUFORM_ID;
 
+        public Expression<Func<EDUFORMS_TBL, bool>> GetById(int id) => x => x.EDUFORM_ID == id;
+
         public bool FieldsNotEmpty => this.NameText.Text != System.String.Empty && this.NameText.Text != null;
 
 

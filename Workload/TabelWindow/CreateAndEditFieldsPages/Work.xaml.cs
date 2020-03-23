@@ -96,5 +96,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.NameText.Text = assignSource.WORK_NAME;
             this.HoursPerStudentText.Text = assignSource.HRS_PER_STUD.ToString();
         }
+
+        public Expression<Func<WORKS_TBL, bool>> GetById(int id) => x => x.WORK_ID == id;
     }
 }

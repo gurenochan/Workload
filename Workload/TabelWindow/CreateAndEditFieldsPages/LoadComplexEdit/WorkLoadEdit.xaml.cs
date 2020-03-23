@@ -193,7 +193,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                         if (!decimal.TryParse(((TextBox)args.EditingElement).Text, out newHours))
                         {
                             ((TextBox)args.EditingElement).Background = Brushes.LightPink;
-                            MessageBox.Show("На жаль, неможливо розпізнати введений текст як ЧИСЛО.\nБудь ласка, переконайтеся що введені вами дані не містять постороніх символів (усе окрім цифр та коми).");
+                            MessageBox.Show("На жаль, неможливо розпізнати введений текст як число.\nБудь ласка, переконайтеся що введені вами дані не містять постороніх символів (усе окрім цифр та коми).");
                             args.Cancel = true;
                             return;
                         }
@@ -395,14 +395,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             {
 
                 MAIN_TBL selMain = (MAIN_TBL)this.MainsGrid.SelectedItem;
-                if (selMain != null)
-                    this.DetailsGrid.ItemsSource = this.MainContext.DETAILS_TBL.Where(p => p.ITEM_ID == ((MAIN_TBL)this.MainsGrid.SelectedItem).ITEM_ID).ToList();
-                else
-                {
-                    try
-                    { this.DetailsGrid.Items.Clear(); }
-                    catch { }
-                }
+                this.DetailsGrid.ItemsSource = this.MainContext.DETAILS_TBL.ToList().Where(p => selMain != null ? p.ITEM_ID == selMain.ITEM_ID : false).AsEnumerable();
                 this.DetailsGrid.Items.Refresh();
             }
             catch (Exception ex)
@@ -498,7 +491,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.EduTypeCol.Visibility = (this.MainParametersChoose.SelectedEduType == null ? Visibility.Visible : Visibility.Collapsed);
                 this.CourseCol.Visibility = (this.MainParametersChoose.CourseChoosed == null ? Visibility.Visible : Visibility.Collapsed);
                 this.SemesterCol.Visibility = (this.MainParametersChoose.SemesterChoosed == null ? Visibility.Visible : Visibility.Collapsed);
-                this.MainsGrid.SelectedItem = selMain != null?this.MainContext.MAIN_TBL.ToList().DefaultIfEmpty(null).FirstOrDefault(p => p.ITEM_ID == selMain.ITEM_ID):null;
+                this.MainsGrid.SelectedItem = selMain != null ? this.MainsGrid.Items.OfType<MAIN_TBL>().Where(p => p.ITEM_ID == selMain.ITEM_ID).DefaultIfEmpty(null).FirstOrDefault() : null;
                 UpdateDetails();
             }
             catch (Exception ex)

@@ -23,9 +23,9 @@
             <EventTrigger.Actions>
                 <BeginStoryboard>
                     <Storyboard BeginTime="0:0:0.25" Duration="Forever">
-
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
+                        <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="TalismanImage" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x"/>
                         <!--<DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>-->
                         
