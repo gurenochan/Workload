@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Subject">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -20,8 +19,24 @@
         </Grid.RowDefinitions>
 
         <Label Content="Name" Grid.Row="0" Grid.Column="0"/>
-        <TextBox x:Name="NameText" Grid.Row="0" Grid.Column="1" Text="" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,3"/>
+        <TextBox x:Name="NameText" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ValidationTip}">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Label Content="Notes" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-        <TextBox x:Name="NotesText" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="0, 3, 0, 0" TextWrapping="Wrap" AcceptsReturn="True" Text="" VerticalAlignment="Stretch"/>
+        <TextBox x:Name="NotesText" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Stretch" Style="{StaticResource ValidationTip}" Height="Auto">
+            <TextBox.Text>
+                <Binding Path="Misc" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
     </Grid>
 </Page>

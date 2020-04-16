@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Workload"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1200">
+        Title="MainWindow" Height="700" Width="1200" Foreground="{x:Null}" Background="WhiteSmoke">
     <Grid x:Name="DividerGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="100" Width="150"/>

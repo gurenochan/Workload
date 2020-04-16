@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="540" d:DesignWidth="800"
       Title="Teacher">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -25,31 +24,76 @@
             <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label x:Name="FullNameLabel" Content="Full Name" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
-        <Label x:Name="PosiyionLabel" Content="Position" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Label x:Name="ParlayLabel" Content="Paylay" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" />
-        <Label x:Name="RankLabel" Content="Scientific Rank" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <Label x:Name="DegreeLabel" Content="Scientific Degree" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
-        <Label x:Name="NotesLabel" Content="Notes" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
+        <Label x:Name="FullNameLabel" Content="Повне ім'я" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <Label x:Name="PosiyionLabel" Content="Посада" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label x:Name="ParlayLabel" Content="Ставка" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" />
+        <Label x:Name="RankLabel" Content="Наукове звання" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label x:Name="DegreeLabel" Content="Науковий ступінь" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
+        <Label x:Name="NotesLabel" Content="Нотатки" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
 
 
-        <TextBox x:Name="FullNameText" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,0,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"/>
-        <ComboBox x:Name="PositionBox" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10,0,10,0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" IsEditable="True">
+        <TextBox x:Name="FullNameText" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" Style="{StaticResource ValidationTip}">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <ComboBox x:Name="PositionBox" Grid.Column="0" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" IsEditable="True" Style="{StaticResource ValidationTip}">
+            <ComboBox.Text>
+                <Binding Path="Position" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
             <ComboBoxItem Content="асистент"/>
             <ComboBoxItem Content="викладач"/>
             <ComboBoxItem Content="старший викладач"/>
             <ComboBoxItem Content="доцент"/>
             <ComboBoxItem Content="професор"/>
         </ComboBox>
-        <TextBox x:Name="PayLayText" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" Margin="10,0,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"/>
-        <ComboBox x:Name="RankBox" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10,0,10,0" Grid.Row="7" VerticalAlignment="Center" IsEditable="True">
-            <ComboBoxItem Content="к.т.н."/>
-            <ComboBoxItem Content="д.т.н."/>
-        </ComboBox>
-        <ComboBox x:Name="DegreeBox" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10,0,10,0" Grid.Row="5" VerticalAlignment="Center" IsEditable="True">
+        <TextBox x:Name="ParlayText" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource ValidationTip}">
+            <TextBox.Text>
+                <Binding Path="Parlay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <ComboBox x:Name="DegreeBox" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Center" IsEditable="True" Style="{StaticResource ValidationTip}">
+            <ComboBox.Text>
+                <Binding Path="Degree" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
             <ComboBoxItem Content="доцент"/>
             <ComboBoxItem Content="професор"/>
         </ComboBox>
-        <TextBox x:Name="NotesText" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" HorizontalAlignment="Stretch" Margin="0,3" TextWrapping="Wrap" AcceptsReturn="True" Text="" VerticalAlignment="Stretch"/>
+        <ComboBox x:Name="RankBox" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Center" IsEditable="True" Style="{StaticResource ValidationTip}">
+            <ComboBox.Text>
+                <Binding Path="Rank" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
+            <ComboBoxItem Content="к.т.н."/>
+            <ComboBoxItem Content="д.т.н."/>
+        </ComboBox>
+        <TextBox x:Name="NotesText" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" HorizontalAlignment="Stretch" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Stretch" Style="{StaticResource ValidationTip}" Height="Auto">
+            <TextBox.Text>
+                <Binding Path="Misc" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
     </Grid>
 </Page>

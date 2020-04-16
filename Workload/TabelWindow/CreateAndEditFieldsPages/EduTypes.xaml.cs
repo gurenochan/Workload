@@ -24,6 +24,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public EduTypesEditForm()
         {
             InitializeComponent();
+            this.DataContext = new Validator();
             this.NameText.TextChanged += new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
         }
 
@@ -34,7 +35,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<EDUTYPES_TBL, int>> GetId => x => x.EDUTYPE_ID;
 
-        public bool FieldsNotEmpty => this.NameText.Text != System.String.Empty && this.NameText.Text != null;
+        public bool FieldsNotEmpty => !Validation.GetHasError(this.NameText);
 
 
         public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>()
@@ -69,10 +70,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public EDUTYPES_TBL ConvertToPresent(EDUTYPES_TBL entity) => entity;
 
-        public void CustomSave()
-        {
-            throw new NotImplementedException();
-        }
+        public void CustomSave() => throw new NotImplementedException();
 
         public EDUTYPES_TBL CreateEntity() => new EDUTYPES_TBL();
 
@@ -89,5 +87,16 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public Expression<Func<EDUTYPES_TBL, bool>> GetById(int id) => x => x.EDUTYPE_ID == id;
+
+        protected class Validator : System.ComponentModel.IDataErrorInfo
+        {
+            public System.String Name { get; set; }
+            public string this[string columnName]
+            {
+                get => (this.Name ?? System.String.Empty) == System.String.Empty && columnName == "Name" ? "Ім\'я типу навчання не може бути пустим" : (this.Name ?? System.String.Empty).Length>25?"Сумарна кількість символів в імені типу навчання не може перевищувати двадцяти п\'яти.":System.String.Empty;
+            }
+
+            public string Error => throw new NotImplementedException();
+        }
     }
 }

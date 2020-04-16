@@ -4,6 +4,37 @@
              xmlns:local="clr-namespace:Workload"
              Startup="AtStartup">
     <Application.Resources>
-         
+        <Style x:Key="ValidationTip" TargetType="{x:Type Control}">
+            <Style.Setters>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder />
+                                </Border>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Margin" Value="5,1.5"/>
+                <Setter Property="Height" Value="20"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},
+                    Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="Background" Value="#FFE7E4E4"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
     </Application.Resources>
 </Application>

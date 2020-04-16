@@ -24,14 +24,14 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public TeacherEditForm()
         {
             InitializeComponent();
-
             TextChangedEventHandler textChangedEvent = new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
             this.FullNameText.TextChanged += textChangedEvent;
             SelectionChangedEventHandler selectionChangedEvent = new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
             this.PositionBox.SelectionChanged += selectionChangedEvent;
-            this.PayLayText.TextChanged += textChangedEvent;
+            this.ParlayText.TextChanged += textChangedEvent;
             this.RankBox.SelectionChanged += selectionChangedEvent;
             this.DegreeBox.SelectionChanged += selectionChangedEvent;
+            this.DataContext = new Valid();
         }
 
         protected int TeacherID = 0;
@@ -44,7 +44,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     TEACHER_ID = this.TeacherID,
                     TEACHER_NAME = FullNameText.Text,
                     TEACHER_POS = PositionBox.Text,
-                    TEACHER_RATE = Convert.ToDecimal(PayLayText.Text),
+                    TEACHER_RATE = Convert.ToDecimal(ParlayText.Text),
                     TEACHER_RANK = RankBox.Text,
                     TEACHER_DEGREE = DegreeBox.Text,
                     TEACHER_MISC = NotesText.Text
@@ -55,7 +55,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.TeacherID = value.TEACHER_ID;
                 this.FullNameText.Text = value.TEACHER_NAME;
                 this.PositionBox.Text = value.TEACHER_POS;
-                this.PayLayText.Text = Convert.ToString(value.TEACHER_RATE);
+                this.ParlayText.Text = Convert.ToString(value.TEACHER_RATE);
                 this.RankBox.Text = value.TEACHER_RANK;
                 this.DegreeBox.Text = value.TEACHER_DEGREE;
                 this.NotesText.Text = value.TEACHER_MISC;
@@ -66,15 +66,15 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public System.Linq.Expressions.Expression<Func<TEACHERS_TBL, bool>> GetSingleEntity
         { get => x => x.TEACHER_ID == this.TeacherID; }
 
-        public bool FieldsNotEmpty
+        public bool FieldsNotEmpty => !(new List<Control>()
         {
-            get => (
-                this.FullNameText.Text != System.String.Empty &&
-                this.PositionBox.Text != System.String.Empty &&
-                this.PayLayText.Text != System.String.Empty &&
-                this.RankBox.SelectedItem != null &&
-                this.DegreeBox.SelectedItem != null);
-        }
+            this.FullNameText,
+            this.PositionBox,
+            this.ParlayText,
+            this.DegreeBox,
+            this.RankBox,
+            this.NotesText
+        }).Any(p => Validation.GetHasError(p));
 
         public event TableWindowPresentation<TEACHERS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
@@ -108,7 +108,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         {
             this.FullNameText.Text = System.String.Empty;
             this.PositionBox.Text = System.String.Empty;
-            this.PayLayText.Text = System.String.Empty;
+            this.ParlayText.Text = System.String.Empty;
             this.RankBox.Text = System.String.Empty;
             this.DegreeBox.Text = System.String.Empty;
             this.NotesText.Text = System.String.Empty;
@@ -118,10 +118,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public TEACHERS_TBL ConvertToPresent(TEACHERS_TBL entity) => entity;
 
-        public void CustomSave()
-        {
-            throw new NotImplementedException();
-        }
+        public void CustomSave() => throw new NotImplementedException();
 
         public TEACHERS_TBL CreateEntity() => new TEACHERS_TBL();
 
@@ -130,7 +127,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             toAssign.TEACHER_ID = this.TeacherID;
             toAssign.TEACHER_NAME = FullNameText.Text;
             toAssign.TEACHER_POS = PositionBox.Text;
-            toAssign.TEACHER_RATE = Convert.ToDecimal(PayLayText.Text);
+            toAssign.TEACHER_RATE = Convert.ToDecimal(ParlayText.Text);
             toAssign.TEACHER_RANK = RankBox.Text;
             toAssign.TEACHER_DEGREE = DegreeBox.Text;
             toAssign.TEACHER_MISC = NotesText.Text;
@@ -141,12 +138,54 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.TeacherID = assignSource.TEACHER_ID;
             this.FullNameText.Text = assignSource.TEACHER_NAME;
             this.PositionBox.Text = assignSource.TEACHER_POS;
-            this.PayLayText.Text = Convert.ToString(assignSource.TEACHER_RATE);
+            this.ParlayText.Text = Convert.ToString(assignSource.TEACHER_RATE);
             this.RankBox.Text = assignSource.TEACHER_RANK;
             this.DegreeBox.Text = assignSource.TEACHER_DEGREE;
             this.NotesText.Text = assignSource.TEACHER_MISC;
         }
 
         public Expression<Func<TEACHERS_TBL, bool>> GetById(int id) => x => x.TEACHER_ID == id;
+
+        protected class Valid : System.ComponentModel.IDataErrorInfo
+        {
+            public System.String Name { get; set; }
+            public System.String Position { get; set; }
+            public System.String Parlay { get; set; }
+            public System.String Degree { get; set; }
+            public System.String Rank { get; set; }
+            public System.String Misc { get; set; }
+            public string this[string columnName]
+            {
+                get
+                {
+                    System.String error = System.String.Empty;
+                    switch (columnName)
+                    {
+                        case "Name":
+                            error = (Name ?? System.String.Empty) == System.String.Empty ? "Викладач як людина не може не мати імені, тому створити чи змінити цей запис про нього неможливо.\nБудь ласука, докладіть зусиль задля того, щоб дізнатися як його звати." : (Name ?? System.String.Empty).Length > 35 ? "На превеликий жаль в програмі неможливо записати ім\'я викладача, що складається з більше ніж тридцяти п\'яти символів.\n<(＿　＿)>" : System.String.Empty;
+                            break;
+                        case "Position":
+                            error = (Position ?? System.String.Empty) == System.String.Empty ? "Посада викладача не може бути не визначеною." : (Position ?? System.String.Empty).Length > 35 ? "На жаль назва посади викладача, не може складатися з більше ніж тридцяти п\'яти символів." : System.String.Empty;
+                            break;
+                        case "Parlay":
+                            decimal d =(decimal) 0.0;
+                            error = !decimal.TryParse((Parlay ?? System.String.Empty), out d) ? "Будь ласка введіть розмір окладу у цифровому вигляді." : d < (decimal)0.0 ? "Ставка не може бути від\'ємною." : d > (decimal)9.99?"Ставка викладача не може бути більше ніж 9,99." : System.String.Empty;
+                            break;
+                        case "Degree":
+                            error = (Degree ?? System.String.Empty).Length > 25 ? "На жаль назва ступенню викладача, не може складатися з більше ніж двадцяти п\'яти символів." : System.String.Empty;
+                            break;
+                        case "Rank":
+                            error = (Rank ?? System.String.Empty).Length > 25 ? "На жаль назва наукового звання викладача, не може складатися з більше ніж двадцяти п\'яти символів." : System.String.Empty;
+                            break;
+                        case "Misc":
+                            error = (Misc ?? System.String.Empty).Length > 100 ? "На жаль вмість нотаток не може складатися з більше ніж ста символів." : System.String.Empty;
+                            break;
+                    }
+                    return error;
+                }
+            }
+
+            public string Error => throw new NotImplementedException();
+        }
     }
 }

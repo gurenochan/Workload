@@ -39,8 +39,8 @@
                     <DataGridTextColumn Header="Години" Binding="{Binding Path=HOURS}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="AddDetail" Content="Add" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Width="60" Margin="0,3"/>
-            <Button x:Name="RemoveDetail" Content="Remove" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="60" Margin="0,3"/>
+            <Button Style="{StaticResource ModernButton}" x:Name="AddDetail" Content="Add" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Width="60" Margin="0,3"/>
+            <Button Style="{StaticResource ModernButton}" x:Name="RemoveDetail" Content="Remove" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="60" Margin="0,3"/>
             <ListView x:Name="WorkList" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>

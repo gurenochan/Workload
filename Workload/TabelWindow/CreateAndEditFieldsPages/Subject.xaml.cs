@@ -24,7 +24,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public SubjectEditForm()
         {
             InitializeComponent();
-            this.NameText.TextChanged += new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
+            this.DataContext = new Valid();
+            TextChangedEventHandler textChanged= new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
+            this.NameText.TextChanged += textChanged;
+            this.NotesText.TextChanged += textChanged;
         }
 
         protected int SubId = 0;
@@ -48,7 +51,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<SUBJECTS_TBL, int>> GetId { get => x => x.SUBJECT_ID; }
 
-        public bool FieldsNotEmpty => (this.NameText.Text != System.String.Empty && this.NameText.Text != null);
+        public bool FieldsNotEmpty => !Validation.GetHasError(this.NameText) && !Validation.GetHasError(NotesText);
 
         public string[] ColumnsToHide => new System.String[] { "SUBJECT_ID", "MAIN_TBL" };
 
@@ -77,10 +80,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public SUBJECTS_TBL ConvertToPresent(SUBJECTS_TBL entity) => entity;
 
-        public void CustomSave()
-        {
-            throw new NotImplementedException();
-        }
+        public void CustomSave() => throw new NotImplementedException();
 
         public SUBJECTS_TBL CreateEntity() => new SUBJECTS_TBL();
 
@@ -99,5 +99,30 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public Expression<Func<SUBJECTS_TBL, bool>> GetById(int id) => x => x.SUBJECT_ID == id;
+
+        protected class Valid : System.ComponentModel.IDataErrorInfo
+        {
+            public System.String Name { get; set; }
+            public System.String Misc { get; set; }
+            public string this[string columnName]
+            {
+                get
+                {
+                    System.String error = System.String.Empty;
+                    switch (columnName)
+                    {
+                        case "Name":
+                            error = (Name ?? System.String.Empty) == System.String.Empty ? "Назва дисціпліни не може бути пустою." : (Name ?? System.String.Empty).Length > 75 ? "Назва дисципліни не може складатися з більше ніж семидесяти п\'яти символів." : System.String.Empty;
+                            break;
+                        case "Misc":
+                            error = (Misc ?? System.String.Empty).Length > 100 ? "Кількість символів в нотатках не може сягати більше сотні." : System.String.Empty;
+                            break;
+                    }
+                    return error;
+                }
+            }
+
+            public string Error => throw new NotImplementedException();
+        }
     }
 }

@@ -97,6 +97,31 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
 
             this.SemesterChoose.ItemsSource = semesterRange;
             this.SemesterChoose.SelectedItem = def_value;
+
+            RoutedEventHandler EduFormUpdate = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.EduFormsList.Items.Refresh());
+            foreach (TableWindowPresentation<EDUFORMS_TBL> presentation in ((App)System.Windows.Application.Current).TableWindowPresentations.OfType<ITableWindowPresentation>().Where(p => p.GetType() == typeof(TableWindowPresentation<EDUFORMS_TBL>)))
+                presentation.CreateEditPage.ContentPage.OkBut.Click += EduFormUpdate;
+            ((App)System.Windows.Application.Current).TableWindowPresentations.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs args) => 
+            {
+                if (args.Action==NotifyCollectionChangedAction.Add)
+                {
+                    foreach (TableWindowPresentation<EDUFORMS_TBL> presentation in args.NewItems.OfType<ITableWindowPresentation>().Where(p=>p.GetType()== typeof(TableWindowPresentation<EDUFORMS_TBL>)))
+                        presentation.CreateEditPage.ContentPage.OkBut.Click += EduFormUpdate;
+                }
+            });
+
+
+            RoutedEventHandler EduTypeUpdate = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.EduTypesList.Items.Refresh());
+            foreach (TableWindowPresentation<EDUTYPES_TBL> presentation in ((App)System.Windows.Application.Current).TableWindowPresentations.OfType<ITableWindowPresentation>().Where(p => p.GetType() == typeof(TableWindowPresentation<EDUTYPES_TBL>)))
+                presentation.CreateEditPage.ContentPage.OkBut.Click += EduTypeUpdate;
+            ((App)System.Windows.Application.Current).TableWindowPresentations.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs args) =>
+            {
+                if (args.Action == NotifyCollectionChangedAction.Add)
+                {
+                    foreach (TableWindowPresentation<EDUTYPES_TBL> presentation in args.NewItems.OfType<ITableWindowPresentation>().Where(p => p.GetType() == typeof(TableWindowPresentation<EDUTYPES_TBL>)))
+                        presentation.CreateEditPage.ContentPage.OkBut.Click += EduTypeUpdate;
+                }
+            });
         }
         protected Entities Context => ((App)System.Windows.Application.Current).DBContext;
 

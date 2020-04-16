@@ -19,6 +19,7 @@ namespace Workload
     {
         public Entities DBContext;
         protected SplashScreen startwindow;
+        public System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation> TableWindowPresentations;
 
         private void AtStartup(object sender, StartupEventArgs e)
         {
@@ -43,6 +44,7 @@ namespace Workload
                 WaitFor.Start();
                 CheckDB.Wait();
                 this.Exit += new ExitEventHandler((object obj, ExitEventArgs args) => this.DBContext.Dispose());
+                this.TableWindowPresentations = new System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation>();
                 MainWindow wnd = new MainWindow();
                 wnd.Title = "Hello";
                 WaitFor.Wait();

@@ -27,7 +27,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public MainEditForm()
         {
             InitializeComponent();
-
+            this.DataContext = new Valid();
 
             this.ParametersChoose = new MainComplexEdit.MainParametersChoose();
             this.UnappliedSubjects = new ListView();
@@ -59,9 +59,13 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.Details.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
             {
                 this.UnappliedWorksList.ItemsSource = this.Context.WORKS_TBL.ToList().Where(p => !this.Details.Any(g => g.WORK_ID == p.WORK_ID)).ToList();
-                this.FieldsHasBeenChanged.Invoke();
+                this.FieldsHasBeenChanged?.Invoke();
                 });
-            this.AppliedWorksList.ItemsSource = this.Details.ToBindingList();
+            try
+            { this.AppliedWorksList.Items.Clear(); }
+            finally
+            { this.AppliedWorksList.ItemsSource = this.Details.ToBindingList(); }
+            this.AmountText.TextChanged += new TextChangedEventHandler((object sender, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
             this.UnappliedWorksList.MouseDoubleClick += new MouseButtonEventHandler((object sender, MouseButtonEventArgs args) => 
             {
                 DependencyObject obj = (DependencyObject)args.OriginalSource;
@@ -73,6 +77,31 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                         break;
                     }
                     obj = VisualTreeHelper.GetParent(obj);
+                }
+            });
+
+            this.AppliedWorksList.CellEditEnding += new EventHandler<DataGridCellEditEndingEventArgs>((object sender, DataGridCellEditEndingEventArgs args) =>
+            {
+                Validation.ClearInvalid(((TextBox)args.EditingElement).GetBindingExpression(TextBox.TextProperty));
+                if (args.EditAction==DataGridEditAction.Cancel) return;
+                System.String txt = ((TextBox)args.EditingElement).Text ?? System.String.Empty, error = System.String.Empty;
+                if ((txt??System.String.Empty) != System.String.Empty)
+                {
+                    decimal h = (decimal)0.0;
+                    if (decimal.TryParse((txt ?? System.String.Empty), out h))
+                    {
+                        if (h < 0) error = "Кількість годин не може бути від\'ємною.";
+                        if (h >= 1000) error = "Кількість годин повина бути менше тисячі.";
+                    }
+                    else error = "Кількість годин має бути введена у цифровому форматі.";
+                }
+                else error = "Значення кількості годин не може бути пустим";
+                if (error!=System.String.Empty)
+                {
+                    ValidationError validationError = new ValidationError(new DataErrorValidationRule(), ((TextBox)args.EditingElement).GetBindingExpression(TextBox.TextProperty));
+                    validationError.ErrorContent = error;
+                    Validation.MarkInvalid(((TextBox)args.EditingElement).GetBindingExpression(TextBox.TextProperty), validationError);
+                    args.Cancel = true;
                 }
             });
 
@@ -88,7 +117,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.ParametersChoose.EduTypesList.SelectionChanged += selCh;
             this.ParametersChoose.CourseChoose.SelectionChanged += selCh;
             this.ParametersChoose.SemesterChoose.SelectionChanged += selCh;
-
         }
 
         public void PreparePlan()
@@ -342,7 +370,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.ParametersChoose.CourseChoosed != null &&
             this.ParametersChoose.SemesterChoosed != null &&
             this.Subject != null &&
-            this.Details.Count > 0;
+            this.Details.Count > 0 &&
+            !Validation.GetHasError(this.AmountText);
+
 
         public TableWindowPresentation<MAIN_TBL>.EditingEntity StartingCreateingEntity => () => { this.Main = null; };
 
@@ -451,5 +481,32 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public Expression<Func<MAIN_TBL, bool>> GetById(int id) => x => x.ITEM_ID == id;
+
+        protected class Valid : System.ComponentModel.IDataErrorInfo
+        {
+            public System.String Hours { get; set; }
+            public System.String Amount { get; set; }
+            public string this[string columnName]
+            {
+                get
+                {
+                    System.String error=System.String.Empty;
+                    switch (columnName)
+                    {
+                        case "Hours":
+                            decimal h = (decimal)0.0;
+                            error = !decimal.TryParse((Hours ?? System.String.Empty), out h) ? "Будь ласка введіть розмір окладу у цифровому вигляді." : h <= (decimal)0.0 ? "Кількість годин не може бути від\'ємною, або дорівнювати нулю." : h > (decimal)999.99 ? "Кількість годин не може бути більше ніж 999,99." : System.String.Empty;
+                            break;
+                        case "Amount":
+                            decimal a = (decimal)0.0;
+                            error = !decimal.TryParse((Amount ?? System.String.Empty), out a) ? "Будь ласка введіть розмір окладу у цифровому вигляді." : a < (decimal)0.0 ? "Кількість годин не може бути від\'ємною." : a > (decimal)999.99 ? "Кількість годин не може бути більше ніж 999,99." : System.String.Empty;
+                            break;
+                    }
+                    return error;
+                }
+            }
+
+            public string Error => throw new NotImplementedException();
+        }
     }
 }

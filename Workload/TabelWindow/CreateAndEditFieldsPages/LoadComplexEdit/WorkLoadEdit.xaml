@@ -27,6 +27,13 @@
         </Grid.ColumnDefinitions>
         <Frame Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" x:Name="ParametersFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <DataGrid x:Name="SubdetailsGrid" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="1.5,1.5" SelectionMode="Single" AutoGenerateColumns="False" IsEnabled="False">
+            <DataGridTemplateColumn>
+                <DataGridTemplateColumn.CellEditingTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource ValidationTip}" Height="Auto" Margin="Auto"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellEditingTemplate>
+            </DataGridTemplateColumn>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="SubTutCol" Header="Викладач" IsReadOnly="True" Binding="{Binding Path=TEACHERS_TBL.TEACHER_NAME}"/>
                 <DataGridTextColumn x:Name="SubHourCol" Header="Години" Binding="{Binding Path=HOURS}" IsReadOnly="False"/>

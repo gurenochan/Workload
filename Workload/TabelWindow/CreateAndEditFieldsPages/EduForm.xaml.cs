@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -27,6 +28,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         {
             InitializeComponent();
             this.NameText.TextChanged += new TextChangedEventHandler((object obj, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
+            this.DataContext = new Validator();
         }
 
 
@@ -36,7 +38,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<EDUFORMS_TBL, bool>> GetById(int id) => x => x.EDUFORM_ID == id;
 
-        public bool FieldsNotEmpty => this.NameText.Text != System.String.Empty && this.NameText.Text != null;
+        public bool FieldsNotEmpty => !Validation.GetHasError(this.NameText);
 
 
         public Dictionary<string, string> ColumnsNames => new Dictionary<string, string>() {{ "EDUFORM_NAME", "Назва" }};
@@ -86,6 +88,14 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public void CustomSave()
         {
             throw new NotImplementedException();
+        }
+
+        protected class Validator : IDataErrorInfo
+        {
+            public System.String Name { get; set; }
+            public string this[string columnName] => (this.Name??System.String.Empty)==System.String.Empty&& columnName=="Name"?"Ім'я форми навчання не може бути пустим.": (this.Name ?? System.String.Empty).Length > 25 ? "Сумарна кількість символів в імені форми навчання не може перевищувати двадцяти п\'яти." : System.String.Empty;
+
+            public string Error => throw new NotImplementedException();
         }
     }
 }

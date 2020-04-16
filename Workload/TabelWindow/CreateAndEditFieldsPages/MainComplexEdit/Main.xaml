@@ -25,9 +25,24 @@
         <Label x:Name="SubjectNameLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
 
         <Label Content="Обсяг" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="4"/>
-        <TextBox x:Name="AmountText" Grid.Column="1" Grid.Row="4" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="AmountText" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" Style="{StaticResource ValidationTip}">
+            <TextBox.Text>
+                <Binding Path="Amount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
         <DataGrid x:Name="AppliedWorksList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGridTemplateColumn>
+                <DataGridTemplateColumn.CellEditingTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource ValidationTip}" Height="Auto" Margin="Auto"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellEditingTemplate>
+            </DataGridTemplateColumn>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Вид роботи" Binding="{Binding Path=WORKS_TBL.WORK_NAME}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="к-ть годин" Binding="{Binding Path=HOURS}" IsReadOnly="False"/>

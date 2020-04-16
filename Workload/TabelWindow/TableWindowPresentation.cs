@@ -155,6 +155,7 @@ namespace Workload
                         catch (NotImplementedException) { }
                         finally
                         {
+                            T newToAdd = null;
                             {
                                 Entities context = new Entities();
                                 T toCreate = this.CreateEditPage.CreateEntity();
@@ -168,7 +169,7 @@ namespace Workload
                                 /*T entry = context.Set<T>().Find(context.Entry<T>(toCreate).Property(this.CreateEditPage.GetId).CurrentValue);
                                 context.Entry<T>(entry).State = EntityState.Detached;*/
                                 context.Dispose();
-                                T newToAdd = this.MainSet.SingleOrDefault(this.CreateEditPage.GetById(newId));
+                                newToAdd = this.MainSet.SingleOrDefault(this.CreateEditPage.GetById(newId));
                                 this.MainSet.Local.Add(newToAdd);
                                 //this.MainSet.Load();
                                 /*((App)System.Windows.Application.Current).Dispatcher.BeginInvoke(new Action(() =>
@@ -181,6 +182,7 @@ namespace Workload
                                 }), System.Windows.Threading.DispatcherPriority.Normal);*/
                             }
                             this.tablePage.tableGrid.Items.Refresh();
+                            this.tablePage.tableGrid.SelectedItem = newToAdd;
                         }
                     }
                 }
@@ -239,8 +241,8 @@ namespace Workload
 
             CreatingEntity StartingEditingEvent { get; }
 
-
             Dictionary<System.String, System.String> ColumnsNames { get; }
+
 
         }
 

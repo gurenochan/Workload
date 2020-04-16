@@ -26,10 +26,9 @@ namespace Workload
         public MainWindow()
         {
             InitializeComponent();
-            //this.Closing += this.MainWindow_Closing;
             this.Closing += delegate (object sender, System.ComponentModel.CancelEventArgs e) { Application.Current.Shutdown(); };
 
-            List<ITableWindowPresentation> tableWindowPresentations = new List<ITableWindowPresentation>();
+            System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation> tableWindowPresentations = ((App)System.Windows.Application.Current).TableWindowPresentations;
             tableWindowPresentations.Add(new TableWindowPresentation<TEACHERS_TBL>("Викладачі", PresentaionType.Table, new TeacherEditForm()));
             tableWindowPresentations.Add(new TableWindowPresentation<GROUPS_TBL>("Групи", PresentaionType.Table, new GroupEditForm()));
             tableWindowPresentations.Add(new TableWindowPresentation<SUBJECTS_TBL>("Дисципліни", PresentaionType.Table, new SubjectEditForm()));

@@ -24,6 +24,10 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         public WorkTypesEditForm()
         {
             InitializeComponent();
+            this.DataContext = new Valid();
+            TextChangedEventHandler textChanged = new TextChangedEventHandler((object sender, TextChangedEventArgs args) => this.FieldsHasBeenChanged?.Invoke());
+            this.NameText.TextChanged += textChanged;
+            this.HoursPerStudentText.TextChanged += textChanged;
         }
 
         protected int WorkId = 0;
@@ -49,7 +53,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<WORKS_TBL, int>> GetId => x => x.WORK_ID;
 
-        public bool FieldsNotEmpty => this.NameText.Text != System.String.Empty && this.NameText.Text != null;
+        public bool FieldsNotEmpty => !Validation.GetHasError(this.NameText) && !Validation.GetHasError(HoursPerStudentText);
 
         public TableWindowPresentation<WORKS_TBL>.EditingEntity StartingCreateingEntity => throw new NotImplementedException();
 
@@ -98,5 +102,39 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public Expression<Func<WORKS_TBL, bool>> GetById(int id) => x => x.WORK_ID == id;
+
+        protected class Valid : System.ComponentModel.IDataErrorInfo
+        {
+            public System.String Name { get; set; }
+            public System.String Hours { get; set; }
+            public string this[string columnName]
+            {
+                get
+                {
+                    System.String error = System.String.Empty;
+                    switch(columnName)
+                    {
+                        case "Name":
+                            error = (Name ?? System.String.Empty) == System.String.Empty ? "Назва роботи не може бути пустою." : (Name ?? System.String.Empty).Length > 40 ? "Назва роботи не може складатися з більше ніж сорока символів." : System.String.Empty;
+                            break;
+                        case "Hours":
+                            decimal h = (decimal)0.0;
+                            if ((Hours ?? System.String.Empty) != System.String.Empty)
+                            {
+                                if (decimal.TryParse((Hours ?? System.String.Empty), out h))
+                                {
+                                    if (h < 0) error = "Кількість годин не може бути від\'ємною.";
+                                    if (h >= 1000) error = "Кількість годин повина бути менше тисячі.";
+                                }
+                                else error = "Кількість годин має бути введена у цифровому форматі.";
+                            }
+                            break;
+                    }
+                    return error;
+                }
+            }
+
+            public string Error => throw new NotImplementedException();
+        }
     }
 }

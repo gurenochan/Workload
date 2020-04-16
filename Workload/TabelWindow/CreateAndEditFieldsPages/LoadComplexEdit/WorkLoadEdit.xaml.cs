@@ -31,6 +31,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             InitializeComponent();
             this.Tab = null;
             this.Window = null;
+            //this.SubdetailsGrid.Items.Clear();
             this.MainParametersChoose = new MainComplexEdit.MainParametersChoose();
             this.ParametersFrame.Content = this.MainParametersChoose;
             SelectionChangedEventHandler selectionChanged = new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => this.PreparePlan());
@@ -171,17 +172,15 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.UserAbleAdd();
                 this.DetailsGrid.Items.Refresh();
             });
+            this.SubdetailsGrid.Items.Clear();
             this.SubdetailsGrid.ItemsSource = this.SubDetailCol;
 
             RoutedEventHandler HourCellLostFocusHandler = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.SubdetailsGrid.Items.Refresh());
 
             this.SubdetailsGrid.CellEditEnding += new EventHandler<DataGridCellEditEndingEventArgs>((object sender, DataGridCellEditEndingEventArgs args) =>
             {
-                if (args.EditAction == DataGridEditAction.Cancel)
-                {
-                    ((TextBox)args.EditingElement).Background = Brushes.White;
-                    return;
-                }
+                Validation.ClearInvalid(((TextBox)args.EditingElement).GetBindingExpression(TextBox.TextProperty));
+                if (args.EditAction == DataGridEditAction.Cancel) return;
                 try
                 {
                     SUBDETAILS_TBL subdetail = (SUBDETAILS_TBL)args.Row.DataContext;
@@ -189,36 +188,30 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     {
                         decimal
                             detailHours = ((DETAILS_TBL)DetailsGrid.SelectedItem).HOURS,
-                            newHours = Convert.ToDecimal(((TextBox)args.EditingElement).Text);
-                        if (!decimal.TryParse(((TextBox)args.EditingElement).Text, out newHours))
-                        {
-                            ((TextBox)args.EditingElement).Background = Brushes.LightPink;
-                            MessageBox.Show("На жаль, неможливо розпізнати введений текст як число.\nБудь ласка, переконайтеся що введені вами дані не містять постороніх символів (усе окрім цифр та коми).");
-                            args.Cancel = true;
-                            return;
-                        }
-                        else if (newHours<=(decimal)0.0)
-                        {
-                            ((TextBox)args.EditingElement).Background = Brushes.LightPink;
-                            MessageBox.Show("На жаль, кількість годин не може бути від'ємною.");
-                            args.Cancel = true;
-                            return;
-                        }
-                        if (detailHours < newHours + this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL()).Select(p => p.HOURS).Sum() - (this.SubdetailsGrid.SelectedItem != null && (this.SubdetailsGrid.SelectedItem ?? new object()).GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).HOURS : (decimal)0.0))
-                        {
-                            args.Cancel = true;
-                            ((TextBox)args.EditingElement).Background = Brushes.LightPink;
-                            MessageBox.Show("На жаль така кількість годин наразі недоступна.");
-                            return;
-                        }
+                            newHours = (decimal)0.0;
+                        System.String error = System.String.Empty;
+                        if (!decimal.TryParse(((TextBox)args.EditingElement).Text??System.String.Empty, out newHours))
+                            error = "На жаль, неможливо розпізнати введений текст як число.\nБудь ласка, переконайтеся що введені вами дані не містять постороніх символів (усе окрім цифр та коми).";
+                        else if (newHours <= (decimal)0.0)
+                            error = "На жаль, кількість годин не може бути від'ємною.";
+                        else if (newHours > (decimal)999.99)
+                            error = "На жаль, кількість годин не може бути більше ніж 999,99.";
+                        else if (detailHours < newHours + this.SubDetailCol.DefaultIfEmpty(new SUBDETAILS_TBL()).Select(p => p.HOURS).Sum() - (this.SubdetailsGrid.SelectedItem != null && (this.SubdetailsGrid.SelectedItem ?? new object()).GetType().Name.Contains("SUBDETAILS_TBL") ? ((SUBDETAILS_TBL)this.SubdetailsGrid.SelectedItem).HOURS : (decimal)0.0))
+                            error = "На жаль така кількість годин наразі недоступна.";
                         else
                         {
                             subdetail.HOURS = newHours;
-                            ((TextBox)args.EditingElement).Background = Brushes.White;
                             this.UpdateLoad();
                             this.SubdetailsGrid.ItemsSource = null;
                             this.SubdetailsGrid.ItemsSource = this.SubDetailCol;
                             this.UserAbleAdd();
+                        }
+                        if (error!=System.String.Empty)
+                        {
+                            ValidationError validationError = new ValidationError(new DataErrorValidationRule(), ((TextBox)args.EditingElement).GetBindingExpression(TextBox.TextProperty));
+                            validationError.ErrorContent = error;
+                            Validation.MarkInvalid(((TextBox)args.EditingElement).GetBindingExpression(TextBox.TextProperty), validationError);
+                            args.Cancel = true;
                         }
                     }
                 }

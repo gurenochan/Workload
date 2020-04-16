@@ -20,9 +20,25 @@
         </Grid.RowDefinitions>
         
         <Label Content="Name" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
-        <TextBox x:Name="NameText" Text="" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,3"/>
+        <TextBox x:Name="NameText" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource ValidationTip}">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <Label Content="Hours per student" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
-        <TextBox x:Name="HoursPerStudentText" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,3"/>
+        <TextBox x:Name="HoursPerStudentText" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource ValidationTip}">
+            <TextBox.Text>
+                <Binding Path="Hours" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
     </Grid>
 </Page>

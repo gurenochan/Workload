@@ -81,3 +81,4 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.xml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainEdit2.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainEdit2.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\App.baml
