@@ -166,7 +166,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             toAssign.GROUP_MISC = this.NotesText.Text == System.String.Empty ? null : this.NotesText.Text;
             toAssign.GROUP_NAME = this.GroupNameText.Text == System.String.Empty ? null : this.GroupNameText.Text;
             toAssign.GROUP_ID = this.GroupId;
-            toAssign.EDUFORMS_TBL = context.EDUFORMS_TBL.Find(this.EduForm.EDUFORM_ID);
+            toAssign.EDUFORMS_TBL = context.EDUFORMS_TBL.Find(((EDUFORMS_TBL)this.EducationalFormsList.SelectedItem).EDUFORM_ID);
             toAssign.EDUFORM_ID = this.EduForm?.EDUFORM_ID;
         }
 

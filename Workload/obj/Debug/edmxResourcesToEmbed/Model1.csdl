@@ -130,7 +130,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_DETAILS_WORK_ID">
-    <End Role="WORKS_TBL" Type="Self.WORKS_TBL" Multiplicity="1" />
+    <End Role="WORKS_TBL" Type="Self.WORKS_TBL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="WORKS_TBL">
@@ -142,7 +144,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SUBDETAILS_DETAIL_ID">
-    <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="1" />
+    <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SUBDETAILS_TBL" Type="Self.SUBDETAILS_TBL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DETAILS_TBL">
@@ -154,7 +158,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_GROUPS_EDUFORM_ID">
-    <End Role="EDUFORMS_TBL" Type="Self.EDUFORMS_TBL" Multiplicity="0..1" />
+    <End Role="EDUFORMS_TBL" Type="Self.EDUFORMS_TBL" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="GROUPS_TBL" Type="Self.GROUPS_TBL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EDUFORMS_TBL">
@@ -166,7 +172,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MAIN_EDUFORM_ID">
-    <End Role="EDUFORMS_TBL" Type="Self.EDUFORMS_TBL" Multiplicity="1" />
+    <End Role="EDUFORMS_TBL" Type="Self.EDUFORMS_TBL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EDUFORMS_TBL">
@@ -178,7 +186,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MAIN_EDUTYPE_ID">
-    <End Role="EDUTYPES_TBL" Type="Self.EDUTYPES_TBL" Multiplicity="1" />
+    <End Role="EDUTYPES_TBL" Type="Self.EDUTYPES_TBL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EDUTYPES_TBL">
@@ -190,7 +200,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MAIN_SUBJECT_ID">
-    <End Role="SUBJECTS_TBL" Type="Self.SUBJECTS_TBL" Multiplicity="1" />
+    <End Role="SUBJECTS_TBL" Type="Self.SUBJECTS_TBL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SUBJECTS_TBL">
@@ -202,7 +214,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SUBDETAILS_TEACHER_ID">
-    <End Role="TEACHERS_TBL" Type="Self.TEACHERS_TBL" Multiplicity="1" />
+    <End Role="TEACHERS_TBL" Type="Self.TEACHERS_TBL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SUBDETAILS_TBL" Type="Self.SUBDETAILS_TBL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TEACHERS_TBL">
