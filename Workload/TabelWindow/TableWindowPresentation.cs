@@ -55,7 +55,7 @@ namespace Workload
         {
             this.tablePage = new TablePage();
             this.tablePage.CreateEditPanel.Content = this.CreateEditPage;
-
+            
             try
             {
                 MainSet.Load();
@@ -69,7 +69,6 @@ namespace Workload
                         Binding = new System.Windows.Data.Binding(column.Key)
                     });
                 }
-
             }
             catch(Exception e)
             { System.Windows.MessageBox.Show(e.Message, "ERROR"); }
@@ -143,6 +142,7 @@ namespace Workload
                 catch (Exception ex)
                 { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to edit the record."); }
             });
+
 
             this.tablePage.CompleteCreateBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) =>
             {

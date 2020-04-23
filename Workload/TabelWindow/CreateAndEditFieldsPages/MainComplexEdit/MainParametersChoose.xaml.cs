@@ -38,7 +38,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
                 this.EduFormsList.Items.Refresh();
             });
             EduFormsListFill();
-            //this.Context.EDUFORMS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => EduFormsListFill());
             this.Context.EDUFORMS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => 
             {
                 switch(args.Action)
@@ -53,6 +52,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
                             ((ObservableCollection<EDUFORMS_TBL>)this.EduFormsList.ItemsSource).Remove(((ObservableCollection<EDUFORMS_TBL>)this.EduFormsList.ItemsSource).SingleOrDefault(p=>p.EDUFORM_ID==eduForm.EDUFORM_ID));
                         break;
                 }
+                this.EduFormsList.Items.Refresh();
             });
 
             Action EduTypesListFill = new Action(() => 
@@ -80,6 +80,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
                             ((ObservableCollection<EDUTYPES_TBL>)this.EduTypesList.ItemsSource).Remove(((ObservableCollection<EDUTYPES_TBL>)this.EduTypesList.ItemsSource).SingleOrDefault(p => p.EDUTYPE_ID == eduType.EDUTYPE_ID));
                         break;
                 }
+                this.EduTypesList.Items.Refresh();
             });
 
             System.String def_value = "<Усі>";
@@ -98,7 +99,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
             this.SemesterChoose.ItemsSource = semesterRange;
             this.SemesterChoose.SelectedItem = def_value;
 
-            RoutedEventHandler EduFormUpdate = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.EduFormsList.Items.Refresh());
+            /*RoutedEventHandler EduFormUpdate = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.EduFormsList.Items.Refresh());
             foreach (TableWindowPresentation<EDUFORMS_TBL> presentation in ((App)System.Windows.Application.Current).TableWindowPresentations.OfType<ITableWindowPresentation>().Where(p => p.GetType() == typeof(TableWindowPresentation<EDUFORMS_TBL>)))
                 presentation.CreateEditPage.ContentPage.OkBut.Click += EduFormUpdate;
             ((App)System.Windows.Application.Current).TableWindowPresentations.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs args) => 
@@ -110,7 +111,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
                 }
             });
 
-
             RoutedEventHandler EduTypeUpdate = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.EduTypesList.Items.Refresh());
             foreach (TableWindowPresentation<EDUTYPES_TBL> presentation in ((App)System.Windows.Application.Current).TableWindowPresentations.OfType<ITableWindowPresentation>().Where(p => p.GetType() == typeof(TableWindowPresentation<EDUTYPES_TBL>)))
                 presentation.CreateEditPage.ContentPage.OkBut.Click += EduTypeUpdate;
@@ -121,7 +121,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.MainComplexEdit
                     foreach (TableWindowPresentation<EDUTYPES_TBL> presentation in args.NewItems.OfType<ITableWindowPresentation>().Where(p => p.GetType() == typeof(TableWindowPresentation<EDUTYPES_TBL>)))
                         presentation.CreateEditPage.ContentPage.OkBut.Click += EduTypeUpdate;
                 }
-            });
+            });*/
+            ((App)Application.Current).AssignRefresh(typeof(EDUFORMS_TBL), EduFormsList);
+            ((App)Application.Current).AssignRefresh(typeof(EDUTYPES_TBL), EduTypesList);
         }
         protected Entities Context => ((App)System.Windows.Application.Current).DBContext;
 

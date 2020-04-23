@@ -20,6 +20,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             this.FieldsNotEmpty = false;
             this.EducationalFormsList.ItemsSource = this.Context.EDUFORMS_TBL.Local.ToBindingList();
             this.Context.EDUFORMS_TBL.Load();
+            this.Context.EDUFORMS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs args) => this.EducationalFormsList.Items.Refresh());
+            ((App)System.Windows.Application.Current).AssignRefresh(typeof(EDUFORMS_TBL), this.EducationalFormsList);
 
             List<Control> controls = new List<Control>()
             {

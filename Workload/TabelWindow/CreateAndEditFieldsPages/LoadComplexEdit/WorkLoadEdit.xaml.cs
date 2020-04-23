@@ -34,6 +34,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             //this.SubdetailsGrid.Items.Clear();
             this.MainParametersChoose = new MainComplexEdit.MainParametersChoose();
             this.ParametersFrame.Content = this.MainParametersChoose;
+            Action<Type, System.Windows.Controls.ItemsControl> UpdateAssing = ((App)Application.Current).AssignRefresh;
             SelectionChangedEventHandler selectionChanged = new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => this.PreparePlan());
             this.MainParametersChoose.EduFormsList.SelectionChanged += selectionChanged;
             this.MainParametersChoose.EduTypesList.SelectionChanged += selectionChanged;
@@ -174,6 +175,11 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             });
             this.SubdetailsGrid.Items.Clear();
             this.SubdetailsGrid.ItemsSource = this.SubDetailCol;
+
+            UpdateAssing(typeof(MAIN_TBL), this.MainsGrid);
+            UpdateAssing(typeof(SUBDETAILS_TBL), this.SubdetailsGrid);
+            UpdateAssing(typeof(DETAILS_TBL), this.DetailsGrid);
+            UpdateAssing(typeof(TEACHERS_TBL), this.AvaliebleTutors);
 
             RoutedEventHandler HourCellLostFocusHandler = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.SubdetailsGrid.Items.Refresh());
 

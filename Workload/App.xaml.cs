@@ -21,6 +21,26 @@ namespace Workload
         protected SplashScreen startwindow;
         public System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation> TableWindowPresentations;
 
+        public void AssignRefresh(Type typeOfAssign, System.Windows.Controls.ItemsControl itemsControl)
+        {
+            RoutedEventHandler Update = new RoutedEventHandler((object sender, RoutedEventArgs args) => itemsControl.Items.Refresh());
+            Action action = new Action(() =>
+              {
+                  foreach (ITableWindowPresentation presentation in ((App)System.Windows.Application.Current).TableWindowPresentations.OfType<ITableWindowPresentation>())
+                  {
+                        Type[] types = presentation.GetType().GetGenericArguments();
+                      if (types.Length > 0 ? types[0] == typeOfAssign : false)
+                        {
+                            ((TablePage)presentation.TablePage).OkBut.Click -= Update;
+                            ((TablePage)presentation.TablePage).OkBut.Click += Update;
+                        }
+                  }
+              });
+            action();
+            ((App)System.Windows.Application.Current).TableWindowPresentations.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs args) =>
+            { if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add) action(); });
+        }
+
         private void AtStartup(object sender, StartupEventArgs e)
         {
             Task CheckDB = new Task(() => { this.DBconnInit(); });
@@ -38,8 +58,6 @@ namespace Workload
                 OpenSplash.SetApartmentState(ApartmentState.STA);
                 OpenSplash.Start();
                 ewh.WaitOne();
-                /*startwindow = new SplashScreen();
-                startwindow.Show();*/
                 CheckDB.Start();
                 WaitFor.Start();
                 CheckDB.Wait();

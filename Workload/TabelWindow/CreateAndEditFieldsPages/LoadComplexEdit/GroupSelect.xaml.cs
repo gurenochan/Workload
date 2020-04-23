@@ -84,6 +84,9 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages.LoadComplexEdit
                     obj = VisualTreeHelper.GetParent(obj);
                 }
             });
+
+            ((App)Application.Current).AssignRefresh(typeof(GROUPS_TBL), this.GroupsInSubList);
+            ((App)Application.Current).AssignRefresh(typeof(GROUPS_TBL), this.GroupsOutSubList);
         }
 
         protected SUBDETAILS_TBL subDetail = null;

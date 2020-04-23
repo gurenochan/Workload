@@ -37,8 +37,11 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 this.Subject = (SUBJECTS_TBL)this.UnappliedSubjects.SelectedItem;
                 this.SubjectNameLabel.Content = this.Subject?.SUBJECT_NAME ?? System.String.Empty;
             });
-            this.Context.SUBJECTS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.PreparePlan());
+            NotifyCollectionChangedEventHandler collectionChangedEventHandler = new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) => this.PreparePlan());
+            this.Context.SUBJECTS_TBL.Local.CollectionChanged += collectionChangedEventHandler;
             this.Context.SUBJECTS_TBL.Load();
+            this.Context.EDUFORMS_TBL.Local.CollectionChanged += collectionChangedEventHandler;
+            this.Context.EDUTYPES_TBL.Local.CollectionChanged += collectionChangedEventHandler;
 
             SelectionChangedEventHandler selectionChanged = new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs args) => this.PreparePlan());
             this.ParametersChoose.EduFormsList.SelectionChanged += selectionChanged;
@@ -285,7 +288,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     }
                 }
                 this.Main.EDUFORM_ID = this.EduForm.EDUFORM_ID;
-
                 if (this.Main.EDUTYPES_TBL == null)
                 {
                     this.Main.EDUTYPES_TBL = this.EduType;
