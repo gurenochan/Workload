@@ -80,4 +80,3 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.ba
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.xml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\App.baml
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainEdit2.baml

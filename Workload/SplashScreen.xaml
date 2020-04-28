@@ -16,7 +16,8 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         Name="Splash"
         
-        Title="SplashScreen" Height="350" Width="600">
+        Title="SplashScreen" Height="350" Width="600"
+        ShowInTaskbar="False">
 
     <Window.Triggers>
         <EventTrigger RoutedEvent="Loaded">
