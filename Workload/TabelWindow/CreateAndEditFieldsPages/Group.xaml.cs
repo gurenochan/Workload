@@ -186,6 +186,17 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<GROUPS_TBL, bool>> GetById(int id) => x => x.GROUP_ID == id;
 
+        public GROUPS_TBL AssignEntityFromFileCols(IEnumerable<object> values) => new GROUPS_TBL()
+        {
+            GROUP_NAME = values.ElementAt(0) as System.String,
+            EDUFORM_ID = this.Context.EDUFORMS_TBL.Where(p => p.EDUFORM_NAME == (values.ElementAt(1) as System.String)).FirstOrDefault()?.EDUFORM_ID ?? 0,
+            BUDGET_CNT = (short)values.ElementAt(2),
+            CONTRACT_CNT = (short)values.ElementAt(3),
+            FACULTY_ABBR = values.ElementAt(4) as System.String,
+            COURSE_NO = 1,
+            GROUP_MISC = values.ElementAt(5) as System.String
+        };
+
         protected class Valid : System.ComponentModel.IDataErrorInfo
         {
             public System.String Name { get; set; }

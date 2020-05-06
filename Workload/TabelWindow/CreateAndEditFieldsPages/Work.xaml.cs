@@ -67,7 +67,19 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             { "HRS_PER_STUD", "Кількість година на студента"}
         };
 
-        public TablePage ContentPage { get; set; }
+        public TablePage ContentPage 
+        {
+            get => this.contentPage;
+            set
+            {
+                this.contentPage = value;
+                //this.contentPage.ImportBut.Visibility = Visibility.Hidden;
+                //this.contentPage.ExportBut.Visibility = Visibility.Hidden;
+                this.contentPage.PrintBut.Visibility = Visibility.Hidden;
+            }
+        }
+
+        protected TablePage contentPage;
 
         public event TableWindowPresentation<WORKS_TBL>.FieldsChanged FieldsHasBeenChanged;
 
@@ -102,6 +114,12 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public Expression<Func<WORKS_TBL, bool>> GetById(int id) => x => x.WORK_ID == id;
+
+        public WORKS_TBL AssignEntityFromFileCols(IEnumerable<object> values) => new WORKS_TBL()
+        {
+            WORK_NAME = values.ElementAt(0) as System.String,
+            HRS_PER_STUD = values.ElementAt(1) != null ? decimal.Parse((System.String)values.ElementAt(1)) : (decimal?)null
+        };
 
         protected class Valid : System.ComponentModel.IDataErrorInfo
         {

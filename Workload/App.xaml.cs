@@ -21,6 +21,24 @@ namespace Workload
         protected SplashScreen startwindow;
         public System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation> TableWindowPresentations;
 
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        public void KillExcel(ref Microsoft.Office.Interop.Excel.Application application)
+        {
+            if (application != null)
+            {
+                uint ExcelPID = 0;
+                int Hwnd = 0;
+                Hwnd = application.Hwnd;
+                System.Diagnostics.Process ExcelProcess;
+                GetWindowThreadProcessId((IntPtr)Hwnd, out ExcelPID);
+                ExcelProcess = System.Diagnostics.Process.GetProcessById((int)ExcelPID);
+                ExcelProcess.Kill();
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(application);
+            }
+        }
+
         public void AssignRefresh(Type typeOfAssign, System.Windows.Controls.ItemsControl itemsControl)
         {
             RoutedEventHandler Update = new RoutedEventHandler((object sender, RoutedEventArgs args) => itemsControl.Items.Refresh());

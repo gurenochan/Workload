@@ -146,6 +146,16 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<TEACHERS_TBL, bool>> GetById(int id) => x => x.TEACHER_ID == id;
 
+        public TEACHERS_TBL AssignEntityFromFileCols(IEnumerable<object> values) => new TEACHERS_TBL()
+        {
+            TEACHER_NAME = values.ElementAt(0) as System.String,
+            TEACHER_RATE = values.ElementAt(1) != null ? decimal.Parse(values.ElementAt(1) as System.String) : (decimal)0.0,
+            TEACHER_POS = values.ElementAt(2) as System.String,
+            TEACHER_RANK = values.ElementAt(3) as System.String,
+            TEACHER_DEGREE = values.ElementAt(4) as System.String,
+            TEACHER_MISC = values.ElementAt(5) as System.String
+        };
+
         protected class Valid : System.ComponentModel.IDataErrorInfo
         {
             public System.String Name { get; set; }

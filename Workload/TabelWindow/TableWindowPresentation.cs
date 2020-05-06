@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Workload.TabelWindow;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
+using System.Windows.Automation.Provider;
 
 namespace Workload
 {
@@ -77,13 +80,20 @@ namespace Workload
             {
                 try
                 {
+                    int sRow = -1;
                     using (Entities context=new Entities())
                     {
-                        if (this.tablePage.tableGrid.SelectedItem != null) context.Set<T>().Remove(context.Set<T>().Single(this.CreateEditPage.GetSingleEntity));
+                        if (this.tablePage.tableGrid.SelectedItem != null)
+                        {
+                            sRow = this.tablePage.tableGrid.SelectedIndex;
+                            context.Set<T>().Remove(context.Set<T>().Single(this.CreateEditPage.GetSingleEntity));
+                        }
                         context.SaveChanges();
                     }
                     if (this.tablePage.tableGrid.SelectedItem != null) this.Context.Set<T>().Local.Remove((T)this.tablePage.tableGrid.SelectedItem);
                     this.tablePage.tableGrid.Items.Refresh();
+                    if (sRow != -1 && this.tablePage.tableGrid.Items.Count > 0)
+                        this.tablePage.tableGrid.SelectedIndex = sRow <= this.tablePage.tableGrid.Items.Count - 1 ? sRow : this.tablePage.tableGrid.Items.Count - 1;
                 }
                 catch (Exception ex)
                 { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to delete the record."); }
@@ -143,8 +153,7 @@ namespace Workload
                 { System.Windows.MessageBox.Show(ex.Message, "Unfortunately, there is impossible to edit the record."); }
             });
 
-
-            this.tablePage.CompleteCreateBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) =>
+            Action Save=new Action(()=>
             {
                 try
                 {
@@ -161,7 +170,7 @@ namespace Workload
                                 T toCreate = this.CreateEditPage.CreateEntity();
                                 this.CreateEditPage.AssingNewId(ref toCreate, -1);
                                 this.CreateEditPage.AssignEntity(ref context, ref toCreate);
-                                int newId = this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 0;
+                                int newId = this.MainSet.Count() > 0 ? (this.MainSet.Max(this.CreateEditPage.GetId) + 1) : 1;
                                 this.CreateEditPage.AssingNewId(ref toCreate, newId);
                                 context.Set<T>().Add(toCreate);
                                 context.SaveChanges();
@@ -189,6 +198,50 @@ namespace Workload
                 catch (Exception ex)
                 { System.Windows.MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "Unfortunately, there is impossible to create the record."); }
             });
+
+            this.tablePage.CompleteCreateBut.Click += new System.Windows.RoutedEventHandler((object obj, System.Windows.RoutedEventArgs args) => Save());
+
+            this.tablePage.ImportBut.Click += new RoutedEventHandler((object sender, RoutedEventArgs args) =>
+            {
+                Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+                dialog.Filter = "Excel books (*.xls, *.xlsx) | *.xls; *.xlsx";
+                dialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+                dialog.RestoreDirectory = true;
+
+                if ((dialog.ShowDialog() ?? false) == true)
+                {
+                    Excel.Application excel = (Excel.Application)Microsoft.VisualBasic.Interaction.CreateObject("Excel.Application");
+                    if (excel != null)
+                    {
+
+                        Excel.Workbook workbook = null;
+                        workbook = excel.Workbooks.Open(dialog.FileName, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+                        Excel.Worksheet worksheet = (Excel.Worksheet)excel.ActiveSheet;
+                        Excel.Range usedRange = worksheet.UsedRange;
+                        foreach (int i in Enumerable.Range(1, usedRange.Rows.Count))
+                        {
+                            System.String[] values = new System.String[worksheet.UsedRange.Columns.Count];
+                            foreach (int o in Enumerable.Range(1, usedRange.Columns.Count))
+                            {
+                                values[o - 1] = (usedRange.Cells[i, o] as Excel.Range).Value2 as System.String;
+                            }
+                            this.CreateEditPage.AssingFields(this.CreateEditPage.AssignEntityFromFileCols(values));
+                            Save();
+                        }
+                        workbook.Close(false);
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(usedRange);
+                        ((App)System.Windows.Application.Current).KillExcel(ref excel);
+                    }
+                    else MessageBox.Show("На жаль не можливо здійснити імпорт даних, в зв\'язку з відсутністю належної версії Miscrosoft Excel");
+                }
+
+
+            });
+
+
             this.CreateEditPage.ContentPage = this.tablePage;
         }
 
@@ -230,6 +283,8 @@ namespace Workload
             void AssingNewId(ref T entity, int newId);
 
             void AssignEntity(ref Entities context, ref T toAssign);
+
+            T AssignEntityFromFileCols(IEnumerable<object> values);
 
             void AssingFields(T assignSource);
 

@@ -30,17 +30,13 @@
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="Blur" Storyboard.TargetProperty="Radius" From="100" To="0" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <!--<DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>-->
-                        
-                        <ColorAnimation AccelerationRatio="0.2" DecelerationRatio="0.8" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" From="White" To="LightGray" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <ColorAnimation AccelerationRatio="0.2" DecelerationRatio="0.8" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" From="White" To="LightGray" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <ColorAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" From="LightGray" To="Black" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <ColorAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" From="LightGray" To="Black" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        
+
                         <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Margin" From="250,10,0,0" To="20,10,0,0" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Margin" From="250,0,0,10" To="20,0,0,10" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Margin" From="20,10,0,0" To="10,10,0,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5" RepeatBehavior="1x"/>
                         <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Margin" From="20,0,0,10" To="10,0,0,10" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5" RepeatBehavior="1x"/>
-                        
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger.Actions>
@@ -58,7 +54,7 @@
             </Image.Effect>
         </Image>
         <Image Visibility="Hidden" x:Name="LoadGIF" gif:ImageBehavior.AnimatedSource="Media/Loading.gif" Margin="100,120,100,80" VerticalAlignment="Top" HorizontalAlignment="Center" gif:ImageBehavior.AutoStart="True"/>
-        <Label x:Name="ProgramNameLabel" Content="Workload" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="80" Width="240" TextBlock.FontSize="54" Grid.Column="0" FontFamily="SansSerif" Foreground="Black"/>
+        <Label x:Name="ProgramNameLabel" Content="Workload" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="80" Width="240" TextBlock.FontSize="54" Grid.Column="0" FontFamily="SansSerif" Background="{x:Null}"/>
         <Label x:Name="MadeByLabel" Content="Made by tedechan" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="SansSerif" FontSize="14" FontWeight="Bold"/>
 
     </Grid>

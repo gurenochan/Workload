@@ -88,6 +88,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<EDUTYPES_TBL, bool>> GetById(int id) => x => x.EDUTYPE_ID == id;
 
+        public EDUTYPES_TBL AssignEntityFromFileCols(IEnumerable<object> values) => throw new NotImplementedException();
+
         protected class Validator : System.ComponentModel.IDataErrorInfo
         {
             public System.String Name { get; set; }

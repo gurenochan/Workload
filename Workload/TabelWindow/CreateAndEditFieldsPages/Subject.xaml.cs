@@ -100,6 +100,13 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         public Expression<Func<SUBJECTS_TBL, bool>> GetById(int id) => x => x.SUBJECT_ID == id;
 
+        public SUBJECTS_TBL AssignEntityFromFileCols(IEnumerable<object> values) => new SUBJECTS_TBL()
+        {
+            SUBJECT_NAME = values.ElementAt(0) as System.String,
+            SUBJECT_MISC = values.ElementAt(1) as System.String
+        };
+
+
         protected class Valid : System.ComponentModel.IDataErrorInfo
         {
             public System.String Name { get; set; }

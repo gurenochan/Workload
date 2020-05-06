@@ -80,3 +80,20 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.ba
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.xml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\App.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual_new.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual_old.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\subj_all.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\subj_one.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\summ_subj.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach_simple.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\teach_all.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\teach_one.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\unp.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\work_one.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\Копия individual.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\Копия individual_new.xls
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.ResolveComReference.cache

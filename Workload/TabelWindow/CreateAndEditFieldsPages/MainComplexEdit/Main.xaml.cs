@@ -441,7 +441,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 {
                     HOURS = detail.HOURS,
                     WORK_ID = detail.WORK_ID,
-                    DETAIL_ID = context.DETAILS_TBL.Max(p => p.DETAIL_ID) + j++
+                    DETAIL_ID = context.DETAILS_TBL.ToList().DefaultIfEmpty(new DETAILS_TBL() { DETAIL_ID = 0 }).Max(p => p.DETAIL_ID) + j++
                 };
                 if (context.MAIN_TBL.Find(toAssign.ITEM_ID) != null)
                 {
@@ -483,6 +483,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public Expression<Func<MAIN_TBL, bool>> GetById(int id) => x => x.ITEM_ID == id;
+
+        public MAIN_TBL AssignEntityFromFileCols(IEnumerable<object> values) => throw new NotImplementedException();
 
         protected class Valid : System.ComponentModel.IDataErrorInfo
         {

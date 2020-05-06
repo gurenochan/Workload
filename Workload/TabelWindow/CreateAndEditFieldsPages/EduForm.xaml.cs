@@ -90,6 +90,8 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             throw new NotImplementedException();
         }
 
+        public EDUFORMS_TBL AssignEntityFromFileCols(IEnumerable<object> values) => throw new NotImplementedException();
+
         protected class Validator : IDataErrorInfo
         {
             public System.String Name { get; set; }
