@@ -80,6 +80,7 @@ namespace Workload.TabelWindow
                     this.ReportChoosedItem.Columns.Add(new DataGridTextColumn() { Header = "Назва дисци", Binding = new Binding("SUBJECTS_TBL.SUBJECT_NAME") });
                     this.ReportChoosedItem.Columns.Add(new DataGridTextColumn() { Header = "Курс", Binding = new Binding("COURSE_NO") });
                     this.ReportChoosedItem.ItemsSource = context.MAIN_TBL.Local.ToList().Where(p =>
+                    p.DETAILS_TBL.Any(o => o.SUBDETAILS_TBL.Count > 0) &&
                     (this.StudyParametersChoose.CourseChoosed ?? p.COURSE_NO) == p.COURSE_NO &&
                     (this.StudyParametersChoose.SemesterChoosed ?? p.SEMESTER_NO) == p.SEMESTER_NO &&
                     (this.StudyParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID) == p.EDUTYPE_ID &&
@@ -100,12 +101,13 @@ namespace Workload.TabelWindow
                 this.ReportChoosedItem.IsEnabled = this.ReportChoosedItem.ItemsSource != null;
             });
 
-            SelectionChangedEventHandler studyParamChanged = new SelectionChangedEventHandler((object sender, SelectionChangedEventArgs args) => reportParamsChanged());
-            this.StudyParametersChoose.CourseChoose.SelectionChanged += studyParamChanged;
-            this.StudyParametersChoose.SemesterChoose.SelectionChanged += studyParamChanged;
-            this.StudyParametersChoose.EduTypesList.SelectionChanged += studyParamChanged;
-            this.StudyParametersChoose.EduFormsList.SelectionChanged += studyParamChanged;
-
+            foreach (ListView listView in new ListView[]
+            {
+                this.StudyParametersChoose.CourseChoose,
+                this.StudyParametersChoose.SemesterChoose,
+                this.StudyParametersChoose.EduTypesList,
+                this.StudyParametersChoose.EduFormsList
+            }) listView.SelectionChanged += new SelectionChangedEventHandler((object sender, SelectionChangedEventArgs args) => reportParamsChanged());
 
             this.ReportTypeTree.SelectedItemChanged += new RoutedPropertyChangedEventHandler<object>((object sender, RoutedPropertyChangedEventArgs<object> args) => reportParamsChanged());
 
@@ -126,54 +128,142 @@ namespace Workload.TabelWindow
                     workbook.SaveAs(Filename: tempFilePath, ReadOnlyRecommended: true);
                     worksheet = (Excel.Worksheet)excel.ActiveSheet;
                 });
-                if (sender == Tutor)
+                if (sender == Tutor || sender == TutorsSum || sender == Subject || sender == SubjectSum)
                 {
-                    const UInt16 startRow = 9;
-                    uint curRow = startRow;
-                    TEACHERS_TBL selectedTutor = ((TEACHERS_TBL)this.ReportChoosedItem.SelectedItem);
-                    if (selectedTutor == null) return;
-                    initExcel("teach_one.xls");
-                    IEnumerable<MAIN_TBL> mains = context.MAIN_TBL.ToList().Where(p => p.DETAILS_TBL.Any(o => o.SUBDETAILS_TBL.Any(j => j.TEACHER_ID == ((TEACHERS_TBL)this.ReportChoosedItem.SelectedItem).TEACHER_ID)) &&
-                    p.COURSE_NO == (this.StudyParametersChoose.CourseChoosed ?? p.COURSE_NO) &&
-                    p.SEMESTER_NO == (this.StudyParametersChoose.SemesterChoosed ?? p.SEMESTER_NO) &&
-                    p.EDUFORM_ID == (this.StudyParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID) &&
-                    p.EDUTYPE_ID == (this.StudyParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID)).AsEnumerable();
-                    foreach (MAIN_TBL main in mains)
+                    uint curRow = 9;
+                    Action<TEACHERS_TBL, Func<MAIN_TBL, bool>, Func<MAIN_TBL, System.String>, Func<MAIN_TBL, System.String>> PasteTutor = new Action<TEACHERS_TBL, Func<MAIN_TBL, bool>, Func<MAIN_TBL, System.String>, Func<MAIN_TBL, System.String>>((TEACHERS_TBL tutor, Func<MAIN_TBL, bool> mainSel, Func<MAIN_TBL, System.String> secondCol, Func<MAIN_TBL, System.String> thirdCol) =>
                     {
-                        Excel.Range range = worksheet.Cells[curRow+1, 1] as Excel.Range;
-                        range.EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown, Type.Missing);
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(range);
-                        (worksheet.Cells[curRow, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow);
-                        worksheet.Cells[curRow, 1] = curRow - startRow + 1;
-                        IEnumerable<System.String> groupsNames = main.DETAILS_TBL.Select(p => p.SUBDETAILS_TBL.ToList().Where(o => o.TEACHER_ID == ((TEACHERS_TBL)this.ReportChoosedItem.SelectedItem).TEACHER_ID).Select(j => j.GROUPS_TBL.Select(k => k.GROUP_NAME))).SelectMany(s=>s).SelectMany(s=>s).Distinct();
-                        worksheet.Cells[curRow, "B"] = main.SUBJECTS_TBL.SUBJECT_NAME + (groupsNames.Count() > 0 ? " (" + (groupsNames.Count() == 1 ? "Група " + groupsNames.Single() : "Групи " + System.String.Join(", ", groupsNames)) + ")" : System.String.Empty);
-                        worksheet.Cells[curRow, "C"] = main.COURSE_NO;
-                        uint curCol = 4;
-                        const System.String desired = "[WH_[$CL_1]]";
-                        System.String cell = System.String.Empty;
-                        System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(System.Text.RegularExpressions.Regex.Escape(desired));
-                        foreach (WORKS_TBL work in context.WORKS_TBL.OrderBy(p=>p.WORK_ID))
+                        UInt32 startRow = curRow;
+                        curRow = startRow;
+                        IEnumerable<MAIN_TBL> mains = context.MAIN_TBL.ToList().Where(p => mainSel(p) &&
+                        p.COURSE_NO == (this.StudyParametersChoose.CourseChoosed ?? p.COURSE_NO) &&
+                        p.SEMESTER_NO == (this.StudyParametersChoose.SemesterChoosed ?? p.SEMESTER_NO) &&
+                        p.EDUFORM_ID == (this.StudyParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID) &&
+                        p.EDUTYPE_ID == (this.StudyParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID)).AsEnumerable();
+                        foreach (MAIN_TBL main in mains)
                         {
-                            cell = (worksheet.Cells[curRow, curCol] as Excel.Range).Text;
-                            cell = regex.Replace(cell, main.DETAILS_TBL.SingleOrDefault(p => p.WORK_ID == work.WORK_ID)?.SUBDETAILS_TBL.SingleOrDefault(p => p.TEACHER_ID == selectedTutor.TEACHER_ID)?.HOURS.ToString() ?? "0", 1);
-                            worksheet.Cells[curRow, curCol] = cell;
-                            if (!cell.Contains(desired))
+                            (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown, Type.Missing);
+                            (worksheet.Cells[curRow, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow);
+                            worksheet.Cells[curRow, 1] = curRow - startRow + 1;
+                            worksheet.Cells[curRow, "B"] = secondCol(main);
+                            worksheet.Cells[curRow, "C"] = thirdCol(main);
+                            uint curCol = 4;
+                            const System.String desired = "[WH_[$CL_1]]";
+                            System.String cell = System.String.Empty;
+                            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(System.Text.RegularExpressions.Regex.Escape(desired));
+                            foreach (WORKS_TBL work in context.WORKS_TBL.OrderBy(p => p.WORK_ID))
                             {
-                                if (cell.Contains("#"))
+                                cell = (worksheet.Cells[curRow, curCol] as Excel.Range).Text;
+                                cell = regex.Replace(cell, main.DETAILS_TBL.SingleOrDefault(p => p.WORK_ID == work.WORK_ID)?.SUBDETAILS_TBL.SingleOrDefault(p => p.TEACHER_ID == tutor.TEACHER_ID)?.HOURS.ToString() ?? "0", 1);
+                                worksheet.Cells[curRow, curCol] = cell;
+                                if (!cell.Contains(desired))
                                 {
-                                    (worksheet.Cells[curRow, curCol] as Excel.Range).Clear();
-                                    (worksheet.Cells[curRow, curCol] as Excel.Range).Formula = cell.Replace('#', '=');
-                                    (worksheet.Cells[curRow, curCol] as Excel.Range).FormulaHidden = true;
-                                    (worksheet.Cells[curRow, curCol] as Excel.Range).Calculate();
+                                    if (cell.Contains("#"))
+                                    {
+                                        (worksheet.Cells[curRow, curCol] as Excel.Range).Clear();
+                                        (worksheet.Cells[curRow, curCol] as Excel.Range).Formula = cell.Replace('#', '=');
+                                        (worksheet.Cells[curRow, curCol] as Excel.Range).FormulaHidden = true;
+                                        (worksheet.Cells[curRow, curCol] as Excel.Range).Calculate();
+                                    }
+                                    curCol++;
                                 }
-                                curCol++;
+                            }
+                            curRow++;
+                        }
+                    });
+                    Func<TEACHERS_TBL, Func<MAIN_TBL, string>> secondColumn;
+                    Func<MAIN_TBL, string> thirdColumn;
+                    if (sender == Tutor || sender == TutorsSum)
+                    {
+                        Func<TEACHERS_TBL, Func<MAIN_TBL, bool>> tutorMatch = new Func<TEACHERS_TBL, Func<MAIN_TBL, bool>>((TEACHERS_TBL tutor) => new Func<MAIN_TBL, bool>((MAIN_TBL main) => main.DETAILS_TBL.Any(o => o.SUBDETAILS_TBL.Any(j => j.TEACHER_ID == tutor.TEACHER_ID))));
+                        secondColumn = new Func<TEACHERS_TBL, Func<MAIN_TBL, string>>((TEACHERS_TBL tutor) => new Func<MAIN_TBL, string>((MAIN_TBL main) =>
+                        {
+                            IEnumerable<System.String> groupsNames = main.DETAILS_TBL.Select(p => p.SUBDETAILS_TBL.ToList().Where(o => o.TEACHER_ID == tutor.TEACHER_ID).Select(j => j.GROUPS_TBL.Select(k => k.GROUP_NAME))).SelectMany(s => s).SelectMany(s => s).Distinct();
+                            return main.SUBJECTS_TBL.SUBJECT_NAME + (groupsNames.Count() > 0 ? " (" + (groupsNames.Count() == 1 ? "Група " + groupsNames.Single() : "Групи " + System.String.Join(", ", groupsNames)) + ")" : System.String.Empty);
+                        }));
+                        thirdColumn = new Func<MAIN_TBL, string>((MAIN_TBL main) => main.COURSE_NO.ToString());
+                        if (sender == Tutor)
+                        {
+                            TEACHERS_TBL selectedTutor = (TEACHERS_TBL)this.ReportChoosedItem.SelectedItem;
+                            if (selectedTutor == null) return;
+                            initExcel("teach_one.xls");
+                            PasteTutor(selectedTutor, tutorMatch(selectedTutor), secondColumn(selectedTutor), thirdColumn);
+                        }
+                        if (sender == TutorsSum)
+                        {
+                            initExcel("teach_all.xls");
+                            uint tutorNameRow = curRow++;
+                            uint i = 1;
+                            foreach (TEACHERS_TBL tutor in context.TEACHERS_TBL.Local.ToList().Where(
+                                p => p.SUBDETAILS_TBL.Any(o =>
+                                     (this.StudyParametersChoose.CourseChoosed ?? o.DETAILS_TBL.MAIN_TBL.COURSE_NO) == o.DETAILS_TBL.MAIN_TBL.COURSE_NO &&
+                                     (this.StudyParametersChoose.SemesterChoosed ?? o.DETAILS_TBL.MAIN_TBL.SEMESTER_NO) == o.DETAILS_TBL.MAIN_TBL.SEMESTER_NO &&
+                                     (this.StudyParametersChoose.SelectedEduForm?.EDUFORM_ID ?? o.DETAILS_TBL.MAIN_TBL.EDUFORM_ID) == o.DETAILS_TBL.MAIN_TBL.EDUFORM_ID &&
+                                     (this.StudyParametersChoose.SelectedEduType?.EDUTYPE_ID ?? o.DETAILS_TBL.MAIN_TBL.EDUTYPE_ID) == o.DETAILS_TBL.MAIN_TBL.EDUTYPE_ID
+                                )))
+                            {
+                                PasteTutor(tutor, tutorMatch(tutor), secondColumn(tutor), thirdColumn);
+                                (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow + 2, 1] as Excel.Range).EntireRow);
+                                (worksheet.Cells[curRow, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow);
+                                (worksheet.Cells[tutorNameRow, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow, 1] as Excel.Range).EntireRow);
+                                worksheet.Cells[tutorNameRow, 1] = i++;
+                                worksheet.Cells[tutorNameRow, 2] = tutor.TEACHER_NAME;
+                                tutorNameRow = curRow++;
                             }
                         }
-                        curRow++;
                     }
-                    (worksheet.Cells[curRow, 1] as Excel.Range).EntireRow.Clear();
-                    (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow, 1] as Excel.Range).EntireRow);
-                    (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Clear();
+                    if (sender == Subject || sender == SubjectSum)
+                    {
+                        Func<MAIN_TBL, Func<MAIN_TBL, bool>> mainMatch = new Func<MAIN_TBL, Func<MAIN_TBL, bool>>((MAIN_TBL x) => new Func<MAIN_TBL, bool>((MAIN_TBL y) => x.ITEM_ID == y.ITEM_ID));
+                        secondColumn = new Func<TEACHERS_TBL, Func<MAIN_TBL, string>>((TEACHERS_TBL x) => new Func<MAIN_TBL, string>((MAIN_TBL y) => x.TEACHER_NAME));
+                        thirdColumn = new Func<MAIN_TBL, string>((MAIN_TBL x) => x.EDUFORMS_TBL.EDUFORM_NAME.First().ToString());
+                        if (sender == Subject)
+                        {
+                            MAIN_TBL selectedMain = (MAIN_TBL)this.ReportChoosedItem.SelectedItem;
+                            if (selectedMain == null) return;
+                            initExcel("subj_one.xls");
+                            foreach (TEACHERS_TBL tutor in selectedMain.DETAILS_TBL.ToList().SelectMany(p => p.SUBDETAILS_TBL.ToList()).Select(p => p.TEACHERS_TBL).Distinct())
+                                PasteTutor(tutor, mainMatch(selectedMain), secondColumn(tutor), thirdColumn);
+                        }
+                        if (sender == SubjectSum)
+                        {
+                            initExcel("subj_all.xls");
+                            uint subjNameRow = curRow++;
+                            uint i = 1;
+                            foreach (MAIN_TBL main in context.MAIN_TBL.Local.ToList().Where(p =>
+                                     (this.StudyParametersChoose.CourseChoosed ?? p.COURSE_NO) == p.COURSE_NO &&
+                                     (this.StudyParametersChoose.SemesterChoosed ?? p.SEMESTER_NO) == p.SEMESTER_NO &&
+                                     (this.StudyParametersChoose.SelectedEduForm?.EDUFORM_ID ?? p.EDUFORM_ID) == p.EDUFORM_ID &&
+                                     (this.StudyParametersChoose.SelectedEduType?.EDUTYPE_ID ?? p.EDUTYPE_ID) == p.EDUTYPE_ID
+                                ))
+                            {
+                                foreach (TEACHERS_TBL tutor in main.DETAILS_TBL.ToList().SelectMany(p => p.SUBDETAILS_TBL.ToList()).Select(p => p.TEACHERS_TBL).Distinct())
+                                    PasteTutor(tutor, mainMatch(main), secondColumn(tutor), thirdColumn);
+                                (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow + 2, 1] as Excel.Range).EntireRow);
+                                (worksheet.Cells[curRow, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow);
+                                (worksheet.Cells[subjNameRow, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow, 1] as Excel.Range).EntireRow);
+                                worksheet.Cells[subjNameRow, 1] = i++;
+                                worksheet.Cells[subjNameRow, 2] = main.SUBJECTS_TBL.SUBJECT_NAME;
+                                subjNameRow = curRow++;
+                            }
+
+                        }
+                    }
+                    if ((sender == Tutor || sender == Subject) && this.ReportChoosedItem.SelectedItem != null)
+                    {
+                        (worksheet.Cells[curRow, 1] as Excel.Range).EntireRow.Clear();
+                        (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow, 1] as Excel.Range).EntireRow);
+                        (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Clear();
+                    }
+                    if (sender==TutorsSum || sender==SubjectSum)
+                    {
+                        (worksheet.Cells[curRow - 1, 1] as Excel.Range).EntireRow.Clear();
+                        (worksheet.Cells[curRow, 1] as Excel.Range).EntireRow.Clear();
+                        (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Copy((worksheet.Cells[curRow - 1, 1] as Excel.Range).EntireRow);
+                        (worksheet.Cells[curRow + 1, 1] as Excel.Range).EntireRow.Clear();
+                        curRow--;
+                    }
+
                 }
 
                 if (excel !=null)

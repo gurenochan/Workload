@@ -97,3 +97,13 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Template
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\Копия individual.xls
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\Копия individual_new.xls
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.ResolveComReference.cache
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\subj_all.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\subj_one.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\summ_subj.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach_simple.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\teach_all.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\teach_one.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\unp.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\work_one.ini
