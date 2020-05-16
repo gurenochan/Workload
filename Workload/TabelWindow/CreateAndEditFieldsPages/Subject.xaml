@@ -20,7 +20,9 @@
 
         <Label Content="Name" Grid.Row="0" Grid.Column="0"/>
         <TextBox x:Name="NameText" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ValidationTip}">
+            <!--Звертання до властивості вмісту поля.-->
             <TextBox.Text>
+                <!--Прив'язка до поля "Name" класу перевірки, аби той в свою чергу здійснював перевірку вмісту поля, і вказував на наявність помилок в ньому.-->
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
                         <DataErrorValidationRule/>

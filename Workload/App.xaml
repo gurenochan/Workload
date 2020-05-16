@@ -11,7 +11,7 @@
                         <ControlTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
+                                    <AdornedElementPlaceholder/>
                                 </Border>
                             </StackPanel>
                         </ControlTemplate>
@@ -27,6 +27,12 @@
                     Path=(Validation.Errors)[0].ErrorContent}" />
                 </Trigger>
             </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Control}">
+            <Style.Setters>
+                <Setter Property="Margin" Value="5,1.5"/>
+                <Setter Property="Height" Value="20"/>
+            </Style.Setters>
         </Style>
         <Style TargetType="Button">
             <Setter Property="BorderThickness" Value="0"/>

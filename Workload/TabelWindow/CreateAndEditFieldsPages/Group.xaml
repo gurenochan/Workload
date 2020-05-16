@@ -26,8 +26,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Content="Group Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-        <TextBox x:Name="GroupNameText" Grid.Row="0" Grid.Column="1" Margin="10, 5, 10, 5" Style="{StaticResource ValidationTip}">
+        <Label Content="Назва" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+        <TextBox x:Name="GroupNameText" Grid.Row="0" Grid.Column="1" Style="{StaticResource ValidationTip}">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -37,8 +37,8 @@
             </TextBox.Text>
         </TextBox>
 
-        <Label Content="Course" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-        <TextBox x:Name="CourseText" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="10, 5, 5, 5" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{StaticResource ValidationTip}">
+        <Label Content="Курс" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+        <TextBox x:Name="CourseText" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{StaticResource ValidationTip}">
             <TextBox.Text>
                 <Binding Path="Course" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -48,7 +48,7 @@
             </TextBox.Text>
         </TextBox>
 
-        <Label Content="Eduticational form type" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+        <Label Content="Форма навчання" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
         <ListView x:Name="EducationalFormsList" Grid.Row="3" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ValidationTip}" Height="Auto">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -64,8 +64,8 @@
             </ListView.SelectedItem>
         </ListView>
 
-        <Label Content="Faculty abreviation" Grid.Row="6" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-        <TextBox x:Name="FacultyAbreviationText" Grid.Row="6" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 5, 10, 5" Style="{StaticResource ValidationTip}">
+        <Label Content="Абревіатура факультету" Grid.Row="6" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+        <TextBox x:Name="FacultyAbreviationText" Grid.Row="6" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ValidationTip}">
             <TextBox.Text>
                 <Binding Path="Faculty" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -74,9 +74,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        
-        <Label Content="Count of budgetaries" Grid.Row="7" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-        <TextBox x:Name="BudgetariesCountText" Grid.Row="7" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 5, 10, 5" Style="{StaticResource ValidationTip}">
+
+        <Label Content="Кількість бюджетників" Grid.Row="7" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+        <TextBox x:Name="BudgetariesCountText" Grid.Row="7" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ValidationTip}">
             <TextBox.Text>
                 <Binding Path="BudgetCount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -86,8 +86,8 @@
             </TextBox.Text>
         </TextBox>
 
-        <Label Content="Count of contractors" Grid.Row="8" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-        <TextBox x:Name="ContractorsCountText" Grid.Row="8" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 5, 10, 5" Style="{StaticResource ValidationTip}">
+        <Label Content="Кількість контрактників" Grid.Row="8" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+        <TextBox x:Name="ContractorsCountText" Grid.Row="8" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ValidationTip}">
             <TextBox.Text>
                 <Binding Path="ContractCount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -97,8 +97,8 @@
             </TextBox.Text>
         </TextBox>
 
-        <Label Content="Notes" Grid.Row="9" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-        <TextBox x:Name="NotesText" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 5, 10, 5" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource ValidationTip}" Height="Auto">
+        <Label Content="Нотації" Grid.Row="9" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+        <TextBox x:Name="NotesText" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource ValidationTip}" Height="Auto">
             <TextBox.Text>
                 <Binding Path="Misc" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>

@@ -18,7 +18,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Content="Назва" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <TextBox x:Name="NameText" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <TextBox x:Name="NameText" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource ValidationTip}">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>

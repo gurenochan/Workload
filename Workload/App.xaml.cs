@@ -36,6 +36,7 @@ namespace Workload
                 ExcelProcess = System.Diagnostics.Process.GetProcessById((int)ExcelPID);
                 ExcelProcess.Kill();
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(application);
+                application = null;
             }
         }
 
