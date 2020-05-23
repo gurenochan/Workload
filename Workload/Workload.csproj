@@ -371,6 +371,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Media\talisman_cropped_and_back_erased.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

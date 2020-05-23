@@ -25,6 +25,8 @@
                 <BeginStoryboard>
                     <Storyboard BeginTime="0:0:0.25" Duration="Forever">
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
+                        <DoubleAnimation AccelerationRatio="0.4" DecelerationRatio="0.6" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Height" From="0" To="40" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
+                        <DoubleAnimation AccelerationRatio="0.4" DecelerationRatio="0.6" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Height" From="40" To="60" BeginTime="0:0:0.5" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="TalismanImage" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="Blur" Storyboard.TargetProperty="Radius" From="100" To="0" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
@@ -48,14 +50,14 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-        <Image x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped.png" Stretch="Uniform" Grid.Column="1" Opacity="1">
+        <Rectangle x:Name="BackRect" Height="60" Grid.ColumnSpan="2" Fill="#FF449BA4"/>
+        <Image Visibility="Hidden" x:Name="LoadGIF" gif:ImageBehavior.AnimatedSource="Media/Loading.gif" Margin="100,120,100,80" VerticalAlignment="Top" HorizontalAlignment="Center" gif:ImageBehavior.AutoStart="True"/>
+        <TextBox AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" x:Name="ProgramNameLabel" Text="Розподіл Навантаження" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="110" Width="369" TextBlock.FontSize="54" Grid.Column="0" FontFamily="Microsoft Sans Serif" Background="{x:Null}" FontSize="48" Grid.ColumnSpan="2" FontWeight="Bold" BorderThickness="0"/>
+        <Label x:Name="MadeByLabel" Content="Кафедра АТЕП" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="Microsoft Sans Serif" FontSize="16"/>
+        <Image x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped_and_back_erased.png" Stretch="Uniform" Grid.Column="1" Opacity="1">
             <Image.Effect>
                 <BlurEffect Radius="0" x:Name="Blur"/>
             </Image.Effect>
         </Image>
-        <Image Visibility="Hidden" x:Name="LoadGIF" gif:ImageBehavior.AnimatedSource="Media/Loading.gif" Margin="100,120,100,80" VerticalAlignment="Top" HorizontalAlignment="Center" gif:ImageBehavior.AutoStart="True"/>
-        <Label x:Name="ProgramNameLabel" Content="Workload" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="80" Width="240" TextBlock.FontSize="54" Grid.Column="0" FontFamily="SansSerif" Background="{x:Null}"/>
-        <Label x:Name="MadeByLabel" Content="Made by tedechan" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="SansSerif" FontSize="14" FontWeight="Bold"/>
-
     </Grid>
 </Window>
