@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Workload.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Facility" Type="System.String" Scope="Application">
+    <Setting Name="Facility" Type="System.String" Scope="User">
       <Value Profile="(Default)">ТЕФ</Value>
     </Setting>
     <Setting Name="Department" Type="System.String" Scope="User">

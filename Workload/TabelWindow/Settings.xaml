@@ -1,0 +1,44 @@
+﻿<Page x:Class="Workload.TabelWindow.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:properties="clr-namespace:Workload.Properties"
+      xmlns:local="clr-namespace:Workload"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Settings">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Факультет" Grid.ColumnSpan="2">
+            <ComboBox x:Name="FacilityText" IsEditable="True" Text="{Binding Source={x:Static properties:Settings.Default}, Path=Facility, Mode=OneWay}">
+                <TextBlock Text="ТЕФ"/>
+                <TextBlock Text="ФЕЛ"/>
+                <TextBlock Text="ІПСА"/>
+                <TextBlock Text="ФЕА"/>
+                <TextBlock Text="ФІОТ"/>
+                <TextBlock Text="ФММ"/>
+                <TextBlock Text="ІФФ"/>
+                <TextBlock Text="ММІ"/>
+            </ComboBox>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Кафедра" Grid.ColumnSpan="2">
+            <ComboBox x:Name="DepartmentText" IsEditable="True" Text="{Binding Source={x:Static properties:Settings.Default}, Path=Department, Mode=OneWay}">
+                <TextBlock Text="Теоретичної і промислової теплотехніки"/>
+                <TextBlock Text="АЕС та інженерної теплофізики"/>
+                <TextBlock Text="Теплоенергетичних установок теплових і АЕС"/>
+                <TextBlock Text="Автоматизації теплоенергетичних процесів"/>
+                <TextBlock Text="Автоматизації проектування енергетичих процесів і систем"/>
+            </ComboBox>
+        </GroupBox>
+    </Grid>
+</Page>

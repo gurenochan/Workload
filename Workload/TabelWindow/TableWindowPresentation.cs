@@ -40,6 +40,7 @@ namespace Workload
         public static PresentaionType Distribution => new PresentaionType("Розподіл");
         public static PresentaionType Reports => new PresentaionType("Звіти");
         public static PresentaionType Database => new PresentaionType("База даних");
+        public static PresentaionType Settings => new PresentaionType("Налаштування");
     }
 
     public class TableWindowPresentation<T>: ITableWindowPresentation where T: class

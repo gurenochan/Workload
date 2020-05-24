@@ -38,6 +38,7 @@ namespace Workload
             tableWindowPresentations.Add(new TableWindowPresentation<EDUTYPES_TBL>("Види навчання ", PresentaionType.Database, new EduTypesEditForm()));
             tableWindowPresentations.Add(new TableWindowPresentation<WORKS_TBL>("Види робіт", PresentaionType.Database, new WorkTypesEditForm()));
             tableWindowPresentations.Add(new TabelWindow.ExcelReports());
+            tableWindowPresentations.Add(new TabelWindow.Settings());
 
             this.PresentaionsList.ItemsSource = tableWindowPresentations;
 

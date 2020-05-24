@@ -80,8 +80,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.ba
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.xml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\App.baml
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.g.cs
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual.xls
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual_new.xls
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual_old.xls
@@ -107,3 +105,7 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Template
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\teach_one.ini
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\unp.ini
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\work_one.ini
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Settings.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.g.cs
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Settings.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.baml

@@ -30,11 +30,11 @@ namespace Workload.TabelWindow
         public TabItem Tab { get; set; }
         public Window Window { get; set; }
 
-        protected CreateAndEditFieldsPages.MainComplexEdit.MainParametersChoose StudyParametersChoose;
+        protected TabelWindow.CreateAndEditFieldsPages.MainComplexEdit.MainParametersChoose StudyParametersChoose;
         public ExcelReports()
         {
             InitializeComponent();
-            this.StudyParametersChoose = new CreateAndEditFieldsPages.MainComplexEdit.MainParametersChoose();
+            this.StudyParametersChoose = new TabelWindow.CreateAndEditFieldsPages.MainComplexEdit.MainParametersChoose();
             this.paramFrame.Content = this.StudyParametersChoose;
 
             TreeViewItem

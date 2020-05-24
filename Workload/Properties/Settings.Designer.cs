@@ -23,12 +23,15 @@ namespace Workload.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("ТЕФ")]
         public string Facility {
             get {
                 return ((string)(this["Facility"]));
+            }
+            set {
+                this["Facility"] = value;
             }
         }
         
