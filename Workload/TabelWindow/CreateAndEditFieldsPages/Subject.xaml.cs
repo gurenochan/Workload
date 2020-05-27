@@ -31,21 +31,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         protected int SubId = 0;
-        public SUBJECTS_TBL EditedEntity
-        {
-            get => new SUBJECTS_TBL()
-            {
-                SUBJECT_ID = this.SubId,
-                SUBJECT_NAME = this.NameText.Text,
-                SUBJECT_MISC = this.NotesText.Text,
-            };
-            set
-            {
-                this.SubId = value.SUBJECT_ID;
-                this.NameText.Text = value.SUBJECT_NAME;
-                this.NotesText.Text = value.SUBJECT_MISC;
-            }
-        }
 
         public Expression<Func<SUBJECTS_TBL, bool>> GetSingleEntity { get => x => x.SUBJECT_ID == this.SubId; }
 

@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Grid.Column="0" Header="Факультет" Grid.ColumnSpan="2">
@@ -39,6 +40,9 @@
                 <TextBlock Text="Автоматизації теплоенергетичних процесів"/>
                 <TextBlock Text="Автоматизації проектування енергетичих процесів і систем"/>
             </ComboBox>
+        </GroupBox>
+        <GroupBox Header="База Даних" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Hidden">
+            <Button x:Name="RestoreDBBut" Content="Відновити базу даних" HorizontalAlignment="Left"/>
         </GroupBox>
     </Grid>
 </Page>

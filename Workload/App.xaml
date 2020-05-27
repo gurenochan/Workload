@@ -41,6 +41,23 @@
             <Setter Property="Background" Value="#FFE7E4E4"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="5,0,5,0"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="BorderBrush" Value="DimGray"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="Background" Value="#FFE7E4E4"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="5,0,5,0"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="BorderBrush" Value="DimGray"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="BorderThickness" Value="0.1"/>
         </Style>
     </Application.Resources>
 </Application>

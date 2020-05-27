@@ -32,23 +32,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         protected int WorkId = 0;
 
-        public WORKS_TBL EditedEntity 
-        {
-            get => new WORKS_TBL()
-            {
-                WORK_ID = this.WorkId,
-                WORK_NAME = this.NameText.Text,
-                HRS_PER_STUD = this.HoursPerStudentText.Text != System.String.Empty ? Convert.ToDecimal(this.HoursPerStudentText.Text) : (Nullable<decimal>)null
-                
-            };
-            set
-            {
-                this.WorkId = value.WORK_ID;
-                this.NameText.Text = value.WORK_NAME;
-                this.HoursPerStudentText.Text = value.HRS_PER_STUD.ToString();
-            }
-        }
-
         public Expression<Func<WORKS_TBL, bool>> GetSingleEntity => x => x.WORK_ID == this.WorkId;
 
         public Expression<Func<WORKS_TBL, int>> GetId => x => x.WORK_ID;

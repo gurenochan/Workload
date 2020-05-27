@@ -35,32 +35,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         protected int TeacherID = 0;
-        public TEACHERS_TBL EditedEntity
-        {
-            get
-            {
-                return new TEACHERS_TBL()
-                {
-                    TEACHER_ID = this.TeacherID,
-                    TEACHER_NAME = FullNameText.Text,
-                    TEACHER_POS = PositionBox.Text,
-                    TEACHER_RATE = Convert.ToDecimal(ParlayText.Text),
-                    TEACHER_RANK = RankBox.Text,
-                    TEACHER_DEGREE = DegreeBox.Text,
-                    TEACHER_MISC = NotesText.Text
-                };
-            }
-            set
-            {
-                this.TeacherID = value.TEACHER_ID;
-                this.FullNameText.Text = value.TEACHER_NAME;
-                this.PositionBox.Text = value.TEACHER_POS;
-                this.ParlayText.Text = Convert.ToString(value.TEACHER_RATE);
-                this.RankBox.Text = value.TEACHER_RANK;
-                this.DegreeBox.Text = value.TEACHER_DEGREE;
-                this.NotesText.Text = value.TEACHER_MISC;
-            }
-        }
 
 
         public System.Linq.Expressions.Expression<Func<TEACHERS_TBL, bool>> GetSingleEntity

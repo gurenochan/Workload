@@ -1,7 +1,9 @@
 ﻿D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Release\GeneratedInternalTypeHelper.g.cs
-
-FD:\Documents\workload\MainWPFProject\Workload\Workload\Loading.xaml;;
+FD:\Documents\workload\MainWPFProject\Workload\Workload\App.xaml;;
 FD:\Documents\workload\MainWPFProject\Workload\Workload\MainWindow.xaml;;
+FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\Settings.xaml;;
+FD:\Documents\workload\MainWPFProject\Workload\Workload\SplashScreen.xaml;;
+FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\GroupSelect.xaml;;
 FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.xaml;;
 FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\EduForm.xaml;;
 FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\EduTypes.xaml;;
@@ -10,6 +12,7 @@ FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEdi
 FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\Subject.xaml;;
 FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\Teacher.xaml;;
 FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\Work.xaml;;
-FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\WorkLoadEdit.xaml;;
+FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.xaml;;
+FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\ExcelReports.xaml;;
 FD:\Documents\workload\MainWPFProject\Workload\Workload\TabelWindow\TablePage.xaml;;
 

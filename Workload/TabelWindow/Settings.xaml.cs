@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FirebirdSql.Data.FirebirdClient;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,5 +52,21 @@ namespace Workload.TabelWindow
         public Page TablePage { get => this; set => throw new NotImplementedException(); }
         public TabItem Tab { get; set; }
         public Window Window { get; set; }
+
+        public void RestoreDB(bool requireConfirm = true)
+        {
+            bool erase = false;
+            if (requireConfirm)
+            {
+                erase = MessageBox.Show("Увага, дана дія зітре поточну базу даних замінить її на пусту резервну копію.\nПісля цього програма виконає самостійний перезапуск.\nБажажте продовжити?", "Відновлення бази даних", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+            }
+            else erase = true;
+            if (!erase) return;
+
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConnectionStringsSection connStrSect = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            FbConnectionStringBuilder connBuilder = new FbConnectionStringBuilder(connStrSect.ConnectionStrings["Entities"].ConnectionString);
+            System.IO.File.Delete(connBuilder.Database);
+        }
     }
 }

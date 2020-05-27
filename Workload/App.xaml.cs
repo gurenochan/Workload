@@ -83,7 +83,7 @@ namespace Workload
                 this.Exit += new ExitEventHandler((object obj, ExitEventArgs args) => this.DBContext.Dispose());
                 this.TableWindowPresentations = new System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation>();
                 MainWindow wnd = new MainWindow();
-                wnd.Title = "Hello";
+                wnd.Title = "Розподіл навантаження кафедри";
                 WaitFor.Wait();
                 bool active = true;
                 System.Windows.Threading.Dispatcher.FromThread(OpenSplash).Invoke(() =>
@@ -114,7 +114,7 @@ namespace Workload
             internalBuilder = new FbConnectionStringBuilder(connBuilder["provider connection string"].ToString());
             System.String appPath = Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
             internalBuilder.ClientLibrary = Path.Combine(appPath, "DatabaseEssentials\\fbembed.dll");
-            internalBuilder.Database = Path.Combine(appPath, "DatabaseEssentials\\WLBASERENEWED2.FDB");
+            internalBuilder.Database = Path.Combine(appPath, "DatabaseEssentials\\Database.fdb");
             internalBuilder.Charset = "UTF8";
             connBuilder["provider connection string"] = internalBuilder.ConnectionString;
             connStrSect.ConnectionStrings["Entities"].ConnectionString = connBuilder.ConnectionString;

@@ -55,62 +55,6 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
         protected GROUPS_TBL Group = null;
 
-        public GROUPS_TBL EditedEntity
-        {
-            get
-            {
-                if (this.Group == null)
-                {
-                    this.Group = new GROUPS_TBL();
-                    this.Group.EDUFORMS_TBL = null;
-                }
-                Group.BUDGET_CNT = Convert.ToInt16(this.BudgetariesCountText.Text);
-                Group.CONTRACT_CNT = Convert.ToInt16(this.ContractorsCountText.Text);
-                Group.COURSE_NO = Convert.ToInt16(this.CourseText.Text);
-                Group.FACULTY_ABBR = this.FacultyAbreviationText.Text;
-                Group.GROUP_MISC = this.NotesText.Text == System.String.Empty ? null : this.NotesText.Text;
-                Group.GROUP_NAME = this.GroupNameText.Text ==System.String.Empty ? null : this.GroupNameText.Text;
-                Group.GROUP_ID = this.GroupId;
-                if (Group.EDUFORMS_TBL == null)
-                {
-                    Group.EDUFORMS_TBL = this.EduForm;
-                    if (this.EduForm!=null)
-                    {
-                        this.Context.Entry<EDUFORMS_TBL>(this.EduForm).State = EntityState.Modified;
-                        this.EduForm.GROUPS_TBL.Add(this.Group);
-                    }
-                }
-                else
-                {
-                    if (Group.EDUFORMS_TBL.EDUFORM_ID != this.EduForm.EDUFORM_ID)
-                    {
-                        this.Context.Entry<EDUFORMS_TBL>(Group.EDUFORMS_TBL).State = EntityState.Modified;
-                        Group.EDUFORMS_TBL.GROUPS_TBL.Remove(this.Context.GROUPS_TBL.Find(this.Group.GROUP_ID));
-                        if (this.EduForm!=null)
-                        {
-                            this.Context.Entry<EDUFORMS_TBL>(this.EduForm).State = EntityState.Modified;
-                            this.EduForm.GROUPS_TBL.Add(this.Context.GROUPS_TBL.Find(this.Group.GROUP_ID));
-                        }
-                        this.Group.EDUFORMS_TBL = this.EduForm;
-                    }
-                }
-                Group.EDUFORM_ID = this.EduForm?.EDUFORM_ID;
-                return Group;
-            }
-            set
-            {
-                this.Group = value;
-                this.BudgetariesCountText.Text = value.BUDGET_CNT.ToString();
-                this.ContractorsCountText.Text = value.CONTRACT_CNT.ToString();
-                this.CourseText.Text = value.COURSE_NO.ToString();
-                this.EducationalFormsList.SelectedItem = this.EducationalFormsList.Items.IndexOf(value.EDUFORMS_TBL.EDUFORM_NAME) >= 0 ? value.EDUFORMS_TBL.EDUFORM_NAME : null;
-                this.FacultyAbreviationText.Text = value.FACULTY_ABBR;
-                this.NotesText.Text = value.GROUP_MISC;
-                this.GroupNameText.Text = value.GROUP_NAME;
-                this.GroupId = value.GROUP_ID;
-            }
-        }
-
         public Expression<Func<GROUPS_TBL, bool>> GetSingleEntity => x => x.GROUP_ID == this.GroupId;
 
         public Expression<Func<GROUPS_TBL, int>> GetId => x => x.GROUP_ID;

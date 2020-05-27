@@ -6,16 +6,15 @@
         xmlns:local="clr-namespace:Workload"
         mc:Ignorable="d"
         d:DesignHeight="350"
-        MaxWidth="600"
-        MaxHeight="350"
-        
+        d:DesignWidth="600"
+        AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize"
-        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         Name="Splash"
-        
+        Background="Transparent"
+        BorderThickness="0"
         Title="SplashScreen" Height="350" Width="600"
         ShowInTaskbar="False">
 
@@ -23,12 +22,10 @@
         <EventTrigger RoutedEvent="Loaded">
             <EventTrigger.Actions>
                 <BeginStoryboard>
-                    <Storyboard BeginTime="0:0:0.25" Duration="Forever">
+                    <Storyboard Duration="Forever">
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <DoubleAnimation AccelerationRatio="0.4" DecelerationRatio="0.6" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Height" From="0" To="40" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <DoubleAnimation AccelerationRatio="0.4" DecelerationRatio="0.6" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Height" From="40" To="60" BeginTime="0:0:0.5" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="TalismanImage" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x"/>
+                        <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="TalismanImage" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.1" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="Blur" Storyboard.TargetProperty="Radius" From="100" To="0" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <!--<DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>-->
@@ -39,6 +36,18 @@
                         <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Margin" From="250,0,0,10" To="20,0,0,10" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
                         <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Margin" From="20,10,0,0" To="10,10,0,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5" RepeatBehavior="1x"/>
                         <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Margin" From="20,0,0,10" To="10,0,0,10" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5" RepeatBehavior="1x"/>
+                        <Storyboard RepeatBehavior="1x">
+                            <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="600,0,0,0" To="100,0,100,0" Duration="0:0:0.5" AutoReverse="False"/>
+                            <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="0,0,600,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5"/>
+                            <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="0,0,600,0" To="0,0,0,0" Duration="0:0:0" AutoReverse="False" BeginTime="0:0:1.25"/>
+                            <DoubleAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" BeginTime="0:0:1.25" Duration="0:0:0.25"/>
+                            <DoubleAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" BeginTime="0:0:3" Duration="0:0:0.5"/>
+                            <DoubleAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="0" To="1.0" BeginTime="0:0:3.5" Duration="0:0:0"/>
+                        </Storyboard>
+                        <Storyboard RepeatBehavior="Forever" BeginTime="0:0:3.5">
+                            <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="600,0,0,0" To="100,0,100,0" Duration="0:0:0.5" AutoReverse="False"/>
+                            <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="0,0,600,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5"/>
+                        </Storyboard>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger.Actions>
@@ -46,12 +55,14 @@
     </Window.Triggers>
 
     <Grid Background="White">
+        <!--<Grid.Effect>
+            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="DarkGray" Opacity="0.7" Direction="0"/>
+        </Grid.Effect>-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Rectangle x:Name="BackRect" Height="60" Grid.ColumnSpan="2" Fill="#FF449BA4"/>
-        <Image Visibility="Hidden" x:Name="LoadGIF" gif:ImageBehavior.AnimatedSource="Media/Loading.gif" Margin="100,120,100,80" VerticalAlignment="Top" HorizontalAlignment="Center" gif:ImageBehavior.AutoStart="True"/>
         <TextBox AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" x:Name="ProgramNameLabel" Text="Розподіл Навантаження" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="110" Width="369" TextBlock.FontSize="54" Grid.Column="0" FontFamily="Microsoft Sans Serif" Background="{x:Null}" FontSize="48" Grid.ColumnSpan="2" FontWeight="Bold" BorderThickness="0"/>
         <Label x:Name="MadeByLabel" Content="Кафедра АТЕП" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="Microsoft Sans Serif" FontSize="16"/>
         <Image x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped_and_back_erased.png" Stretch="Uniform" Grid.Column="1" Opacity="1">

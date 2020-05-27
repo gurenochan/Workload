@@ -43,7 +43,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.CopyComplete
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.conf
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.msg
-D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\wlbaseRenewed.fdb
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\fbembed.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\ib_util.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\icudt30.dll
@@ -58,7 +57,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Cre
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\wlb_udf.dll
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Subject.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Subject.baml
-D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\WLBASERENEWED2.FDB
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduForm.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduTypes.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduForm.baml
@@ -77,8 +75,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Cre
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojAssemblyReference.cache
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.baml
-D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.dll
-D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\WpfAnimatedGif.xml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\App.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual.xls
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\Report Templates\xls\individual_new.xls
@@ -109,3 +105,4 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Set
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Settings.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.baml
+D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\Database.fdb
