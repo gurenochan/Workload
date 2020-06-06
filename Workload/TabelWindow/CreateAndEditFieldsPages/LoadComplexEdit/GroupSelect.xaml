@@ -14,7 +14,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -40,8 +40,8 @@
             </ListBox.ItemTemplate>
         </ListView>
 
-        <Button x:Name="AddGroupBut" Content="Add" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,0" Height="20"/>
-        <Button x:Name="RemoveGroupBut" Content="Remove" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,30,5,0" Height="20"/>
+        <Button x:Name="AddGroupBut" Content="Додати" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,5,0" Height="20"/>
+        <Button x:Name="RemoveGroupBut" Content="Прибрати" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,30,5,0" Height="20"/>
 
         <Button x:Name="CloseBut" Visibility="Hidden" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" Margin="10,1"/>
     </Grid>

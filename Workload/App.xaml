@@ -54,10 +54,22 @@
         </Style>
         <Style TargetType="DataGridCell">
             <Setter Property="BorderBrush" Value="DimGray"/>
-            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="Height" Value="20"/>
             <Setter Property="BorderThickness" Value="0.1"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="DimGray"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TreeViewItem">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="HeadersVisibility" Value="Column"/>
         </Style>
     </Application.Resources>
 </Application>

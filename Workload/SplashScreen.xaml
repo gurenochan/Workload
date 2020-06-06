@@ -14,7 +14,7 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         Name="Splash"
         Background="Transparent"
-        BorderThickness="0"
+        BorderThickness="0.01"
         Title="SplashScreen" Height="350" Width="600"
         ShowInTaskbar="False">
 
@@ -56,7 +56,7 @@
 
     <Grid Background="White">
         <!--<Grid.Effect>
-            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="DarkGray" Opacity="0.7" Direction="0"/>
+            <DropShadowEffect BlurRadius="0.01" ShadowDepth="0" Color="DimGray" Opacity="0.01" Direction="0"/>
         </Grid.Effect>-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
