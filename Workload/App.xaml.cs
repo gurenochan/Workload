@@ -21,6 +21,8 @@ namespace Workload
         protected SplashScreen startwindow;
         public System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation> TableWindowPresentations;
 
+        public MainWindow MainWindow = null;
+
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
@@ -82,8 +84,8 @@ namespace Workload
                 CheckDB.Wait();
                 this.Exit += new ExitEventHandler((object obj, ExitEventArgs args) => this.DBContext.Dispose());
                 this.TableWindowPresentations = new System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation>();
-                MainWindow wnd = new MainWindow();
-                wnd.Title = "Розподіл навантаження кафедри";
+                this.MainWindow = new MainWindow();
+                this.MainWindow.Title = "Розподіл навантаження кафедри";
                 WaitFor.Wait();
                 bool active = true;
                 System.Windows.Threading.Dispatcher.FromThread(OpenSplash).Invoke(() =>
@@ -92,9 +94,9 @@ namespace Workload
                     active = startwindow.IsActive;
                     startwindow.Close();
                 });
-                wnd.Show();
-                wnd.ShowActivated = active;
-                if (active) wnd.Activate();
+                this.MainWindow.Show();
+                this.MainWindow.ShowActivated = active;
+                if (active) this.MainWindow.Activate();
                 OpenSplash.Abort();
             }
             catch (Exception ex)

@@ -65,7 +65,7 @@
         <Rectangle x:Name="BackRect" Height="60" Grid.ColumnSpan="2" Fill="#FF449BA4"/>
         <TextBox AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" x:Name="ProgramNameLabel" Text="Розподіл Навантаження" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="110" Width="369" TextBlock.FontSize="54" Grid.Column="0" FontFamily="Microsoft Sans Serif" Background="{x:Null}" FontSize="48" Grid.ColumnSpan="2" FontWeight="Bold" BorderThickness="0"/>
         <Label x:Name="MadeByLabel" Content="Кафедра АТЕП" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="Microsoft Sans Serif" FontSize="16"/>
-        <Image x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped_and_back_erased.png" Stretch="Uniform" Grid.Column="1" Opacity="1">
+        <Image Visibility="Visible" x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped_and_back_erased.png" Stretch="Uniform" Grid.Column="1" Opacity="1">
             <Image.Effect>
                 <BlurEffect Radius="0" x:Name="Blur"/>
             </Image.Effect>

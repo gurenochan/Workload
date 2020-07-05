@@ -308,6 +308,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="DatabaseEssentials\Backup.fdb" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="DatabaseEssentials\Database.fdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

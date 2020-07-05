@@ -23,7 +23,7 @@
         <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="ButtonsDock" Background="Transparent">
             <Button x:Name="ImportBut" Content="Імпортувати" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="100"/>
             <Button x:Name="ExportBut" Content="Експортувати" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="100" Visibility="Collapsed"/>
-            <Button x:Name="PrintBut" Content="Роздрукувати" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="100"/>
+            <Button Visibility="Collapsed" x:Name="PrintBut" Content="Роздрукувати" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="100"/>
             <Button x:Name="DelBut" Content="Видалити" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
             <Button x:Name="AddBut" Content="Додати" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Width="75"/>
         </DockPanel>

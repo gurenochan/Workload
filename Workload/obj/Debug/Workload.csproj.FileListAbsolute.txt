@@ -106,3 +106,4 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Exc
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Settings.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\Database.fdb
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.CoreCompileInputs.cache
