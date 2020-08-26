@@ -8,5 +8,31 @@
     <Setting Name="Department" Type="System.String" Scope="User">
       <Value Profile="(Default)">Автоматизації теплоенергетичних процесів</Value>
     </Setting>
+    <Setting Name="FacilitiesList" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;ТЕФ&lt;/string&gt;
+  &lt;string&gt;ФЕЛ&lt;/string&gt;
+  &lt;string&gt;ІПСА&lt;/string&gt;
+  &lt;string&gt;ФЕА&lt;/string&gt;
+  &lt;string&gt;ФІОТ&lt;/string&gt;
+  &lt;string&gt;ФММ&lt;/string&gt;
+  &lt;string&gt;ІФФ&lt;/string&gt;
+  &lt;string&gt;ММІ&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="DepartmentsList" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Теоретичної і промислової теплотехніки&lt;/string&gt;
+  &lt;string&gt;АЕС та інженерної теплофізики&lt;/string&gt;
+  &lt;string&gt;Теплоенергетичних установок теплових і АЕС&lt;/string&gt;
+  &lt;string&gt;Автоматизації теплоенергетичних процесів&lt;/string&gt;
+  &lt;string&gt;Автоматизації проектування енергетичих процесів і систем&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ShowTalisman" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

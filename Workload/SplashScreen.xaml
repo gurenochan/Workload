@@ -23,30 +23,51 @@
             <EventTrigger.Actions>
                 <BeginStoryboard>
                     <Storyboard Duration="Forever">
-                        <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="TalismanImage" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.1" AutoReverse="False" RepeatBehavior="1x"/>
-                        <DoubleAnimation AccelerationRatio="0" DecelerationRatio="1" Storyboard.TargetName="Blur" Storyboard.TargetProperty="Radius" From="100" To="0" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <!--<DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <DoubleAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.2" To="1" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>-->
-                        <ColorAnimation AccelerationRatio="0.2" DecelerationRatio="0.8" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" From="White" To="LightGray" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <ColorAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" From="LightGray" To="Black" Duration="0:0:0.75" BeginTime="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
+                        <!--<DoubleAnimation Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x"/>-->
 
-                        <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Margin" From="250,10,0,0" To="20,10,0,0" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Margin" From="250,0,0,10" To="20,0,0,10" Duration="0:0:0.5" AutoReverse="False" RepeatBehavior="1x"/>
-                        <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Margin" From="20,10,0,0" To="10,10,0,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5" RepeatBehavior="1x"/>
-                        <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Margin" From="20,0,0,10" To="10,0,0,10" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5" RepeatBehavior="1x"/>
+                        <DoubleAnimation Storyboard.TargetName="grPrgName1" Duration="0:0:1" From="0" To="1" Storyboard.TargetProperty="Offset" AutoReverse="False" RepeatBehavior="1x">
+                            <DoubleAnimation.EasingFunction>
+                                <CircleEase EasingMode="EaseIn"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <DoubleAnimation Duration="0:0:1" From="0" To="1" Storyboard.TargetProperty="Offset" Storyboard.TargetName="grPrgName2" AutoReverse="False" RepeatBehavior="1x">
+                            <DoubleAnimation.EasingFunction>
+                                <ExponentialEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+
+                        <DoubleAnimation Storyboard.TargetName="MadeByLabel" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x"/>
+                        <DoubleAnimation Storyboard.TargetName="TalismanImage" Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.1" AutoReverse="False" RepeatBehavior="1x"/>
+                        <DoubleAnimation Storyboard.TargetName="Blur" Storyboard.TargetProperty="Radius" From="100" To="0" Duration="0:0:0.75" AutoReverse="False" RepeatBehavior="1x">
+                            <DoubleAnimation.EasingFunction>
+                                <CircleEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+
+                        <ThicknessAnimation Storyboard.TargetName="ProgramNameLabel" Storyboard.TargetProperty="Margin" From="0,10,0,0" To="10,10,0,0" Duration="0:0:1" AutoReverse="False" RepeatBehavior="1x">
+                            <ThicknessAnimation.EasingFunction>
+                                <CircleEase EasingMode="EaseOut"/>
+                            </ThicknessAnimation.EasingFunction>
+                        </ThicknessAnimation>
                         <Storyboard RepeatBehavior="1x">
-                            <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="600,0,0,0" To="100,0,100,0" Duration="0:0:0.5" AutoReverse="False"/>
-                            <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="0,0,600,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5"/>
-                            <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="0,0,600,0" To="0,0,0,0" Duration="0:0:0" AutoReverse="False" BeginTime="0:0:1.25"/>
-                            <DoubleAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" BeginTime="0:0:1.25" Duration="0:0:0.25"/>
-                            <DoubleAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" BeginTime="0:0:3" Duration="0:0:0.5"/>
-                            <DoubleAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="0" To="1.0" BeginTime="0:0:3.5" Duration="0:0:0"/>
+                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="0,0,600,0" To="100,0,100,0" Duration="0:0:0.75" AutoReverse="False">
+                                <ThicknessAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseIn"/>
+                                </ThicknessAnimation.EasingFunction>
+                            </ThicknessAnimation>
+                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="600,0,0,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.75">
+                                <ThicknessAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut"/>
+                                </ThicknessAnimation.EasingFunction>
+                            </ThicknessAnimation>
+                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="0,0,600,0" To="0,0,0,0" Duration="0:0:0" AutoReverse="False" BeginTime="0:0:1.5"/>
+                            <DoubleAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" BeginTime="0:0:1.5" Duration="0:0:0.25"/>
+                            <DoubleAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" BeginTime="0:0:3" Duration="0:0:0.5"/>
+                            <DoubleAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="0" To="1.0" BeginTime="0:0:3.5" Duration="0:0:0"/>
                         </Storyboard>
                         <Storyboard RepeatBehavior="Forever" BeginTime="0:0:3.5">
-                            <ThicknessAnimation AccelerationRatio="0.6" DecelerationRatio="0.4" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="600,0,0,0" To="100,0,100,0" Duration="0:0:0.5" AutoReverse="False"/>
-                            <ThicknessAnimation AccelerationRatio="0.5" DecelerationRatio="0.5" Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="0,0,600,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5"/>
+                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="600,0,0,0" To="100,0,100,0" Duration="0:0:0.5" AutoReverse="False"/>
+                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="0,0,600,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5"/>
                         </Storyboard>
                     </Storyboard>
                 </BeginStoryboard>
@@ -63,9 +84,16 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Rectangle x:Name="BackRect" Height="60" Grid.ColumnSpan="2" Fill="#FF449BA4"/>
-        <TextBox AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" x:Name="ProgramNameLabel" Text="Розподіл Навантаження" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="110" Width="369" TextBlock.FontSize="54" Grid.Column="0" FontFamily="Microsoft Sans Serif" Background="{x:Null}" FontSize="48" Grid.ColumnSpan="2" FontWeight="Bold" BorderThickness="0"/>
+        <TextBox AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" x:Name="ProgramNameLabel" Text="Розподіл Навантаження" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="110" Width="369" TextBlock.FontSize="54" Grid.Column="0" FontFamily="Microsoft Sans Serif" FontSize="48" Grid.ColumnSpan="2" FontWeight="Bold" BorderThickness="0" Background="{x:Null}">
+            <TextBox.Foreground>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop x:Name="grPrgName1" Color="Black" Offset="1"/>
+                    <GradientStop x:Name="grPrgName2" Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBox.Foreground>
+        </TextBox>
         <Label x:Name="MadeByLabel" Content="Кафедра АТЕП" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" FontFamily="Microsoft Sans Serif" FontSize="16"/>
-        <Image Visibility="Visible" x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped_and_back_erased.png" Stretch="Uniform" Grid.Column="1" Opacity="1">
+        <Image x:Name="TalismanImage" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Source="Media/talisman_cropped_and_back_erased.png" Stretch="Uniform" Grid.Column="1" Opacity="1">
             <Image.Effect>
                 <BlurEffect Radius="0" x:Name="Blur"/>
             </Image.Effect>

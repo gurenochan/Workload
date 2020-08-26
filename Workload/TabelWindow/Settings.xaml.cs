@@ -26,23 +26,98 @@ namespace Workload.TabelWindow
         {
             InitializeComponent();
 
-            foreach (ComboBox comboBox in new ComboBox[] { this.FacilityText, this.DepartmentText })
-                comboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
-                    new System.Windows.Controls.TextChangedEventHandler((object sender, TextChangedEventArgs args) =>
+            Action<object> FacilityDepartmentUpdateSource = new Action<object>((object sender) =>
+            {
+                try
+                {
+                    Action<ComboBox, System.String, System.Collections.Specialized.StringCollection> action = new Action<ComboBox, System.String, System.Collections.Specialized.StringCollection>((ComboBox comboBox, System.String param, System.Collections.Specialized.StringCollection collection) => 
                     {
-                        try
+                        param = comboBox.Text;
+                        if (!collection.Contains(comboBox.Text) && comboBox.Text!=System.String.Empty)
                         {
-                            if (sender == this.FacilityText) Properties.Settings.Default.Facility = this.FacilityText.Text;
-                            if (sender == this.DepartmentText) Properties.Settings.Default.Department = this.DepartmentText.Text;
-                            Properties.Settings.Default.Save();
+                            collection.Add(comboBox.Text);
+                            comboBox.ItemsSource = null;
+                            comboBox.ItemsSource = collection;
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(messageBoxText: ex.Message + "\n" + ex.StackTrace, "На жаль не вдалося зберегти ваші налаштування", MessageBoxButton.OK, MessageBoxImage.Error);
-                            if (sender == this.FacilityText) this.FacilityText.Text = Properties.Settings.Default.Facility;
-                            if (sender == this.DepartmentText) this.DepartmentText.Text = Properties.Settings.Default.Department;
-                        }
-                    }));
+                        Properties.Settings.Default.Save();
+                    });
+                    if (sender == this.FacilityText)
+                        action(this.FacilityText, Properties.Settings.Default.Facility, Properties.Settings.Default.FacilitiesList);
+                    if (sender == this.DepartmentText)
+                        action(this.DepartmentText, Properties.Settings.Default.Department, Properties.Settings.Default.DepartmentsList);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(messageBoxText: ex.Message + "\n" + ex.StackTrace, "На жаль не вдалося зберегти ваші налаштування", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (sender == this.FacilityText) this.FacilityText.Text = Properties.Settings.Default.Facility;
+                    if (sender == this.DepartmentText) this.DepartmentText.Text = Properties.Settings.Default.Department;
+                }
+            });
+
+            KeyEventHandler FacilityDepartmentKeyUp = new KeyEventHandler((object sender, KeyEventArgs args) =>
+            {
+                switch (args.Key)
+                {
+                    case Key.Enter:
+                        FacilityDepartmentUpdateSource(sender);
+                        break;
+                    case Key.Escape:
+                        Action<ComboBox, System.String> action = new Action<ComboBox, string>((ComboBox comboBox, System.String param) => comboBox.Text = param);
+                        if (sender == this.FacilityText)
+                            action((ComboBox)sender, Properties.Settings.Default.Facility);
+                        if (sender == this.DepartmentText)
+                            action((ComboBox)sender, Properties.Settings.Default.Department);
+                        break;
+                }
+                if (args.Key== Key.Enter || args.Key==Key.Escape)
+                {
+                    UIElement element = Keyboard.FocusedElement as UIElement;
+                    element.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                }
+            });
+            this.FacilityText.KeyUp += FacilityDepartmentKeyUp;
+            this.DepartmentText.KeyUp += FacilityDepartmentKeyUp;
+
+            KeyboardFocusChangedEventHandler FacilityDepartmentLostKeyboardFocus = new KeyboardFocusChangedEventHandler((object sender, KeyboardFocusChangedEventArgs args) => FacilityDepartmentUpdateSource(sender));
+            //this.FacilityText.LostKeyboardFocus += FacilityDepartmentLostKeyboardFocus;
+            //this.DepartmentText.LostKeyboardFocus += FacilityDepartmentLostKeyboardFocus;
+
+            RoutedEventHandler delButs= new RoutedEventHandler((object sender, RoutedEventArgs args) =>
+            {
+                Func<string> facultyOrDepartment = new Func<string>(() => 
+                {
+                    return
+                    (sender == this.DeleteFacilityBut ? "факультету" : System.String.Empty) +
+                    (sender == this.DeleteDepartmentBut ? "кафедри" : System.String.Empty);
+                });
+                try
+                {
+                    if (MessageBox.Show("Увага назву" +
+                        facultyOrDepartment() +
+                        " буде видалено.\nВи дійсно бажаєте її видалити?", "Видалення" +
+                        facultyOrDepartment(), MessageBoxButton.YesNo
+                        ) == MessageBoxResult.No) return;
+                    Action<ComboBox, System.Collections.Specialized.StringCollection> action = new Action<ComboBox, System.Collections.Specialized.StringCollection>((ComboBox comboBox, System.Collections.Specialized.StringCollection collection) => 
+                    {
+                        if (collection.Contains(comboBox.Text))
+                            collection.Remove(comboBox.Text);
+                        comboBox.Text = System.String.Empty;
+                        comboBox.ItemsSource = null;
+                        comboBox.ItemsSource = collection;
+                        Properties.Settings.Default.Save();
+                    });
+                    if (sender == this.DeleteFacilityBut)
+                        action(this.FacilityText, Properties.Settings.Default.FacilitiesList);
+                    if (sender == this.DeleteDepartmentBut)
+                        action(this.DepartmentText, Properties.Settings.Default.DepartmentsList);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(messageBoxText: ex.Message + "\n" + ex.StackTrace, "На жаль не вдалося видалити назву "+ facultyOrDepartment(), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+            this.DeleteDepartmentBut.Click += delButs;
+            this.DeleteFacilityBut.Click += delButs;
         }
 
         public string PresentationName => "Налаштування";

@@ -72,7 +72,6 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Cre
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\GroupSelect.baml
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojAssemblyReference.cache
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\SplashScreen.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\App.baml
@@ -107,3 +106,4 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\Set
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.baml
 D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssentials\Database.fdb
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csproj.CoreCompileInputs.cache
+D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojAssemblyReference.cache

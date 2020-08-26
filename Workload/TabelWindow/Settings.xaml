@@ -21,27 +21,18 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Grid.Column="0" Header="Факультет" Grid.ColumnSpan="2">
-            <ComboBox x:Name="FacilityText" IsEditable="True" Text="{Binding Source={x:Static properties:Settings.Default}, Path=Facility, Mode=OneWay}">
-                <TextBlock Text="ТЕФ"/>
-                <TextBlock Text="ФЕЛ"/>
-                <TextBlock Text="ІПСА"/>
-                <TextBlock Text="ФЕА"/>
-                <TextBlock Text="ФІОТ"/>
-                <TextBlock Text="ФММ"/>
-                <TextBlock Text="ІФФ"/>
-                <TextBlock Text="ММІ"/>
-            </ComboBox>
+            <DockPanel LastChildFill="True">
+                <Button x:Name="DeleteFacilityBut" Content="Видалити" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="5, 0"/>
+                <ComboBox x:Name="FacilityText" IsEditable="True" Text="{Binding Source={x:Static properties:Settings.Default}, Path=Facility, Mode=OneTime}" DockPanel.Dock="Left" ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=FacilitiesList, Mode=OneTime}"/>
+            </DockPanel>
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.Column="0" Header="Кафедра" Grid.ColumnSpan="2">
-            <ComboBox x:Name="DepartmentText" IsEditable="True" Text="{Binding Source={x:Static properties:Settings.Default}, Path=Department, Mode=OneWay}">
-                <TextBlock Text="Теоретичної і промислової теплотехніки"/>
-                <TextBlock Text="АЕС та інженерної теплофізики"/>
-                <TextBlock Text="Теплоенергетичних установок теплових і АЕС"/>
-                <TextBlock Text="Автоматизації теплоенергетичних процесів"/>
-                <TextBlock Text="Автоматизації проектування енергетичих процесів і систем"/>
-            </ComboBox>
+            <DockPanel>
+                <Button x:Name="DeleteDepartmentBut" Content="Видалити" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="5, 0"/>
+                <ComboBox x:Name="DepartmentText" IsEditable="True" Text="{Binding Source={x:Static properties:Settings.Default}, Path=Department, Mode=OneWay}" ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=DepartmentsList, Mode=OneTime}"/>
+            </DockPanel>
         </GroupBox>
-        <GroupBox Header="База Даних" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Hidden">
+        <GroupBox Header="База Даних" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Visible">
             <Button x:Name="RestoreDBBut" Content="Відновити базу даних" HorizontalAlignment="Left"/>
         </GroupBox>
     </Grid>
