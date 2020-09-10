@@ -81,7 +81,17 @@ namespace Workload
                 ewh.WaitOne();
                 CheckDB.Start();
                 WaitFor.Start();
-                CheckDB.Wait();
+                try
+                {
+                    CheckDB.Wait();
+                }
+                catch (AggregateException ex)
+                {
+                    if (ex.InnerExceptions.Count(new Func<Exception, bool>((Exception exc)=>exc.Message.Contains("Error while trying to open file")))>0)
+                    {
+                        MessageBox.Show(messageBoxText: "", caption: "", button: MessageBoxButton.OK, icon: MessageBoxImage.Error);
+                    }
+                }
                 this.Exit += new ExitEventHandler((object obj, ExitEventArgs args) => this.DBContext.Dispose());
                 this.TableWindowPresentations = new System.Collections.ObjectModel.ObservableCollection<ITableWindowPresentation>();
                 this.MainWindow = new MainWindow();
@@ -101,7 +111,7 @@ namespace Workload
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unfortunately Error has been occured.\n" + ex.Message, "Failed to start");
+                MessageBox.Show(messageBoxText: "Unfortunately Error has been occured.\n" + ex.Message, caption: "Failed to start", icon: MessageBoxImage.Error, button: MessageBoxButton.OK);
                 Environment.Exit(1);
             }
 
@@ -117,12 +127,30 @@ namespace Workload
             System.String appPath = Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
             internalBuilder.ClientLibrary = Path.Combine(appPath, "DatabaseEssentials\\fbembed.dll");
             internalBuilder.Database = Path.Combine(appPath, "DatabaseEssentials\\Database.fdb");
-            internalBuilder.Charset = "UTF8";
             connBuilder["provider connection string"] = internalBuilder.ConnectionString;
             connStrSect.ConnectionStrings["Entities"].ConnectionString = connBuilder.ConnectionString;
             config.Save();
             ConfigurationManager.RefreshSection("connectionStrings");
             this.DBContext = new Entities();
+            this.DBContext.Database.Connection.Open();
+            this.DBContext.Database.Connection.Close();
+        }
+
+        public void RestoreDB(bool requireConfirm)
+        {
+            bool erase = false;
+            if (requireConfirm)
+                erase = MessageBox.Show("Увага, дана дія зітре поточну базу даних замінить її на пусту резервну копію.\nПісля цього програма виконає самостійний перезапуск.\nБажажте продовжити?", "Відновлення бази даних", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+            else erase = true;
+            if (!erase) return;
+
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConnectionStringsSection connStrSect = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            FbConnectionStringBuilder connBuilder = new FbConnectionStringBuilder(connStrSect.ConnectionStrings["Entities"].ConnectionString);
+            System.IO.File.Delete(connBuilder.Database);
+            System.IO.File.WriteAllBytes(connBuilder.Database, Workload.Properties.Resources.Backup);
+            Application.Current.Run();
+            Application.Current.Shutdown();
         }
     }
 }

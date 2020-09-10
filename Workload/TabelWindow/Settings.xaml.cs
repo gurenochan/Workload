@@ -118,6 +118,8 @@ namespace Workload.TabelWindow
             });
             this.DeleteDepartmentBut.Click += delButs;
             this.DeleteFacilityBut.Click += delButs;
+
+            this.RestoreDBBut.Click += new RoutedEventHandler((object sender, RoutedEventArgs args) => this.RestoreDB());
         }
 
         public string PresentationName => "Налаштування";
@@ -128,20 +130,17 @@ namespace Workload.TabelWindow
         public TabItem Tab { get; set; }
         public Window Window { get; set; }
 
-        public void RestoreDB(bool requireConfirm = true)
+        public void RestoreDB()
         {
-            bool erase = false;
-            if (requireConfirm)
-            {
-                erase = MessageBox.Show("Увага, дана дія зітре поточну базу даних замінить її на пусту резервну копію.\nПісля цього програма виконає самостійний перезапуск.\nБажажте продовжити?", "Відновлення бази даних", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
-            }
-            else erase = true;
-            if (!erase) return;
+            if (MessageBox.Show("Увага, дана дія зітре поточну базу даних замінить її на пусту резервну копію.\nПісля цього програма виконає самостійний перезапуск.\nБажажте продовжити?", "Відновлення бази даних", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No) return;
 
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             ConnectionStringsSection connStrSect = (ConnectionStringsSection)config.GetSection("connectionStrings");
             FbConnectionStringBuilder connBuilder = new FbConnectionStringBuilder(connStrSect.ConnectionStrings["Entities"].ConnectionString);
             System.IO.File.Delete(connBuilder.Database);
+            System.IO.File.WriteAllBytes(connBuilder.Database, Properties.Resources.Backup);
+            Application.Current.Run();
+            Application.Current.Shutdown();
         }
     }
 }

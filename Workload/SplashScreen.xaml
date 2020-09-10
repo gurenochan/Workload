@@ -66,8 +66,16 @@
                             <DoubleAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Opacity" From="0" To="1.0" BeginTime="0:0:3.5" Duration="0:0:0"/>
                         </Storyboard>
                         <Storyboard RepeatBehavior="Forever" BeginTime="0:0:3.5">
-                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="600,0,0,0" To="100,0,100,0" Duration="0:0:0.5" AutoReverse="False"/>
-                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="0,0,600,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.5"/>
+                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="0,0,600,0" To="100,0,100,0" Duration="0:0:0.75" AutoReverse="False">
+                                <ThicknessAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseIn"/>
+                                </ThicknessAnimation.EasingFunction>
+                            </ThicknessAnimation>
+                            <ThicknessAnimation Storyboard.TargetName="BackRect" Storyboard.TargetProperty="Margin" From="100,0,100,0" To="600,0,0,0" Duration="0:0:0.75" AutoReverse="False" BeginTime="0:0:0.75">
+                                <ThicknessAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut"/>
+                                </ThicknessAnimation.EasingFunction>
+                            </ThicknessAnimation>
                         </Storyboard>
                     </Storyboard>
                 </BeginStoryboard>
