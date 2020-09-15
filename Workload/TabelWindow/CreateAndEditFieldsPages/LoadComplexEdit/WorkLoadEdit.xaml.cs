@@ -180,6 +180,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
             UpdateAssing(typeof(SUBDETAILS_TBL), this.SubdetailsGrid);
             UpdateAssing(typeof(DETAILS_TBL), this.DetailsGrid);
             UpdateAssing(typeof(TEACHERS_TBL), this.AvaliebleTutors);
+            UpdateAssing(typeof(SUBDETAILS_TBL), this.AvaliebleTutors);
 
             RoutedEventHandler HourCellLostFocusHandler = new RoutedEventHandler((object sender, RoutedEventArgs args) => this.SubdetailsGrid.Items.Refresh());
 
@@ -528,5 +529,41 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Context.GROUPS_TBL.ToList().Where(p => ((System.String)value).Contains(p.GROUP_NAME)).AsEnumerable();
+    }
+
+    [ValueConversion(typeof(TEACHERS_TBL), typeof(decimal))]
+    public class HoursOnTutor : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            decimal ret = 0;
+            try
+            { ret = ((TEACHERS_TBL)value).SUBDETAILS_TBL.Sum(p => p.HOURS); }
+            finally 
+            { }
+            return ret;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
+    [ValueConversion(typeof(TEACHERS_TBL), typeof(System.String))]
+    public class HoursOnTutorFormatedString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            System.String ret = System.String.Empty;
+            try
+            {
+                decimal
+                    curHours = ((TEACHERS_TBL)value).SUBDETAILS_TBL.Sum(p => p.HOURS),
+                    allHours = Properties.Settings.Default.MaxHoursPerTeacher;
+                ret = curHours.ToString() + "/" + allHours + " (" + (allHours - curHours).ToString() + ")";
+            }
+            finally { }
+            return ret;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 }

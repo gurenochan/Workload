@@ -99,5 +99,26 @@ namespace Workload.Properties {
                 this["ShowTalisman"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public decimal MaxHoursPerTeacher {
+            get {
+                return ((decimal)(this["MaxHoursPerTeacher"]));
+            }
+            set {
+                this["MaxHoursPerTeacher"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("68, 155, 164")]
+        public global::System.Drawing.Color AccentColor {
+            get {
+                return ((global::System.Drawing.Color)(this["AccentColor"]));
+            }
+        }
     }
 }

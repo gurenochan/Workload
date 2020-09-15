@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Workload.TabelWindow.CreateAndEditFieldsPages"
+      xmlns:properties="clr-namespace:Workload.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WorkLoadEdit">
@@ -11,6 +12,8 @@
     <Page.Resources>
         <local:FreeHours x:Key="FreeHours"/>
         <local:Groups x:Key="Groups"/>
+        <local:HoursOnTutor x:Key="HoursOnTutor"/>
+        <local:HoursOnTutorFormatedString x:Key="HoursOnTutorFormatedString"/>
     </Page.Resources>
 
     <Grid>
@@ -42,13 +45,21 @@
         </DataGrid>
 
         <Label Content="Доступні викладачі" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"/>
-        <ListView x:Name="AvaliebleTutors" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Margin="1.5,1.5" SelectionMode="Single">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=TEACHER_NAME}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListView>
+        <DataGrid x:Name="AvaliebleTutors" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Margin="1.5,1.5" SelectionMode="Single" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ПІБ" IsReadOnly="True" Binding="{Binding Path=TEACHER_NAME}"/>
+                <DataGridTemplateColumn Header="Години" IsReadOnly="True" MinWidth="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ProgressBar Minimum="0" Maximum="{Binding Source={x:Static properties:Settings.Default}, Path=MaxHoursPerTeacher, Mode=OneWay}" Value="{Binding Converter={StaticResource HoursOnTutor}, Mode=OneWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                <TextBlock Text="{Binding Converter={StaticResource HoursOnTutorFormatedString}, Mode=OneWay}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         
         <Label Content="Набори груп" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"/>
         <Frame x:Name="GroupSelectFrame" Grid.Column="2" Grid.Row="2" Margin="1.5,1.5" IsEnabled="False"/>

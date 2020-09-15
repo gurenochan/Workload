@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:properties="clr-namespace:Workload.Properties"
         xmlns:local="clr-namespace:Workload"
         mc:Ignorable="d"
         d:DesignHeight="350"
@@ -17,6 +18,9 @@
         BorderThickness="0.01"
         Title="SplashScreen" Height="350" Width="600"
         ShowInTaskbar="False">
+    <Window.Resources>
+        <local:ColorToBrush x:Key="ColorToBrush"/>
+    </Window.Resources>
 
     <Window.Triggers>
         <EventTrigger RoutedEvent="Loaded">
@@ -91,7 +95,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Rectangle x:Name="BackRect" Height="60" Grid.ColumnSpan="2" Fill="#FF449BA4"/>
+        <Rectangle x:Name="BackRect" Height="60" Grid.ColumnSpan="2" Fill="{Binding Source={x:Static properties:Settings.Default}, Path=AccentColor, Mode=OneWay, Converter={StaticResource ColorToBrush}}"/>
         <TextBox AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" x:Name="ProgramNameLabel" Text="Розподіл Навантаження" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="110" Width="369" TextBlock.FontSize="54" Grid.Column="0" FontFamily="Microsoft Sans Serif" FontSize="48" Grid.ColumnSpan="2" FontWeight="Bold" BorderThickness="0" Background="{x:Null}">
             <TextBox.Foreground>
                 <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">

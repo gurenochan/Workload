@@ -9,6 +9,7 @@ using FirebirdSql.Data.FirebirdClient;
 using System.IO;
 using System.Data.Common;
 using System.Threading;
+using System.Globalization;
 
 namespace Workload
 {
@@ -152,5 +153,17 @@ namespace Workload
             Application.Current.Run();
             Application.Current.Shutdown();
         }
+    }
+
+    [System.Windows.Data.ValueConversion(typeof(System.Drawing.Color), typeof(System.Windows.Media.Brush))]
+    public class ColorToBrush : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            System.Drawing.Color color = (System.Drawing.Color)value;
+            return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 }

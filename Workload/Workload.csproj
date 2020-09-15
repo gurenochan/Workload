@@ -99,6 +99,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
@@ -144,6 +145,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="TabelWindow\CreateAndEditFieldsPages\LoadPerTutorEditor\TutorsWorkload.xaml.cs">
+      <DependentUpon>TutorsWorkload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TabelWindow\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -211,6 +215,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TabelWindow\CreateAndEditFieldsPages\LoadPerTutorEditor\TutorsWorkload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TabelWindow\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -18,6 +18,7 @@
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Grid.Column="0" Header="Факультет" Grid.ColumnSpan="2">
@@ -34,6 +35,17 @@
         </GroupBox>
         <GroupBox Header="База Даних" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Visible">
             <Button x:Name="RestoreDBBut" Content="Відновити базу даних" HorizontalAlignment="Left"/>
+        </GroupBox>
+        <GroupBox Header="Максимальна кількість годин виклдання" Grid.Row="3" Grid.ColumnSpan="2">
+            <TextBox Style="{StaticResource ValidationTip}">
+                <TextBox.Text>
+                    <Binding Source="{x:Static properties:Settings.Default}" Path="MaxHoursPerTeacher" Mode="TwoWay" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </GroupBox>
     </Grid>
 </Page>
