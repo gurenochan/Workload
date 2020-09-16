@@ -39,7 +39,6 @@
         </DataGrid>
         <DataGrid Grid.Row="0" Grid.Column="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Вид роботи"/>
                 <DataGridTextColumn Header="Кількість робіт"/>
                 <DataGridTextColumn Header="Групи"/>
             </DataGrid.Columns>

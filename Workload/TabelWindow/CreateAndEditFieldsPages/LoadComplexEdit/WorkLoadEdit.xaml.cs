@@ -50,7 +50,11 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                 MessageBox.Show("Unable to load plans.\nError: " + ex.Message + ".\n" + ex.StackTrace);
             }
 
-            this.MainsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => this.UpdateDetails());
+            this.MainsGrid.SelectionChanged += new SelectionChangedEventHandler((object obj, SelectionChangedEventArgs arg) => 
+            { 
+                this.UpdateDetails();
+                this.MainsGrid.Focus();
+            });
             this.MainContext.DETAILS_TBL.Local.CollectionChanged += new NotifyCollectionChangedEventHandler((object obj, NotifyCollectionChangedEventArgs args) =>
             {
                 DETAILS_TBL detail = (DETAILS_TBL)this.DetailsGrid.SelectedItem;
@@ -126,6 +130,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     }
                     else this.SubdetailsGrid.IsEnabled = false;
                     this.UserAbleAdd();
+                    this.DetailsGrid.Focus();
                 }
                 catch(Exception ex)
                 { MessageBox.Show("Unable to load loads details while switchiing selection of plan details.\nError: " + ex.Message + "\n" + ex.StackTrace); }
@@ -267,6 +272,7 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
                     }
                     catch (Exception ex)
                     { MessageBox.Show("Unable to fill edit fields while switching selection of load plan.\nError: " + ex.Message + ".\n" + ex.StackTrace); }
+                    this.SubdetailsGrid.Focus();
                 }
             });
 
@@ -290,8 +296,15 @@ namespace Workload.TabelWindow.CreateAndEditFieldsPages
 
                     this.SubdetailsGrid.Items.Refresh();
                     this.UpdateLoad();
+                    this.AvaliebleTutors.Items.Refresh();
 
-                    if (goToNextRow && this.SubdetailsGrid.CanUserAddRows) this.SubdetailsGrid.SelectedIndex = this.SubdetailsGrid.Items.Count - 1;
+                    if (goToNextRow && this.SubdetailsGrid.CanUserAddRows)
+                    {
+                        this.SubdetailsGrid.SelectedIndex = this.SubdetailsGrid.Items.Count - 1;
+                        this.SubdetailsGrid.Focus();
+                    }
+                    else this.AvaliebleTutors.Focus();
+
                 }
                 catch(Exception ex)
                 { MessageBox.Show("Unable to change selection of tutor.\nError: " + ex.Message + ".\n" + ex.StackTrace); }

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:properties="clr-namespace:Workload.Properties"
         xmlns:local="clr-namespace:Workload"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200" Foreground="{x:Null}" Background="WhiteSmoke">
@@ -26,7 +27,7 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Padding="5,2,5,2" Background="#FF449BA4" Foreground="White" FontWeight="Bold" Text="{Binding Path=Name}"/>
+                            <TextBlock Padding="5,2,5,2" Background="{Binding Source={x:Static properties:Settings.Default}, Path=AccentColor, Mode=OneTime, Converter={StaticResource ColorToBrush}}" Foreground="White" FontWeight="Bold" Text="{Binding Path=Name}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>

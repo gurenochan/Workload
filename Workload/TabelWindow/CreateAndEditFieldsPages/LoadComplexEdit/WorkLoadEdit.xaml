@@ -45,7 +45,7 @@
         </DataGrid>
 
         <Label Content="Доступні викладачі" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"/>
-        <DataGrid x:Name="AvaliebleTutors" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Margin="1.5,1.5" SelectionMode="Single" IsReadOnly="True">
+        <DataGrid x:Name="AvaliebleTutors" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Margin="1.5,1.5" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ПІБ" IsReadOnly="True" Binding="{Binding Path=TEACHER_NAME}"/>
                 <DataGridTemplateColumn Header="Години" IsReadOnly="True" MinWidth="80">
