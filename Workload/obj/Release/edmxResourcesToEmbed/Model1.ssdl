@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models.Store" Provider="FirebirdSql.Data.FirebirdClient" ProviderManifestToken="2.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="APP_PARAMS">
+    <Key>
+      <PropertyRef Name="IDX" />
+    </Key>
+    <Property Name="IDX" Type="int" Nullable="false" />
+    <Property Name="EDUTYPE_ID" Type="int" />
+    <Property Name="EDUFORM_ID" Type="int" />
+    <Property Name="COURSE_NO" Type="smallint" Nullable="false" />
+    <Property Name="SEMESTER_NO" Type="smallint" />
+    <Property Name="FACULTY" Type="varchar" MaxLength="50" Unicode="true" />
+    <Property Name="DEPARTMENT" Type="varchar" MaxLength="75" Unicode="true" />
+  </EntityType>
+  <EntityType Name="DETAILS_TBL">
+    <Key>
+      <PropertyRef Name="DETAIL_ID" />
+    </Key>
+    <Property Name="DETAIL_ID" Type="int" Nullable="false" />
+    <Property Name="ITEM_ID" Type="int" Nullable="false" />
+    <Property Name="WORK_ID" Type="int" Nullable="false" />
+    <Property Name="HOURS" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EDUFORMS_TBL">
+    <Key>
+      <PropertyRef Name="EDUFORM_ID" />
+    </Key>
+    <Property Name="EDUFORM_ID" Type="int" Nullable="false" />
+    <Property Name="EDUFORM_NAME" Type="varchar" MaxLength="25" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EDUTYPES_TBL">
+    <Key>
+      <PropertyRef Name="EDUTYPE_ID" />
+    </Key>
+    <Property Name="EDUTYPE_ID" Type="int" Nullable="false" />
+    <Property Name="EDUTYPE_NAME" Type="varchar" MaxLength="25" Unicode="true" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Firebird.Firebird.GPRELATIONS_TBL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="GPRELATIONS_TBL">
+    <Key>
+      <PropertyRef Name="SUBDETAIL_ID" />
+      <PropertyRef Name="GROUP_ID" />
+    </Key>
+    <Property Name="SUBDETAIL_ID" Type="int" Nullable="false" />
+    <Property Name="GROUP_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GROUPS_TBL">
+    <Key>
+      <PropertyRef Name="GROUP_ID" />
+    </Key>
+    <Property Name="GROUP_ID" Type="int" Nullable="false" />
+    <Property Name="GROUP_NAME" Type="varchar" MaxLength="10" Unicode="true" Nullable="false" />
+    <Property Name="GROUP_MISC" Type="varchar" MaxLength="100" Unicode="true" />
+    <Property Name="EDUFORM_ID" Type="int" />
+    <Property Name="COURSE_NO" Type="smallint" Nullable="false" />
+    <Property Name="BUDGET_CNT" Type="smallint" Nullable="false" />
+    <Property Name="CONTRACT_CNT" Type="smallint" Nullable="false" />
+    <Property Name="FACULTY_ABBR" Type="varchar" MaxLength="5" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MAIN_TBL">
+    <Key>
+      <PropertyRef Name="ITEM_ID" />
+    </Key>
+    <Property Name="ITEM_ID" Type="int" Nullable="false" />
+    <Property Name="SUBJECT_ID" Type="int" Nullable="false" />
+    <Property Name="COURSE_NO" Type="smallint" Nullable="false" />
+    <Property Name="SEMESTER_NO" Type="smallint" Nullable="false" />
+    <Property Name="EDUTYPE_ID" Type="int" Nullable="false" />
+    <Property Name="EDUFORM_ID" Type="int" Nullable="false" />
+    <Property Name="VOLUME" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SUBDETAILS_TBL">
+    <Key>
+      <PropertyRef Name="SUBDETAIL_ID" />
+    </Key>
+    <Property Name="SUBDETAIL_ID" Type="int" Nullable="false" />
+    <Property Name="DETAIL_ID" Type="int" Nullable="false" />
+    <Property Name="TEACHER_ID" Type="int" Nullable="false" />
+    <Property Name="HOURS" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SUBJECTS_TBL">
+    <Key>
+      <PropertyRef Name="SUBJECT_ID" />
+    </Key>
+    <Property Name="SUBJECT_ID" Type="int" Nullable="false" />
+    <Property Name="SUBJECT_NAME" Type="varchar" MaxLength="75" Unicode="true" Nullable="false" />
+    <Property Name="SUBJECT_MISC" Type="varchar" MaxLength="100" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TEACHERS_TBL">
+    <Key>
+      <PropertyRef Name="TEACHER_ID" />
+    </Key>
+    <Property Name="TEACHER_ID" Type="int" Nullable="false" />
+    <Property Name="TEACHER_NAME" Type="varchar" MaxLength="35" Unicode="true" Nullable="false" />
+    <Property Name="TEACHER_POS" Type="varchar" MaxLength="35" Unicode="true" />
+    <Property Name="TEACHER_RATE" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+    <Property Name="TEACHER_MISC" Type="varchar" MaxLength="100" Unicode="true" />
+    <Property Name="TEACHER_RANK" Type="varchar" MaxLength="25" Unicode="true" />
+    <Property Name="TEACHER_DEGREE" Type="varchar" MaxLength="25" Unicode="true" />
+  </EntityType>
+  <EntityType Name="WORKS_TBL">
+    <Key>
+      <PropertyRef Name="WORK_ID" />
+    </Key>
+    <Property Name="WORK_ID" Type="int" Nullable="false" />
+    <Property Name="WORK_NAME" Type="varchar" MaxLength="40" Unicode="true" Nullable="false" />
+    <Property Name="HRS_PER_STUD" Type="decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <Association Name="FK_DETAILS_ITEM_ID">
+    <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="1" />
+    <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MAIN_TBL">
+        <PropertyRef Name="ITEM_ID" />
+      </Principal>
+      <Dependent Role="DETAILS_TBL">
+        <PropertyRef Name="ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DETAILS_WORK_ID">
+    <End Role="WORKS_TBL" Type="Self.WORKS_TBL" Multiplicity="1" />
+    <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WORKS_TBL">
+        <PropertyRef Name="WORK_ID" />
+      </Principal>
+      <Dependent Role="DETAILS_TBL">
+        <PropertyRef Name="WORK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GPRELATIONS_GROUP_ID">
+    <End Role="GROUPS_TBL" Type="Self.GROUPS_TBL" Multiplicity="1" />
+    <End Role="GPRELATIONS_TBL" Type="Self.GPRELATIONS_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS_TBL">
+        <PropertyRef Name="GROUP_ID" />
+      </Principal>
+      <Dependent Role="GPRELATIONS_TBL">
+        <PropertyRef Name="GROUP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GPRELATIONS_SUBDETAIL_ID">
+    <End Role="SUBDETAILS_TBL" Type="Self.SUBDETAILS_TBL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GPRELATIONS_TBL" Type="Self.GPRELATIONS_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUBDETAILS_TBL">
+        <PropertyRef Name="SUBDETAIL_ID" />
+      </Principal>
+      <Dependent Role="GPRELATIONS_TBL">
+        <PropertyRef Name="SUBDETAIL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GROUPS_EDUFORM_ID">
+    <End Role="EDUFORMS_TBL" Type="Self.EDUFORMS_TBL" Multiplicity="0..1" />
+    <End Role="GROUPS_TBL" Type="Self.GROUPS_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EDUFORMS_TBL">
+        <PropertyRef Name="EDUFORM_ID" />
+      </Principal>
+      <Dependent Role="GROUPS_TBL">
+        <PropertyRef Name="EDUFORM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MAIN_EDUFORM_ID">
+    <End Role="EDUFORMS_TBL" Type="Self.EDUFORMS_TBL" Multiplicity="1" />
+    <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EDUFORMS_TBL">
+        <PropertyRef Name="EDUFORM_ID" />
+      </Principal>
+      <Dependent Role="MAIN_TBL">
+        <PropertyRef Name="EDUFORM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MAIN_EDUTYPE_ID">
+    <End Role="EDUTYPES_TBL" Type="Self.EDUTYPES_TBL" Multiplicity="1" />
+    <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EDUTYPES_TBL">
+        <PropertyRef Name="EDUTYPE_ID" />
+      </Principal>
+      <Dependent Role="MAIN_TBL">
+        <PropertyRef Name="EDUTYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MAIN_SUBJECT_ID">
+    <End Role="SUBJECTS_TBL" Type="Self.SUBJECTS_TBL" Multiplicity="1" />
+    <End Role="MAIN_TBL" Type="Self.MAIN_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUBJECTS_TBL">
+        <PropertyRef Name="SUBJECT_ID" />
+      </Principal>
+      <Dependent Role="MAIN_TBL">
+        <PropertyRef Name="SUBJECT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SUBDETAILS_DETAIL_ID">
+    <End Role="DETAILS_TBL" Type="Self.DETAILS_TBL" Multiplicity="1" />
+    <End Role="SUBDETAILS_TBL" Type="Self.SUBDETAILS_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DETAILS_TBL">
+        <PropertyRef Name="DETAIL_ID" />
+      </Principal>
+      <Dependent Role="SUBDETAILS_TBL">
+        <PropertyRef Name="DETAIL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SUBDETAILS_TEACHER_ID">
+    <End Role="TEACHERS_TBL" Type="Self.TEACHERS_TBL" Multiplicity="1" />
+    <End Role="SUBDETAILS_TBL" Type="Self.SUBDETAILS_TBL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEACHERS_TBL">
+        <PropertyRef Name="TEACHER_ID" />
+      </Principal>
+      <Dependent Role="SUBDETAILS_TBL">
+        <PropertyRef Name="TEACHER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="APP_PARAMS" EntityType="Self.APP_PARAMS" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="DETAILS_TBL" EntityType="Self.DETAILS_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="EDUFORMS_TBL" EntityType="Self.EDUFORMS_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="EDUTYPES_TBL" EntityType="Self.EDUTYPES_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="GROUPS_TBL" EntityType="Self.GROUPS_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="MAIN_TBL" EntityType="Self.MAIN_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="SUBDETAILS_TBL" EntityType="Self.SUBDETAILS_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="SUBJECTS_TBL" EntityType="Self.SUBJECTS_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="TEACHERS_TBL" EntityType="Self.TEACHERS_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="WORKS_TBL" EntityType="Self.WORKS_TBL" Schema="Firebird" store:Type="Tables" />
+    <EntitySet Name="GPRELATIONS_TBL" EntityType="Self.GPRELATIONS_TBL" store:Type="Tables" store:Schema="Firebird">
+      <DefiningQuery>SELECT 
+"A"."SUBDETAIL_ID" AS "SUBDETAIL_ID", 
+"A"."GROUP_ID" AS "GROUP_ID"
+FROM "GPRELATIONS_TBL" AS "A"</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_DETAILS_ITEM_ID" Association="Self.FK_DETAILS_ITEM_ID">
+      <End Role="MAIN_TBL" EntitySet="MAIN_TBL" />
+      <End Role="DETAILS_TBL" EntitySet="DETAILS_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DETAILS_WORK_ID" Association="Self.FK_DETAILS_WORK_ID">
+      <End Role="WORKS_TBL" EntitySet="WORKS_TBL" />
+      <End Role="DETAILS_TBL" EntitySet="DETAILS_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GPRELATIONS_GROUP_ID" Association="Self.FK_GPRELATIONS_GROUP_ID">
+      <End Role="GROUPS_TBL" EntitySet="GROUPS_TBL" />
+      <End Role="GPRELATIONS_TBL" EntitySet="GPRELATIONS_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GPRELATIONS_SUBDETAIL_ID" Association="Self.FK_GPRELATIONS_SUBDETAIL_ID">
+      <End Role="SUBDETAILS_TBL" EntitySet="SUBDETAILS_TBL" />
+      <End Role="GPRELATIONS_TBL" EntitySet="GPRELATIONS_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GROUPS_EDUFORM_ID" Association="Self.FK_GROUPS_EDUFORM_ID">
+      <End Role="EDUFORMS_TBL" EntitySet="EDUFORMS_TBL" />
+      <End Role="GROUPS_TBL" EntitySet="GROUPS_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MAIN_EDUFORM_ID" Association="Self.FK_MAIN_EDUFORM_ID">
+      <End Role="EDUFORMS_TBL" EntitySet="EDUFORMS_TBL" />
+      <End Role="MAIN_TBL" EntitySet="MAIN_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MAIN_EDUTYPE_ID" Association="Self.FK_MAIN_EDUTYPE_ID">
+      <End Role="EDUTYPES_TBL" EntitySet="EDUTYPES_TBL" />
+      <End Role="MAIN_TBL" EntitySet="MAIN_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MAIN_SUBJECT_ID" Association="Self.FK_MAIN_SUBJECT_ID">
+      <End Role="SUBJECTS_TBL" EntitySet="SUBJECTS_TBL" />
+      <End Role="MAIN_TBL" EntitySet="MAIN_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SUBDETAILS_DETAIL_ID" Association="Self.FK_SUBDETAILS_DETAIL_ID">
+      <End Role="DETAILS_TBL" EntitySet="DETAILS_TBL" />
+      <End Role="SUBDETAILS_TBL" EntitySet="SUBDETAILS_TBL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SUBDETAILS_TEACHER_ID" Association="Self.FK_SUBDETAILS_TEACHER_ID">
+      <End Role="TEACHERS_TBL" EntitySet="TEACHERS_TBL" />
+      <End Role="SUBDETAILS_TBL" EntitySet="SUBDETAILS_TBL" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

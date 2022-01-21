@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Documents\workload\MainWPFProject\Workload\Workload\obj\x64\Release\
+D:\Programing\Projects\Workload\Workload\obj\x64\Release\
 Workload
 none
 false
 TRACE
-D:\Documents\workload\MainWPFProject\Workload\Workload\App.xaml
-12-1444656015
-11-1355501334
-31529202121
-21-683237077
-Loading.xaml;MainWindow.xaml;TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.xaml;TabelWindow\CreateAndEditFieldsPages\EduForm.xaml;TabelWindow\CreateAndEditFieldsPages\EduTypes.xaml;TabelWindow\CreateAndEditFieldsPages\Group.xaml;TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.xaml;TabelWindow\CreateAndEditFieldsPages\Subject.xaml;TabelWindow\CreateAndEditFieldsPages\Teacher.xaml;TabelWindow\CreateAndEditFieldsPages\Work.xaml;TabelWindow\CreateAndEditFieldsPages\WorkLoadEdit.xaml;TabelWindow\TablePage.xaml;
+D:\Programing\Projects\Workload\Workload\App.xaml
+16-297884472
+10-71447876
+35531735536
+2926837303
+MainWindow.xaml;TabelWindow\CreateAndEditFieldsPages\LoadPerTutorEditor\TutorsWorkload.xaml;TabelWindow\Settings.xaml;SplashScreen.xaml;TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\GroupSelect.xaml;TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.xaml;TabelWindow\CreateAndEditFieldsPages\EduForm.xaml;TabelWindow\CreateAndEditFieldsPages\EduTypes.xaml;TabelWindow\CreateAndEditFieldsPages\Group.xaml;TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.xaml;TabelWindow\CreateAndEditFieldsPages\Subject.xaml;TabelWindow\CreateAndEditFieldsPages\Teacher.xaml;TabelWindow\CreateAndEditFieldsPages\Work.xaml;TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.xaml;TabelWindow\ExcelReports.xaml;TabelWindow\TablePage.xaml;
 
 True
 

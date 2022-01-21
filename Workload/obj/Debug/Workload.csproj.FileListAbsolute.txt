@@ -109,3 +109,93 @@ D:\Documents\workload\MainWPFProject\Workload\Workload\bin\Debug\DatabaseEssenti
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\Workload.csprojAssemblyReference.cache
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadPerTutorEditor\TutorsWorkload.g.cs
 D:\Documents\workload\MainWPFProject\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadPerTutorEditor\TutorsWorkload.baml
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\wlb_udf.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\Database.fdb
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.conf
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\firebird.msg
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\fbembed.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\ib_util.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\icudt30.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\icuin30.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\DatabaseEssentials\icuuc30.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\individual.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\individual.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\individual_new.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\individual_old.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\subj_all.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\subj_all.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\subj_one.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\subj_one.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\summ_subj.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\summ_subj.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach_simple.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\summ_teach_simple.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\teach_all.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\teach_all.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\teach_one.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\teach_one.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\unp.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\unp.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\work_one.ini
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\work_one.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\Копия individual.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Report Templates\xls\Копия individual_new.xls
+D:\Programing\Projects\Workload\Workload\bin\Debug\Workload.exe.config
+D:\Programing\Projects\Workload\Workload\bin\Debug\Workload.exe
+D:\Programing\Projects\Workload\Workload\bin\Debug\Workload.pdb
+D:\Programing\Projects\Workload\Workload\bin\Debug\EntityFramework.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\EntityFramework.SqlServer.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\EntityFramework.xml
+D:\Programing\Projects\Workload\Workload\bin\Debug\EntityFramework.SqlServer.xml
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload.csproj.ResolveComReference.cache
+D:\Programing\Projects\Workload\Workload\obj\Debug\MainWindow.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadPerTutorEditor\TutorsWorkload.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\Settings.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\SplashScreen.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\GroupSelect.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduForm.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduTypes.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Group.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Subject.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Teacher.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Work.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\TablePage.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\App.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload_Content.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload_MarkupCompile.cache
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload_MarkupCompile.lref
+D:\Programing\Projects\Workload\Workload\obj\Debug\App.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\MainWindow.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadPerTutorEditor\TutorsWorkload.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\Settings.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\SplashScreen.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\GroupSelect.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\Main.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduForm.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\EduTypes.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Group.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\MainComplexEdit\MainParametersChoose.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Subject.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Teacher.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\Work.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\CreateAndEditFieldsPages\LoadComplexEdit\WorkLoadEdit.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\ExcelReports.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\TabelWindow\TablePage.baml
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload.g.resources
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload.Properties.Resources.resources
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload.csproj.GenerateResource.cache
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload.csproj.CoreCompileInputs.cache
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload.exe
+D:\Programing\Projects\Workload\Workload\obj\Debug\Workload.pdb
+D:\Programing\Projects\Workload\Workload\bin\Debug\FirebirdSql.Data.FirebirdClient.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Programing\Projects\Workload\Workload\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Programing\Projects\Workload\Workload\bin\Debug\System.Threading.Tasks.Extensions.xml

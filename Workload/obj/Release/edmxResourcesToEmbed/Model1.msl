@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="APP_PARAMS">
+      <EntityTypeMapping TypeName="Models.APP_PARAMS">
+        <MappingFragment StoreEntitySet="APP_PARAMS">
+          <ScalarProperty Name="IDX" ColumnName="IDX" />
+          <ScalarProperty Name="EDUTYPE_ID" ColumnName="EDUTYPE_ID" />
+          <ScalarProperty Name="EDUFORM_ID" ColumnName="EDUFORM_ID" />
+          <ScalarProperty Name="COURSE_NO" ColumnName="COURSE_NO" />
+          <ScalarProperty Name="SEMESTER_NO" ColumnName="SEMESTER_NO" />
+          <ScalarProperty Name="FACULTY" ColumnName="FACULTY" />
+          <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DETAILS_TBL">
+      <EntityTypeMapping TypeName="Models.DETAILS_TBL">
+        <MappingFragment StoreEntitySet="DETAILS_TBL">
+          <ScalarProperty Name="DETAIL_ID" ColumnName="DETAIL_ID" />
+          <ScalarProperty Name="ITEM_ID" ColumnName="ITEM_ID" />
+          <ScalarProperty Name="WORK_ID" ColumnName="WORK_ID" />
+          <ScalarProperty Name="HOURS" ColumnName="HOURS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EDUFORMS_TBL">
+      <EntityTypeMapping TypeName="Models.EDUFORMS_TBL">
+        <MappingFragment StoreEntitySet="EDUFORMS_TBL">
+          <ScalarProperty Name="EDUFORM_ID" ColumnName="EDUFORM_ID" />
+          <ScalarProperty Name="EDUFORM_NAME" ColumnName="EDUFORM_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EDUTYPES_TBL">
+      <EntityTypeMapping TypeName="Models.EDUTYPES_TBL">
+        <MappingFragment StoreEntitySet="EDUTYPES_TBL">
+          <ScalarProperty Name="EDUTYPE_ID" ColumnName="EDUTYPE_ID" />
+          <ScalarProperty Name="EDUTYPE_NAME" ColumnName="EDUTYPE_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GROUPS_TBL">
+      <EntityTypeMapping TypeName="Models.GROUPS_TBL">
+        <MappingFragment StoreEntitySet="GROUPS_TBL">
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="GROUP_MISC" ColumnName="GROUP_MISC" />
+          <ScalarProperty Name="EDUFORM_ID" ColumnName="EDUFORM_ID" />
+          <ScalarProperty Name="COURSE_NO" ColumnName="COURSE_NO" />
+          <ScalarProperty Name="BUDGET_CNT" ColumnName="BUDGET_CNT" />
+          <ScalarProperty Name="CONTRACT_CNT" ColumnName="CONTRACT_CNT" />
+          <ScalarProperty Name="FACULTY_ABBR" ColumnName="FACULTY_ABBR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MAIN_TBL">
+      <EntityTypeMapping TypeName="Models.MAIN_TBL">
+        <MappingFragment StoreEntitySet="MAIN_TBL">
+          <ScalarProperty Name="ITEM_ID" ColumnName="ITEM_ID" />
+          <ScalarProperty Name="SUBJECT_ID" ColumnName="SUBJECT_ID" />
+          <ScalarProperty Name="COURSE_NO" ColumnName="COURSE_NO" />
+          <ScalarProperty Name="SEMESTER_NO" ColumnName="SEMESTER_NO" />
+          <ScalarProperty Name="EDUTYPE_ID" ColumnName="EDUTYPE_ID" />
+          <ScalarProperty Name="EDUFORM_ID" ColumnName="EDUFORM_ID" />
+          <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUBDETAILS_TBL">
+      <EntityTypeMapping TypeName="Models.SUBDETAILS_TBL">
+        <MappingFragment StoreEntitySet="SUBDETAILS_TBL">
+          <ScalarProperty Name="SUBDETAIL_ID" ColumnName="SUBDETAIL_ID" />
+          <ScalarProperty Name="DETAIL_ID" ColumnName="DETAIL_ID" />
+          <ScalarProperty Name="TEACHER_ID" ColumnName="TEACHER_ID" />
+          <ScalarProperty Name="HOURS" ColumnName="HOURS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUBJECTS_TBL">
+      <EntityTypeMapping TypeName="Models.SUBJECTS_TBL">
+        <MappingFragment StoreEntitySet="SUBJECTS_TBL">
+          <ScalarProperty Name="SUBJECT_ID" ColumnName="SUBJECT_ID" />
+          <ScalarProperty Name="SUBJECT_NAME" ColumnName="SUBJECT_NAME" />
+          <ScalarProperty Name="SUBJECT_MISC" ColumnName="SUBJECT_MISC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEACHERS_TBL">
+      <EntityTypeMapping TypeName="Models.TEACHERS_TBL">
+        <MappingFragment StoreEntitySet="TEACHERS_TBL">
+          <ScalarProperty Name="TEACHER_ID" ColumnName="TEACHER_ID" />
+          <ScalarProperty Name="TEACHER_NAME" ColumnName="TEACHER_NAME" />
+          <ScalarProperty Name="TEACHER_POS" ColumnName="TEACHER_POS" />
+          <ScalarProperty Name="TEACHER_RATE" ColumnName="TEACHER_RATE" />
+          <ScalarProperty Name="TEACHER_MISC" ColumnName="TEACHER_MISC" />
+          <ScalarProperty Name="TEACHER_RANK" ColumnName="TEACHER_RANK" />
+          <ScalarProperty Name="TEACHER_DEGREE" ColumnName="TEACHER_DEGREE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORKS_TBL">
+      <EntityTypeMapping TypeName="Models.WORKS_TBL">
+        <MappingFragment StoreEntitySet="WORKS_TBL">
+          <ScalarProperty Name="WORK_ID" ColumnName="WORK_ID" />
+          <ScalarProperty Name="WORK_NAME" ColumnName="WORK_NAME" />
+          <ScalarProperty Name="HRS_PER_STUD" ColumnName="HRS_PER_STUD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="GPRELATIONS_TBL" TypeName="Models.GPRELATIONS_TBL" StoreEntitySet="GPRELATIONS_TBL">
+      <EndProperty Name="GROUPS_TBL">
+        <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+      </EndProperty>
+      <EndProperty Name="SUBDETAILS_TBL">
+        <ScalarProperty Name="SUBDETAIL_ID" ColumnName="SUBDETAIL_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
